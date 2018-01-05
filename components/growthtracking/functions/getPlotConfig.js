@@ -1,0 +1,209 @@
+import { getCentile, getDeviations, getSeries } from '../functions';
+
+const getPlotConfig = (
+  indicatorConfig,
+  appConfig,
+  visits,
+  selectedVisit,
+  plotType,
+  displayType,
+  showMultiple,
+) => {
+  if (!indicatorConfig) return null;
+
+  const { colors, labels } = appConfig;
+  const {
+    ageBased,
+    dataSet,
+    xtitle,
+    ytitle,
+    measurement1,
+    measurement2,
+  } = indicatorConfig;
+
+  const deviations = getDeviations(dataSet);
+
+  const patientLine = showMultiple
+    ? visits.map(visit => [visit[measurement1], visit[measurement2]])
+    : [[selectedVisit[measurement1], selectedVisit[measurement2]]];
+
+  /*
+  const predictedLine = predicted.map(visit => [
+    visit[config.measurement1],
+    visit[config.measurement2],
+  ]);
+  */
+
+  const formatDivisor = ageBased ? 30.25 : 1;
+
+  return {
+    title: {
+      text: '',
+    },
+    chart: {
+      zoomType: 'xy',
+      resetZoomButton: {
+        position: {
+          x: -40,
+          y: 10,
+        },
+      },
+      backgroundColor: 'transparent',
+      /*
+      events: {
+        load() {
+          this.xAxis[0].setExtremes(
+            patientLine[0][0] - 5 > 0 ? patientLine[0][0] - 5 : 0,
+            patientLine[patientLine.length - 1][0] - 5 > 0
+              ? patientLine[patientLine.length - 1][0] + 5
+              : 0,
+            // predictedLine[predictedLine.length - 1][0] + 5, // TODO: modify to handle case where predicted line doesnt exist
+            false,
+          );
+          this.yAxis[0].setExtremes(
+            patientLine[0][1] - 5 > 0 ? patientLine[0][1] - 5 : 0,
+            patientLine[patientLine.length - 1][1] - 5 > 0
+              ? patientLine[patientLine.length - 1][0] + 5
+              : 0,
+            // predictedLine[predictedLine.length - 1][1] + 5, // TODO: modify to handle case where predicted line doesnt exist
+            false,
+          );
+          this.showResetZoom();
+          this.redraw();
+        },
+      },
+      */
+    },
+    credits: false,
+    plotOptions: {
+      scatter: {
+        lineWidth: 2,
+      },
+      marker: {
+        enabled: false,
+      },
+      series: {
+        animation: false,
+      },
+    },
+    xAxis: {
+      gridLineWidth: 1,
+      tickInterval: formatDivisor,
+      labels: {
+        formatter() {
+          // if chart is based on age, divide days by 30.25 to get months
+          return Math.round(this.value / formatDivisor);
+        },
+      },
+      title: {
+        text: xtitle,
+      },
+    },
+    yAxis: {
+      maxPadding: 0,
+      tickInterval: 1,
+      title: {
+        text: ytitle,
+      },
+    },
+    tooltip: {
+      formatter() {
+        const x = ageBased
+          ? Math.round(this.x / formatDivisor)
+          : Math.round(this.x * 100) / 100;
+        const y = Math.round(this.y * 100) / 100;
+
+        /*
+        if (this.series.name === 'Predicted') {
+          if (this.point.index === 0) return false;
+
+          const visit = predicted[1];
+          const zscore = visit[plotType];
+          return `
+          <b>Predicted visit</b> <br />
+          ${config.xtitle}: ${x} <br />
+          ${config.ytitle}: ${y} <br />
+          Z-score: ${zscore} <br />
+          Percentile: ${getCentile(zscore)}%`;
+        }
+        */
+
+        const visit = visits[this.point.index];
+        const zscore = visit[plotType];
+
+        return `
+          <b>${this.point.index + 1}: ${visit.visitDate
+          .toISOString()
+          .slice(0, 10)}</b> <br />
+          ${xtitle}: ${x} <br />
+          ${ytitle}: ${y} <br />
+          Z-score: ${zscore} <br />
+          Percentile: ${getCentile(zscore)}%`;
+      },
+    },
+    series: [
+      getSeries(
+        'arearange',
+        labels.SD3_4,
+        deviations.SD4_SD3,
+        colors.SD3_4,
+        true,
+      ),
+      getSeries(
+        'arearange',
+        labels.SD2_3,
+        deviations.SD3_SD2,
+        colors.SD2_3,
+        true,
+      ),
+      getSeries(
+        'arearange',
+        labels.SD1_2,
+        deviations.SD2_SD1,
+        colors.SD1_2,
+        true,
+      ),
+      getSeries(
+        'arearange',
+        labels.SD0_1,
+        deviations.SD1_nSD1,
+        colors.SD0_1,
+        true,
+      ),
+      getSeries('arearange', labels.SD1_2, deviations.nSD1_nSD2, colors.SD1_2),
+      getSeries('arearange', labels.SD2_3, deviations.nSD2_nSD3, colors.SD2_3),
+      getSeries('arearange', labels.SD3_4, deviations.nSD3_nSD4, colors.SD3_4),
+      getSeries('line', 'Median', deviations.SD0, colors.SD3_4, true, false),
+      /*
+      {
+        data: predictedLine,
+        marker: {
+          symbol: 'circle',
+        },
+        color: 'black',
+        lineWidth: 3,
+        name: 'Predicted',
+        dashStyle: 'shortdot',
+      },
+      */
+      {
+        data: patientLine,
+        marker: {
+          symbol: 'circle',
+        },
+        color: 'black',
+        lineWidth: 3,
+        name: 'Patient',
+      },
+    ],
+    legend: {
+      align: 'left',
+      verticalAlign: 'top',
+      x: 50,
+      floating: true,
+      layout: 'vertical',
+    },
+  };
+};
+
+export default getPlotConfig;

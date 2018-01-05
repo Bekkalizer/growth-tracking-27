@@ -17,7 +17,7 @@ try {
     console.info('Using default config');
     dhisConfig = {
         baseUrl: 'https://hmis.moh.gov.rw/fbf',
-        authorization: 'Basic user:password'
+        authorization: 'Basic ='
     };
 }
 console.log(JSON.stringify(dhisConfig, null, 2), '\n');
