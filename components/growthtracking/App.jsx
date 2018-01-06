@@ -145,8 +145,12 @@ class App extends React.Component {
       );
     }
 
-    const completedEvents = events.filter(event => event.completedDate);
+    const completedEvents = events.filter(event => event.completedDate).sort((a, b) => a.completedDate > b.completedDate);
+
+    console.log(completedEvents);
     // does it need to be sorted by completeddate?
+
+    /*
 
     if (completedEvents.length === 0) {
       return (
@@ -165,8 +169,26 @@ class App extends React.Component {
     console.log('Unique data values:');
     Object.values(dataValues).forEach((value, index) => console.log(index, dataElements[value]));
 
+    const eventData = completedEvents
+
     console.log('Events:');
-    completedEvents.forEach(event => console.log(event));
+    completedEvents.forEach((event, index) => console.log(index, event.completedDate, event.dataValues.find(val => val.dataElement === "WeCHX2qGTPy").value));
+
+    // SORT EVENTS BY DATE
+    // EACH ITEM IN LIST:
+    // event #
+    // date
+    // age at event #
+    // weight
+    // height
+    // muac
+    // OPTIONAL:
+    // quantity receieved in kg
+    // quantity recieved (number of packets)
+
+    */
+
+    
 
     const female = patientInfo.gender === 'Female';
 

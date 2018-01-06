@@ -27,9 +27,9 @@ trackerCapture
       DHIS2DataElementFactory,
       DataStoreFactory,
     ) => {
-      $scope.selectedTeiId = $location.search().tei;
       $scope.trackedEvents = DHIS2EventFactory.getEventsByProgram(
-        $scope.selectedTeiId,
+        $location.search().tei,
+        $location.search().program,
         null,
       ).then(events => events);
       $scope.dataElements = DHIS2DataElementFactory.getDataElements().then(
