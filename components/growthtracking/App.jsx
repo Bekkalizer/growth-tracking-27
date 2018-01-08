@@ -124,18 +124,12 @@ class App extends React.Component {
     this.setState(state => ({ showConfig: !state.showConfig }));
 
   render() {
-    const { events } = this.props;
+    const { events, trackedEntity } = this.props;
     const { config, plotType } = this.state;
 
     this.addAnimation(
       config.animation.radius || defaultConfig.animation.radius,
     );
-
-    // TODO:
-    const dataElements = this.props.dataElements.reduce((acc, value) => {
-      acc[value.id] = value.displayName;
-      return acc;
-    }, {});
 
     if (events.length === 0) {
       return (
@@ -145,50 +139,46 @@ class App extends React.Component {
       );
     }
 
-    const completedEvents = events.filter(event => event.completedDate).sort((a, b) => a.completedDate > b.completedDate);
+    // filter identical event dates?
+    const completedEvents = events
+      .filter(event => event.completedDate)
+      .sort((a, b) => a.eventDate > b.eventDate)
+      .map((event, index) => ({
+        index,
+        date: event.eventDate,
+        age: event.dataValues.find(val => val.dataElement === 'WeCHX2qGTPy')
+          .value,
+        muac: event.dataValues.find(val => val.dataElement === 'ySphlmZ7fKG')
+          .value,
+        weight: event.dataValues.find(val => val.dataElement === 'KHyKhpRfVRS')
+          .value,
+        height: event.dataValues.find(val => val.dataElement === 'VCYJkaP96KZ')
+          .value,
+      }));
 
     console.log(completedEvents);
-    // does it need to be sorted by completeddate?
 
-    /*
+    const patient = {
+      firstname: trackedEntity.attributes.find(
+        attr => attr.attribute === 'kim8r9m1oGE',
+      ).value,
+      lastname: trackedEntity.attributes.find(
+        attr => attr.attribute === 'blDEf5Ld0fA',
+      ).value,
+      gender: trackedEntity.attributes.find(
+        attr => attr.attribute === 'uMSSNRDVcXS',
+      ).value,
+      birthdate: trackedEntity.attributes.find(
+        attr => attr.attribute === 'yj8BaYdkTA6',
+      ).value,
+    };
+    console.log(patient);
 
-    if (completedEvents.length === 0) {
-      return (
-        <div className="alert alert-warning">
-          No events have been registered
-        </div>
-      );
-    }
-
-    const dataValues = completedEvents.reduce((acc, value) => {
-      const d = value.dataValues.map(dataValue => dataValue.dataElement);
-      return { ...acc, ...d };
-    }, {});
-    // what data values should be plottable? only numerical?
-
-    console.log('Unique data values:');
-    Object.values(dataValues).forEach((value, index) => console.log(index, dataElements[value]));
-
-    const eventData = completedEvents
-
-    console.log('Events:');
-    completedEvents.forEach((event, index) => console.log(index, event.completedDate, event.dataValues.find(val => val.dataElement === "WeCHX2qGTPy").value));
-
-    // SORT EVENTS BY DATE
-    // EACH ITEM IN LIST:
-    // event #
-    // date
-    // age at event #
-    // weight
-    // height
-    // muac
-    // OPTIONAL:
-    // quantity receieved in kg
-    // quantity recieved (number of packets)
-
-    */
-
-    
+    // TODO: Replace following with real data listed above
+    // remove tsfa, ssfa, hcfa
+    //
+    //
+    //
 
     const female = patientInfo.gender === 'Female';
 

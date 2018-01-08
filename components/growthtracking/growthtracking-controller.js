@@ -23,6 +23,7 @@ trackerCapture
     (
       $scope,
       $location,
+      CurrentSelection,
       DHIS2EventFactory,
       DHIS2DataElementFactory,
       DataStoreFactory,
@@ -37,6 +38,7 @@ trackerCapture
       );
 
       $scope.dataStoreFunctions = DataStoreFactory;
+      $scope.trackedEntity = CurrentSelection.get().tei;
     },
   )
   .directive('reactapp', () => ({
@@ -51,13 +53,15 @@ trackerCapture
       Promise.all([
         scope.trackedEvents,
         scope.dataElements,
+        scope.trackedEntity,
         initialConfig,
       ]).then(values => {
         ReactDOM.render(
           <App
             events={values[0]}
             dataElements={values[1]}
-            initialConfig={values[2]}
+            trackedEntity={values[2]}
+            initialConfig={values[3]}
             updateConfig={scope.dataStoreFunctions.update}
           />,
           el[0],
