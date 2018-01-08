@@ -18,12 +18,12 @@ const PlotPage = ({
   setDisplayType,
   setShowMultiple,
   selectedVisit,
-  patientInfo,
-  showMultiple,
+  patient,
+  showMultiple
 }) => {
   const indicatorConfig = getIndicatorConfig(
-    patientInfo.gender === 'Female',
-    plotType,
+    patient.gender === 'Female',
+    plotType
   );
 
   const plotConfig = getPlotConfig(
@@ -33,7 +33,7 @@ const PlotPage = ({
     visits[selectedVisit],
     plotType,
     displayType,
-    showMultiple,
+    showMultiple
   );
 
   return (
@@ -80,8 +80,8 @@ PlotPage.propTypes = {
   displayType: PropTypes.string.isRequired,
   plotType: PropTypes.string.isRequired,
   selectedVisit: PropTypes.number.isRequired,
-  patientInfo: PropTypes.object.isRequired,
-  showMultiple: PropTypes.bool.isRequired,
+  patient: PropTypes.object.isRequired,
+  showMultiple: PropTypes.bool.isRequired
 };
 
 export default PlotPage;

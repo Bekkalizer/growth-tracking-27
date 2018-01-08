@@ -5,7 +5,7 @@ import 'rc-slider/assets/index.css';
 
 const VisitSlider = ({ visits, setVisit }) => {
   const marks = visits.reduce((acc, value, index) => {
-    acc[index] = value.visitDate.toISOString().slice(0, 10);
+    acc[index] = value.date.toISOString().slice(0, 10);
     return acc;
   }, {});
 
@@ -26,22 +26,22 @@ const VisitSlider = ({ visits, setVisit }) => {
         handleStyle={{
           height: 20,
           width: 20,
-          marginTop: -5,
+          marginTop: -5
         }}
         railStyle={{
-          height: 10,
+          height: 10
         }}
         dotStyle={{
           height: 14,
           width: 14,
           marginLeft: -5,
-          bottom: -8,
+          bottom: -8
         }}
         activeDotStyle={{
           height: 14,
           width: 14,
           marginLeft: -5,
-          bottom: -8,
+          bottom: -8
         }}
       />
     </div>
@@ -50,7 +50,7 @@ const VisitSlider = ({ visits, setVisit }) => {
 
 VisitSlider.propTypes = {
   setVisit: PropTypes.func.isRequired,
-  visits: PropTypes.arrayOf(PropTypes.object).isRequired,
+  visits: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default VisitSlider;

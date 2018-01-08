@@ -7,7 +7,7 @@ const getPlotConfig = (
   selectedVisit,
   plotType,
   displayType,
-  showMultiple,
+  showMultiple
 ) => {
   if (!indicatorConfig) return null;
 
@@ -18,7 +18,7 @@ const getPlotConfig = (
     xtitle,
     ytitle,
     measurement1,
-    measurement2,
+    measurement2
   } = indicatorConfig;
 
   const deviations = getDeviations(dataSet);
@@ -38,17 +38,17 @@ const getPlotConfig = (
 
   return {
     title: {
-      text: '',
+      text: ''
     },
     chart: {
       zoomType: 'xy',
       resetZoomButton: {
         position: {
           x: -40,
-          y: 10,
-        },
+          y: 10
+        }
       },
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent'
       /*
       events: {
         load() {
@@ -77,14 +77,14 @@ const getPlotConfig = (
     credits: false,
     plotOptions: {
       scatter: {
-        lineWidth: 2,
+        lineWidth: 2
       },
       marker: {
-        enabled: false,
+        enabled: false
       },
       series: {
-        animation: false,
-      },
+        animation: false
+      }
     },
     xAxis: {
       gridLineWidth: 1,
@@ -93,18 +93,18 @@ const getPlotConfig = (
         formatter() {
           // if chart is based on age, divide days by 30.25 to get months
           return Math.round(this.value / formatDivisor);
-        },
+        }
       },
       title: {
-        text: xtitle,
-      },
+        text: xtitle
+      }
     },
     yAxis: {
       maxPadding: 0,
       tickInterval: 1,
       title: {
-        text: ytitle,
-      },
+        text: ytitle
+      }
     },
     tooltip: {
       formatter() {
@@ -132,14 +132,14 @@ const getPlotConfig = (
         const zscore = visit[plotType];
 
         return `
-          <b>${this.point.index + 1}: ${visit.visitDate
+          <b>${this.point.index + 1}: ${visit.date
           .toISOString()
           .slice(0, 10)}</b> <br />
           ${xtitle}: ${x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />
           Percentile: ${getCentile(zscore)}%`;
-      },
+      }
     },
     series: [
       getSeries(
@@ -147,28 +147,28 @@ const getPlotConfig = (
         labels.SD3_4,
         deviations.SD4_SD3,
         colors.SD3_4,
-        true,
+        true
       ),
       getSeries(
         'arearange',
         labels.SD2_3,
         deviations.SD3_SD2,
         colors.SD2_3,
-        true,
+        true
       ),
       getSeries(
         'arearange',
         labels.SD1_2,
         deviations.SD2_SD1,
         colors.SD1_2,
-        true,
+        true
       ),
       getSeries(
         'arearange',
         labels.SD0_1,
         deviations.SD1_nSD1,
         colors.SD0_1,
-        true,
+        true
       ),
       getSeries('arearange', labels.SD1_2, deviations.nSD1_nSD2, colors.SD1_2),
       getSeries('arearange', labels.SD2_3, deviations.nSD2_nSD3, colors.SD2_3),
@@ -189,20 +189,20 @@ const getPlotConfig = (
       {
         data: patientLine,
         marker: {
-          symbol: 'circle',
+          symbol: 'circle'
         },
         color: 'black',
         lineWidth: 3,
-        name: 'Patient',
-      },
+        name: 'Patient'
+      }
     ],
     legend: {
       align: 'left',
       verticalAlign: 'top',
       x: 50,
       floating: true,
-      layout: 'vertical',
-    },
+      layout: 'vertical'
+    }
   };
 };
 

@@ -11,7 +11,7 @@ class CirclePage extends React.Component {
     selectedVisit: this.props.visits.length - 1,
     plotType: null,
     displayType: 'zscore', // TODO
-    showMultiple: false,
+    showMultiple: false
   };
 
   setVisit = selectedVisit => {
@@ -33,7 +33,7 @@ class CirclePage extends React.Component {
   togglePlot = plotType => this.setState({ plotType });
 
   render() {
-    const { visits, patientInfo, toggleConfig, config } = this.props;
+    const { visits, patient, toggleConfig, config } = this.props;
     const { selectedVisit, plotType, displayType, showMultiple } = this.state;
 
     const visit = visits[selectedVisit];
@@ -49,11 +49,13 @@ class CirclePage extends React.Component {
           setDisplayType={this.setDisplayType}
           setShowMultiple={this.setShowMultiple}
           selectedVisit={selectedVisit}
-          patientInfo={patientInfo}
+          patient={patient}
           showMultiple={showMultiple}
         />
       );
     }
+
+    console.log(visit);
 
     return (
       <div>
@@ -69,7 +71,7 @@ class CirclePage extends React.Component {
           style={{
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
           <Circle
@@ -129,14 +131,14 @@ class CirclePage extends React.Component {
 CirclePage.propTypes = {
   visits: PropTypes.arrayOf(PropTypes.object),
   toggleConfig: PropTypes.func.isRequired,
-  patientInfo: PropTypes.object.isRequired,
+  patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string]),
-  ).isRequired,
+    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
+  ).isRequired
 };
 
 CirclePage.defaultProps = {
-  visits: [],
+  visits: []
 };
 
 export default CirclePage;
