@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactHighcharts from 'react-highcharts';
 import HighchartsMore from 'highcharts-more';
 import HighchartsExporting from 'highcharts-exporting';
+import Select from 'react-select';
 import HighchartsOfflineExporting from 'highcharts-offline-exporting';
 
 import { getIndicatorConfig, getPlotConfig } from '../../functions';
@@ -25,8 +26,9 @@ const PlotPage = ({
   showMultiple
 }) => {
   const indicatorConfig = getIndicatorConfig(
-    patient.gender === 'Female',
-    plotType
+    patient.gender,
+    plotType,
+    displayType
   );
 
   const plotConfig = getPlotConfig(
@@ -45,23 +47,24 @@ const PlotPage = ({
       <button
         onClick={() => togglePlot(null)}
         className="btn btn-primary small-horizontal-spacing"
-        style={{ float: 'right' }}
       >
         Return
       </button>
 
-      <button
-        onClick={setShowMultiple}
-        className="btn btn-primary small-horizontal-spacing"
-        style={{ float: 'right' }}
-      >
-        Dropdown (set display)
-      </button>
+      <Select
+        name="display-select"
+        value={displayType}
+        onChange={setDisplayType}
+        simpleValue
+        options={[
+          { value: 'zscore', label: 'Z-score' },
+          { value: 'percentile', label: 'Percentile' }
+        ]}
+      />
 
       <button
         onClick={setShowMultiple}
         className="btn btn-primary small-horizontal-spacing"
-        style={{ float: 'right' }}
       >
         Dropdown (multiple)
       </button>
