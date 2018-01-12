@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import ReactHighcharts from 'react-highcharts';
 import HighchartsMore from 'highcharts-more';
 import HighchartsExporting from 'highcharts-exporting';
+import HighchartsOfflineExporting from 'highcharts-offline-exporting';
 
 import { getIndicatorConfig, getPlotConfig } from '../../functions';
 
 HighchartsMore(ReactHighcharts.Highcharts);
 HighchartsExporting(ReactHighcharts.Highcharts);
+HighchartsOfflineExporting(ReactHighcharts.Highcharts);
 
 const PlotPage = ({
   config,

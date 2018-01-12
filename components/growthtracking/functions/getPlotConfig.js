@@ -48,7 +48,7 @@ const getPlotConfig = (
           y: 10
         }
       },
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
       /*
       events: {
         load() {
@@ -73,6 +73,10 @@ const getPlotConfig = (
         },
       },
       */
+
+      exporting: {
+        fallbackToExportServer: false
+      }
     },
     credits: false,
     plotOptions: {

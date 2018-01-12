@@ -2691,6 +2691,10 @@ highcharts-more@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/highcharts-more/-/highcharts-more-0.1.2.tgz#38c2e386569ec79c8bd97fd68b384c5ea512efac"
 
+highcharts-offline-exporting@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/highcharts-offline-exporting/-/highcharts-offline-exporting-0.1.2.tgz#99790dc111cc3c5592964feed2c2b672bf17438c"
+
 highcharts@^6.0.0:
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-6.0.4.tgz#bb6956de2fbe24fa4b6141be7ceadc052ca2abf9"
