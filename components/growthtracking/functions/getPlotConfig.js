@@ -137,6 +137,10 @@ const getPlotConfig = (
         },
       },
       */
+
+      exporting: {
+        fallbackToExportServer: false
+      }
     },
     credits: false,
     plotOptions: {
