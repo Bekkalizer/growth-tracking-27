@@ -127,6 +127,7 @@ class App extends React.Component {
       .filter(event => event.completedDate)
       .sort((a, b) => a.eventDate > b.eventDate)
       .map((event, index) => {
+        console.log(event);
         const date = new Date(event.eventDate);
         const age =
           event.dataValues.find(val => val.dataElement === 'WeCHX2qGTPy')
@@ -159,7 +160,8 @@ class App extends React.Component {
           wfa: rawWfa === null ? null : Math.round(rawWfa * 100) / 100,
           lfa: rawLfa === null ? null : Math.round(rawLfa * 100) / 100,
           bfa: rawBfa === null ? null : Math.round(rawBfa * 100) / 100,
-          acfa: rawAcfa === null ? null : Math.round(rawAcfa * 100) / 100
+          acfa: rawAcfa === null ? null : Math.round(rawAcfa * 100) / 100,
+          completedBy: event.completedBy
         };
       });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { VisitInfo, VisitSlider, Circle } from './components';
+import { VisitList, Circle } from './components';
 import ConfigButton from '../ConfigButton.jsx';
 import PlotPage from '../PlotPage';
 
@@ -61,11 +61,18 @@ class CirclePage extends React.Component {
       <div>
         <ConfigButton toggleConfig={toggleConfig} />
 
-        <VisitInfo visit={visit} />
+        <VisitList setVisit={this.setVisit} visits={visits} visit={visit} />
 
-        <VisitSlider setVisit={this.setVisit} visits={visits} />
-
-        <hr />
+        <div
+          style={{
+            fontSize: 20,
+            paddingLeft: 24,
+            paddingTop: 24,
+            paddingBottom: 24
+          }}
+        >
+          Visit: {visit.date.toISOString().slice(0, 10)}
+        </div>
 
         <div
           style={{

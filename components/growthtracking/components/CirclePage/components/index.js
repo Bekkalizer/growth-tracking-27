@@ -1,5 +1,4 @@
-import VisitInfo from './VisitInfo.jsx';
-import VisitSlider from './VisitSlider.jsx';
+import VisitList from './VisitList.jsx';
 import Circle from './Circle';
 
-export { VisitInfo, VisitSlider, Circle };
+export { VisitList, Circle };
