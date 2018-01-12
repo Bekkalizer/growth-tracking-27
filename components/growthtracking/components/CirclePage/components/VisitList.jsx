@@ -56,7 +56,7 @@ class VisitList extends React.Component {
   toggleHover = index => this.setState({ hovered: index });
 
   render() {
-    const { visit, visits, setVisit } = this.props;
+    const { visit, visits, setVisit, predictedVisit } = this.props;
 
     return (
       <div>
@@ -107,7 +107,7 @@ class VisitList extends React.Component {
 
         <div
           style={{
-            maxHeight: 240,
+            maxHeight: 216,
             overflow: 'auto'
           }}
         >
@@ -136,6 +136,23 @@ class VisitList extends React.Component {
                   <Td style={{ paddingRight: 24 }}>{v.muac}</Td>
                 </Tr>
               ))}
+              {predictedVisit && 
+              <Tr
+                index={predictedVisit.index}
+                onClick={() => setVisit(predictedVisit.index)}
+                toggleHover={() => this.toggleHover(predictedVisit.index)}
+                hovered={this.state.hovered === predictedVisit.index}
+                selected={visit.index === predictedVisit.index}
+              >
+                <Td style={{ paddingLeft: 24 }}>
+                  {predictedVisit.date.toISOString().slice(0, 10)} (Predicted)
+                </Td>
+                <Td>{predictedVisit.completedBy}</Td>
+                <Td>{predictedVisit.weight}</Td>
+                <Td>{predictedVisit.height}</Td>
+                <Td style={{ paddingRight: 24 }}>{predictedVisit.muac}</Td>
+              </Tr>
+              }
             </tbody>
           </table>
         </div>
@@ -146,6 +163,7 @@ class VisitList extends React.Component {
 
 VisitList.propTypes = {
   visit: PropTypes.object.isRequired,
+  predictedVisit: PropTypes.object.isRequired,
   visits: PropTypes.arrayOf(PropTypes.object).isRequired,
   setVisit: PropTypes.func.isRequired
 };

@@ -36,7 +36,7 @@ const PlotPage = ({
     config,
     visits,
     predictedVisit,
-    visits[selectedVisit],
+    selectedVisit,
     plotType,
     displayType,
     showMultiple
@@ -81,13 +81,13 @@ const PlotPage = ({
 PlotPage.propTypes = {
   config: PropTypes.object.isRequired,
   visits: PropTypes.array.isRequired,
-  predictedVisit: PropTypes.array.isRequired,
+  predictedVisit: PropTypes.object.isRequired,
   togglePlot: PropTypes.func.isRequired,
   setShowMultiple: PropTypes.func.isRequired,
   setDisplayType: PropTypes.func.isRequired,
   displayType: PropTypes.string.isRequired,
   plotType: PropTypes.string.isRequired,
-  selectedVisit: PropTypes.number.isRequired,
+  selectedVisit: PropTypes.object.isRequired,
   patient: PropTypes.object.isRequired,
   showMultiple: PropTypes.bool.isRequired
 };

@@ -8,24 +8,21 @@ import PlotPage from '../PlotPage';
 class CirclePage extends React.Component {
   state = {
     // Defaults to the most recent visit
-    selectedVisit: this.props.visits.length - 1,
+    selectedVisit: this.props.visits[this.props.visits.length - 1],
     plotType: null,
-    displayType: 'zscore', // TODO
+    displayType: 'zscore',
     showMultiple: false
   };
 
   setVisit = selectedVisit => {
-    this.setState({ selectedVisit });
-    /*
-    if (visit >= Object.values(this.props.visits).length) {
-      this.setState({ visit: this.props.nextVisit });
+    if (selectedVisit >= Object.values(this.props.visits).length) {
+      this.setState({ selectedVisit: this.props.predictedVisit });
     } else {
-      this.setState({ visit: this.props.visits[visit] });
+      this.setState({ selectedVisit: this.props.visits[selectedVisit] });
     }
-    */
   };
 
-  setDisplayType = displayType => this.setState({ displayType });
+  setDisplayType = displayType => this.setState({ displayType: displayType.value });
 
   setShowMultiple = () =>
     this.setState(state => ({ showMultiple: !state.showMultiple }));
@@ -42,7 +39,7 @@ class CirclePage extends React.Component {
     } = this.props;
     const { selectedVisit, plotType, displayType, showMultiple } = this.state;
 
-    const visit = visits[selectedVisit];
+    const visit = selectedVisit;
 
     if (visit && plotType) {
       return (
@@ -62,13 +59,16 @@ class CirclePage extends React.Component {
       );
     }
 
-    console.log(visit);
-
     return (
       <div>
         <ConfigButton toggleConfig={toggleConfig} />
 
-        <VisitList setVisit={this.setVisit} visits={visits} visit={visit} />
+        <VisitList
+          setVisit={this.setVisit}
+          visits={visits}
+          visit={visit}
+          predictedVisit={predictedVisit}
+        />
 
         <div
           style={{
@@ -78,7 +78,7 @@ class CirclePage extends React.Component {
             paddingBottom: 24
           }}
         >
-          Visit: {visit.date.toISOString().slice(0, 10)}
+          Visit: {visit.date.toISOString().slice(0, 10)} {visit.predicted && '(Predicted)'}
         </div>
 
         <div
@@ -113,27 +113,9 @@ class CirclePage extends React.Component {
             config={config}
           />
           <Circle
-            onClick={() => this.togglePlot('hcfa')}
-            label="HC-for-age"
-            zscore={visit.hcfa}
-            config={config}
-          />
-          <Circle
             onClick={() => this.togglePlot('acfa')}
             label="MUAC-for-age"
             zscore={visit.acfa}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('tsfa')}
-            label="TSF-for-age"
-            zscore={visit.tsfa}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('ssfa')}
-            label="SSF-for-age"
-            zscore={visit.ssfa}
             config={config}
           />
         </div>
@@ -144,7 +126,7 @@ class CirclePage extends React.Component {
 
 CirclePage.propTypes = {
   visits: PropTypes.arrayOf(PropTypes.object),
-  predictedVisit: PropTypes.arrayOf(PropTypes.object),
+  predictedVisit: PropTypes.object.isRequired,
   toggleConfig: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
@@ -153,8 +135,7 @@ CirclePage.propTypes = {
 };
 
 CirclePage.defaultProps = {
-  visits: [],
-  predictedVisit: []
+  visits: []
 };
 
 export default CirclePage;

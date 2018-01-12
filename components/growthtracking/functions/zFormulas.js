@@ -29,8 +29,8 @@ const getWeightForLength = (female, weight, height) => {
   const maxheight = Math.round((lowheight + 0.5) * 2) / 2;
 
   const lowlms = female
-    ? centileSets.wflGirls[lowheight]
-    : centileSets.wflBoys[lowheight];
+    ? centileSets.wflGirls[lowheight.toFixed(1)]
+    : centileSets.wflBoys[lowheight.toFixed(1)];
   const highlms = female
     ? centileSets.wflGirls[maxheight]
     : centileSets.wflBoys[maxheight];
@@ -60,7 +60,7 @@ const getAgeBasedLms = (dataset, age) =>
           }
           return acc;
         },
-        { low: null, high: null },
+        { low: null, high: null }
       );
 
 const getAgeBasedZscore = (dataset, measurement, age) => {
@@ -138,5 +138,5 @@ export {
   getHCForAge,
   getMUACForAge,
   getTSForAge,
-  getSSForAge,
+  getSSForAge
 };

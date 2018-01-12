@@ -1,80 +1,69 @@
-import { sdSets } from '../datasets';
+import { sdSets, centileSets } from '../datasets';
 
-const indicatorConfigs = female => ({
+const indicatorConfigs = (female, displayType) => ({
   wfl: {
     title: 'Weight-for-length',
     xtitle: 'Height (cm)',
     ytitle: 'Weight (kg)',
-    dataSet: female ? sdSets.wflGirlsSd : sdSets.wflBoysSd,
+    dataSet:
+      displayType === 'zscore'
+        ? female ? sdSets.wflGirlsSd : sdSets.wflBoysSd
+        : female ? centileSets.wflGirls : centileSets.wflBoys,
     measurement1: 'height', // replace string with corresponding data value string from config
-    measurement2: 'weight', // replace string with corresponding data value string from config
+    measurement2: 'weight' // replace string with corresponding data value string from config
   },
   wfa: {
     title: 'Weight-for-age',
     xtitle: 'Age (months)',
     ytitle: 'Weight (kg)',
-    dataSet: female ? sdSets.wfaGirlsSd : sdSets.wfaBoysSd,
+    dataSet:
+      displayType === 'zscore'
+        ? female ? sdSets.wfaGirlsSd : sdSets.wfaBoysSd
+        : female ? centileSets.wfaGirls : centileSets.wfaBoys,
     ageBased: true,
     measurement1: 'age', // replace string with corresponding data value string from config
-    measurement2: 'weight', // replace string with corresponding data value string from config
+    measurement2: 'weight' // replace string with corresponding data value string from config
   },
   lfa: {
     title: 'Length-for-age',
     xtitle: 'Age (months)',
     ytitle: 'Height (cm)',
-    dataSet: female ? sdSets.lhfaGirlsSd : sdSets.lhfaBoysSd,
+    dataSet:
+      displayType === 'zscore'
+        ? female ? sdSets.lhfaGirlsSd : sdSets.lhfaBoysSd
+        : female ? centileSets.lhfaGirls : centileSets.lhfaBoys,
     ageBased: true,
     measurement1: 'age', // replace string with corresponding data value string from config
-    measurement2: 'height', // replace string with corresponding data value string from config
+    measurement2: 'height' // replace string with corresponding data value string from config
   },
   bfa: {
     title: 'BMI-for-age',
     xtitle: 'Age (months)',
     ytitle: 'BMI',
-    dataSet: female ? sdSets.bfaGirlsSd : sdSets.bfaBoysSd,
+
+    dataSet:
+      displayType === 'zscore'
+        ? female ? sdSets.bfaGirlsSd : sdSets.bfaBoysSd
+        : female ? centileSets.bfaGirls : centileSets.bfaBoys,
     ageBased: true,
     measurement1: 'age', // replace string with corresponding data value string from config
-    measurement2: 'bmi', // replace string with corresponding data value string from config
+    measurement2: 'bmi' // replace string with corresponding data value string from config
   },
   acfa: {
     title: 'MUAC-for-age',
     xtitle: 'Age (months)',
     ytitle: 'MUAC',
-    dataSet: female ? sdSets.acfaGirlsSd : sdSets.acfaBoysSd,
+    dataSet:
+      displayType === 'zscore'
+        ? female ? sdSets.acfaGirlsSd : sdSets.acfaBoysSd
+        : female ? centileSets.acfaGirls : centileSets.acfaBoys,
     ageBased: true,
     measurement1: 'age', // replace string with corresponding data value string from config
-    measurement2: 'muac', // replace string with corresponding data value string from config
-  },
-  hcfa: {
-    title: 'HC-for-age',
-    xtitle: 'Age (months)',
-    ytitle: 'Head Circumference (cm)',
-    dataSet: female ? sdSets.hcfaGirlsSd : sdSets.hcfaBoysSd,
-    ageBased: true,
-    measurement1: 'age', // replace string with corresponding data value string from config
-    measurement2: 'hc', // replace string with corresponding data value string from config
-  },
-  tsfa: {
-    title: 'TSF-for-age',
-    xtitle: 'Age (months)',
-    ytitle: 'Triceps skinfold (cm)',
-    dataSet: female ? sdSets.tsfaGirlsSd : sdSets.tsfaBoysSd,
-    ageBased: true,
-    measurement1: 'age', // replace string with corresponding data value string from config
-    measurement2: 'ts', // replace string with corresponding data value string from config
-  },
-  ssfa: {
-    title: 'SSF-for-age',
-    xtitle: 'Age (months)',
-    ytitle: 'Subscapular Skinfold (cm)',
-    dataSet: female ? sdSets.ssfaGirlsSd : sdSets.ssfaBoysSd,
-    ageBased: true,
-    measurement1: 'age', // replace string with corresponding data value string from config
-    measurement2: 'ss', // replace string with corresponding data value string from config
-  },
+    measurement2: 'muac' // replace string with corresponding data value string from config
+  }
 });
 
-const getIndicatorConfig = (female, plotType) =>
-  indicatorConfigs(female)[plotType];
+const getIndicatorConfig = (female, plotType, displayType) =>
+  indicatorConfigs(female, displayType)[plotType];
 
 export default getIndicatorConfig;

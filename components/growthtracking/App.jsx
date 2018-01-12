@@ -27,50 +27,53 @@ class App extends React.Component {
     }
   }
 
-  predictVisit = (visitsInfo, patientGender) => {
-    const lastVisit = visitsInfo[visitsInfo.length - 1];
-    const secondLastVisit = visitsInfo[visitsInfo.length - 2];
+  predictVisit = (visits, gender) => {
+    if (visits.length < 2) return null;
 
-    const predictedAge = lastVisit.age + 30.25;
+    const lastVisit = visits[visits.length - 1];
+    const secondLastVisit = visits[visits.length - 2];
+
+    const age = lastVisit.age + 30.25;
     const ageDiff = (lastVisit.age - secondLastVisit.age) / 30.25;
 
     const tmpWeight = lastVisit.weight * 2 - secondLastVisit.weight;
     const tmpHeight = lastVisit.height * 2 - secondLastVisit.height;
     const tmpMuac = lastVisit.muac * 2 - secondLastVisit.muac;
 
-    const predictedWeight =
+    const weight =
       lastVisit.weight + (tmpWeight - lastVisit.weight) / ageDiff;
-    const predictedHeight =
+    const height =
       lastVisit.height + (tmpHeight - lastVisit.height) / ageDiff;
-    const predictedMuac = lastVisit.muac + (tmpMuac - lastVisit.muac) / ageDiff;
-    const predictedBmi = predictedWeight / (predictedHeight / 100) ** 2;
+    const muac = lastVisit.muac + (tmpMuac - lastVisit.muac) / ageDiff;
+    const bmi = weight / (height / 100) ** 2;
 
     const predWfl = getWeightForLength(
-      patientGender,
-      predictedWeight,
-      predictedHeight
+      gender,
+      weight,
+      height
     );
     const predWfa = getWeightForAge(
-      patientGender,
-      predictedWeight,
-      predictedAge
+      gender,
+      weight,
+      age
     );
     const predLfa = getLengthForAge(
-      patientGender,
-      predictedHeight,
-      predictedAge
+      gender,
+      height,
+      age
     );
-    const predBfa = getBMIForAge(patientGender, predictedBmi, predictedAge);
-    const predAcfa = getMUACForAge(patientGender, predictedMuac, predictedAge);
+    const predBfa = getBMIForAge(gender, bmi, age);
+    const predAcfa = getMUACForAge(gender, muac, age);
 
     return {
+      predicted: true,
       index: lastVisit.index + 1,
-      date: predictedAge,
-      age: predictedAge,
-      weight: predictedWeight,
-      height: predictedHeight,
-      muac: predictedMuac,
-      bmi: predictedBmi,
+      date: new Date(new Date(lastVisit.date).setDate(lastVisit.date.getDate() + 30.25)),
+      age,
+      weight,
+      height,
+      muac,
+      bmi,
       wfl: predWfl === null ? null : Math.round(predWfl * 100) / 100,
       wfa: predWfa === null ? null : Math.round(predWfa * 100) / 100,
       lfa: predLfa === null ? null : Math.round(predLfa * 100) / 100,
@@ -190,10 +193,7 @@ class App extends React.Component {
 
     console.log('visits:', visits);
 
-    const predictedVisit = [
-      visits[visits.length - 1],
-      this.predictVisit(visits, patient.gender)
-    ];
+    const predictedVisit = this.predictVisit(visits, patient.gender);
     console.log('predicted:', predictedVisit);
 
     return (
