@@ -208,63 +208,7 @@ const getPlotConfig = (
           Percentile: ${getCentile(zscore)}%`;
       }
     },
-    /*series: [
-      getSeries(
-        'arearange',
-        labels.SD3_4,
-        deviations.SD4_SD3,
-        colors.SD3_4,
-        true
-      ),
-      getSeries(
-        'arearange',
-        labels.SD2_3,
-        deviations.SD3_SD2,
-        colors.SD2_3,
-        true
-      ),
-      getSeries(
-        'arearange',
-        labels.SD1_2,
-        deviations.SD2_SD1,
-        colors.SD1_2,
-        true
-      ),
-      getSeries(
-        'arearange',
-        labels.SD0_1,
-        deviations.SD1_nSD1,
-        colors.SD0_1,
-        true
-      ),
-      getSeries('arearange', labels.SD1_2, deviations.nSD1_nSD2, colors.SD1_2),
-      getSeries('arearange', labels.SD2_3, deviations.nSD2_nSD3, colors.SD2_3),
-      getSeries('arearange', labels.SD3_4, deviations.nSD3_nSD4, colors.SD3_4),
-      getSeries('line', 'Median', deviations.SD0, colors.SD3_4, true, false),
-
-      {
-        data: predictedLine,
-        marker: {
-          symbol: 'circle'
-        },
-        color: 'black',
-        lineWidth: 3,
-        name: 'Predicted',
-        dashStyle: 'shortdot'
-      },
-
-      {
-        data: patientLine,
-        marker: {
-          symbol: 'circle'
-        },
-        color: 'black',
-        lineWidth: 3,
-        name: 'Patient'
-      }
-    ],*/
-      },
-    },
+    
     series: getDataSeries(displayType, deviations, colors, patientLine, predictedLine),
     legend: {
       align: 'left',
