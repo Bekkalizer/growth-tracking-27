@@ -141,7 +141,6 @@ class App extends React.Component {
     };
     console.log('patient:', patient);
 
-    // filter identical event dates?
     const visits = events
       .reduce((acc, val) => {
         if (!val.completedDate) return acc;
@@ -191,7 +190,6 @@ class App extends React.Component {
 
     console.log('visits:', visits);
 
-    // TODO: Re-add predicted visit
     const predictedVisit = [
       visits[visits.length - 1],
       this.predictVisit(visits, patient.gender)

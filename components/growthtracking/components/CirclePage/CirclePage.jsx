@@ -144,7 +144,7 @@ class CirclePage extends React.Component {
 
 CirclePage.propTypes = {
   visits: PropTypes.arrayOf(PropTypes.object),
-  predictedVisit: PropTypes.array.isRequired,
+  predictedVisit: PropTypes.arrayOf(PropTypes.object),
   toggleConfig: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
@@ -153,7 +153,8 @@ CirclePage.propTypes = {
 };
 
 CirclePage.defaultProps = {
-  visits: []
+  visits: [],
+  predictedVisit: []
 };
 
 export default CirclePage;
