@@ -8,7 +8,7 @@ import {
   getWeightForAge,
   getLengthForAge,
   getBMIForAge,
-  getMUACForAge
+  getMUACForAge,
 } from './functions';
 import { defaultConfig, validateConfig } from './datasets/defaultConfig';
 
@@ -16,8 +16,8 @@ class App extends React.Component {
   state = {
     showConfig: false,
     config: {
-      ...this.props.initialConfig
-    }
+      ...this.props.initialConfig,
+    },
   };
 
   componentWillMount() {
@@ -66,7 +66,7 @@ class App extends React.Component {
     this.props.updateConfig('growthTracker', 'config', config);
 
     this.setState({
-      config
+      config,
     });
   };
 
@@ -83,7 +83,7 @@ class App extends React.Component {
 
     styleElement.sheet.insertRule(
       keyframesStyle,
-      styleElement.sheet.cssRules.length
+      styleElement.sheet.cssRules.length,
     );
   };
 
@@ -95,7 +95,7 @@ class App extends React.Component {
     const { config } = this.state;
 
     this.addAnimation(
-      config.animation.radius || defaultConfig.animation.radius
+      config.animation.radius || defaultConfig.animation.radius,
     );
 
     if (events.length === 0) {
@@ -108,17 +108,17 @@ class App extends React.Component {
 
     const patient = {
       firstname: trackedEntity.attributes.find(
-        attr => attr.attribute === 'kim8r9m1oGE'
+        attr => attr.attribute === 'kim8r9m1oGE',
       ).value,
       lastname: trackedEntity.attributes.find(
-        attr => attr.attribute === 'blDEf5Ld0fA'
+        attr => attr.attribute === 'blDEf5Ld0fA',
       ).value,
       gender:
         trackedEntity.attributes.find(attr => attr.attribute === 'uMSSNRDVcXS')
           .value === 'Female',
       birthdate: trackedEntity.attributes.find(
-        attr => attr.attribute === 'yj8BaYdkTA6'
-      ).value
+        attr => attr.attribute === 'yj8BaYdkTA6',
+      ).value,
     };
     console.log('patient:', patient);
 
@@ -133,13 +133,13 @@ class App extends React.Component {
           event.dataValues.find(val => val.dataElement === 'WeCHX2qGTPy')
             .value * 30.25;
         const muac = Number(
-          event.dataValues.find(val => val.dataElement === 'ySphlmZ7fKG').value
+          event.dataValues.find(val => val.dataElement === 'ySphlmZ7fKG').value,
         );
         const weight = Number(
-          event.dataValues.find(val => val.dataElement === 'KHyKhpRfVRS').value
+          event.dataValues.find(val => val.dataElement === 'KHyKhpRfVRS').value,
         );
         const height = Number(
-          event.dataValues.find(val => val.dataElement === 'VCYJkaP96KZ').value
+          event.dataValues.find(val => val.dataElement === 'VCYJkaP96KZ').value,
         );
 
         const bmi = weight / (height / 100) ** 2;
@@ -161,7 +161,7 @@ class App extends React.Component {
           lfa: rawLfa === null ? null : Math.round(rawLfa * 100) / 100,
           bfa: rawBfa === null ? null : Math.round(rawBfa * 100) / 100,
           acfa: rawAcfa === null ? null : Math.round(rawAcfa * 100) / 100,
-          completedBy: event.completedBy
+          completedBy: event.completedBy,
         };
       });
 
@@ -198,8 +198,8 @@ App.propTypes = {
   trackedEntity: PropTypes.object.isRequired,
   updateConfig: PropTypes.func.isRequired,
   initialConfig: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
-  ).isRequired
+    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string]),
+  ).isRequired,
 };
 
 export default App;

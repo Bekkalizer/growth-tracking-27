@@ -10,8 +10,8 @@ class CirclePage extends React.Component {
     // Defaults to the most recent visit
     selectedVisit: this.props.visits.length - 1,
     plotType: null,
-    displayType: 'zscore', // TODO
-    showMultiple: false
+    displayType: 'percentile', // TODO
+    showMultiple: false,
   };
 
   setVisit = selectedVisit => {
@@ -25,7 +25,9 @@ class CirclePage extends React.Component {
     */
   };
 
-  setDisplayType = displayType => this.setState({ displayType });
+  setDisplayType = displayType => {
+    this.setState({ displayType: displayType.value });
+  };
 
   setShowMultiple = () =>
     this.setState(state => ({ showMultiple: !state.showMultiple }));
@@ -68,7 +70,7 @@ class CirclePage extends React.Component {
             fontSize: 20,
             paddingLeft: 24,
             paddingTop: 24,
-            paddingBottom: 24
+            paddingBottom: 24,
           }}
         >
           Visit: {visit.date.toISOString().slice(0, 10)}
@@ -78,7 +80,7 @@ class CirclePage extends React.Component {
           style={{
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
           <Circle
@@ -106,27 +108,9 @@ class CirclePage extends React.Component {
             config={config}
           />
           <Circle
-            onClick={() => this.togglePlot('hcfa')}
-            label="HC-for-age"
-            zscore={visit.hcfa}
-            config={config}
-          />
-          <Circle
             onClick={() => this.togglePlot('acfa')}
             label="MUAC-for-age"
             zscore={visit.acfa}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('tsfa')}
-            label="TSF-for-age"
-            zscore={visit.tsfa}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('ssfa')}
-            label="SSF-for-age"
-            zscore={visit.ssfa}
             config={config}
           />
         </div>
@@ -140,12 +124,12 @@ CirclePage.propTypes = {
   toggleConfig: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
-  ).isRequired
+    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string]),
+  ).isRequired,
 };
 
 CirclePage.defaultProps = {
-  visits: []
+  visits: [],
 };
 
 export default CirclePage;
