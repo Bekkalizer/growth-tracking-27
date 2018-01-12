@@ -4,6 +4,7 @@ const getPlotConfig = (
   indicatorConfig,
   appConfig,
   visits,
+  predictedVisit,
   selectedVisit,
   plotType,
   displayType,
@@ -27,12 +28,10 @@ const getPlotConfig = (
     ? visits.map(visit => [visit[measurement1], visit[measurement2]])
     : [[selectedVisit[measurement1], selectedVisit[measurement2]]];
 
-  /*
-  const predictedLine = predicted.map(visit => [
-    visit[config.measurement1],
-    visit[config.measurement2],
+  const predictedLine = predictedVisit.map(visit => [
+    visit[measurement1],
+    visit[measurement2]
   ]);
-  */
 
   const formatDivisor = ageBased ? 30.25 : 1;
 
@@ -178,18 +177,18 @@ const getPlotConfig = (
       getSeries('arearange', labels.SD2_3, deviations.nSD2_nSD3, colors.SD2_3),
       getSeries('arearange', labels.SD3_4, deviations.nSD3_nSD4, colors.SD3_4),
       getSeries('line', 'Median', deviations.SD0, colors.SD3_4, true, false),
-      /*
+
       {
         data: predictedLine,
         marker: {
-          symbol: 'circle',
+          symbol: 'circle'
         },
         color: 'black',
         lineWidth: 3,
         name: 'Predicted',
-        dashStyle: 'shortdot',
+        dashStyle: 'shortdot'
       },
-      */
+
       {
         data: patientLine,
         marker: {

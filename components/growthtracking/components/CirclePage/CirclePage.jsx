@@ -33,7 +33,13 @@ class CirclePage extends React.Component {
   togglePlot = plotType => this.setState({ plotType });
 
   render() {
-    const { visits, patient, toggleConfig, config } = this.props;
+    const {
+      visits,
+      predictedVisit,
+      patient,
+      toggleConfig,
+      config
+    } = this.props;
     const { selectedVisit, plotType, displayType, showMultiple } = this.state;
 
     const visit = visits[selectedVisit];
@@ -43,6 +49,7 @@ class CirclePage extends React.Component {
         <PlotPage
           config={config}
           visits={visits}
+          predictedVisit={predictedVisit}
           plotType={plotType}
           displayType={displayType}
           togglePlot={this.togglePlot}
@@ -137,6 +144,7 @@ class CirclePage extends React.Component {
 
 CirclePage.propTypes = {
   visits: PropTypes.arrayOf(PropTypes.object),
+  predictedVisit: PropTypes.array.isRequired,
   toggleConfig: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(

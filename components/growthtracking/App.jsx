@@ -27,38 +27,57 @@ class App extends React.Component {
     }
   }
 
-  /*
-  predictVisit = (visitsInfo, patientinfo, female) => {
+  predictVisit = (visitsInfo, patientGender) => {
     const lastVisit = visitsInfo[visitsInfo.length - 1];
     const secondLastVisit = visitsInfo[visitsInfo.length - 2];
-    const weight = lastVisit.weight * 2 - secondLastVisit.weight;
-    const height = lastVisit.height * 2 - secondLastVisit.height;
-    const bmi = weight / (height / 100) ** 2;
-    const muac = lastVisit.muac * 2 - secondLastVisit.muac;
-    const visitDate = new Date(
-      lastVisit.visitDate.getTime() * 2 - secondLastVisit.visitDate.getTime(),
+
+    const predictedAge = lastVisit.age + 30.25;
+    const ageDiff = (lastVisit.age - secondLastVisit.age) / 30.25;
+
+    const tmpWeight = lastVisit.weight * 2 - secondLastVisit.weight;
+    const tmpHeight = lastVisit.height * 2 - secondLastVisit.height;
+    const tmpMuac = lastVisit.muac * 2 - secondLastVisit.muac;
+
+    const predictedWeight =
+      lastVisit.weight + (tmpWeight - lastVisit.weight) / ageDiff;
+    const predictedHeight =
+      lastVisit.height + (tmpHeight - lastVisit.height) / ageDiff;
+    const predictedMuac = lastVisit.muac + (tmpMuac - lastVisit.muac) / ageDiff;
+    const predictedBmi = predictedWeight / (predictedHeight / 100) ** 2;
+
+    const predWfl = getWeightForLength(
+      patientGender,
+      predictedWeight,
+      predictedHeight
     );
-    const age =
-      (visitDate -
-        new Date(
-          patientinfo.year_of_birth,
-          patientinfo.month_of_birth,
-          patientinfo.date_of_birth,
-        )) /
-      (1000 * 3600 * 24);
+    const predWfa = getWeightForAge(
+      patientGender,
+      predictedWeight,
+      predictedAge
+    );
+    const predLfa = getLengthForAge(
+      patientGender,
+      predictedHeight,
+      predictedAge
+    );
+    const predBfa = getBMIForAge(patientGender, predictedBmi, predictedAge);
+    const predAcfa = getMUACForAge(patientGender, predictedMuac, predictedAge);
 
-    const nextVisit = this.getVisitInfo(female, {
-      visitDate,
-      weight,
-      height,
-      muac,
-      bmi,
-      age,
-    });
-
-    return [lastVisit, nextVisit];
+    return {
+      index: lastVisit.index + 1,
+      date: predictedAge,
+      age: predictedAge,
+      weight: predictedWeight,
+      height: predictedHeight,
+      muac: predictedMuac,
+      bmi: predictedBmi,
+      wfl: predWfl === null ? null : Math.round(predWfl * 100) / 100,
+      wfa: predWfa === null ? null : Math.round(predWfa * 100) / 100,
+      lfa: predLfa === null ? null : Math.round(predLfa * 100) / 100,
+      bfa: predBfa === null ? null : Math.round(predBfa * 100) / 100,
+      acfa: predAcfa === null ? null : Math.round(predAcfa * 100) / 100
+    };
   };
-  */
 
   saveConfig = config => {
     // TODO: Prevent save if no change
@@ -124,7 +143,12 @@ class App extends React.Component {
 
     // filter identical event dates?
     const visits = events
-      .filter(event => event.completedDate)
+      .reduce((acc, val) => {
+        if (!val.completedDate) return acc;
+        if (acc.find(v => v.eventDate === val.eventDate)) return acc;
+        acc.push(val);
+        return acc;
+      }, [])
       .sort((a, b) => a.eventDate > b.eventDate)
       .map((event, index) => {
         console.log(event);
@@ -168,13 +192,18 @@ class App extends React.Component {
     console.log('visits:', visits);
 
     // TODO: Re-add predicted visit
-    // const predictedVisit = this.predictVisit(visits, female);
+    const predictedVisit = [
+      visits[visits.length - 1],
+      this.predictVisit(visits, patient.gender)
+    ];
+    console.log('predicted:', predictedVisit);
 
     return (
       <div>
         {!this.state.showConfig && (
           <CirclePage
             visits={visits}
+            predictedVisit={predictedVisit}
             patient={patient}
             toggleConfig={this.toggleConfig}
             config={config}
