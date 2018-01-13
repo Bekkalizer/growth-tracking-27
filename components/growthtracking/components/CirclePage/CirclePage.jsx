@@ -11,7 +11,7 @@ class CirclePage extends React.Component {
     selectedVisit: this.props.visits[this.props.visits.length - 1],
     plotType: null,
     displayType: 'zscore',
-    showMultiple: false
+    showMultiple: 'single'
   };
 
   setVisit = selectedVisit => {
@@ -22,10 +22,18 @@ class CirclePage extends React.Component {
     }
   };
 
-  setDisplayType = displayType => this.setState({ displayType: displayType.value });
+  setDisplayType = event => this.setState({ displayType: event.target.value });
 
-  setShowMultiple = () =>
-    this.setState(state => ({ showMultiple: !state.showMultiple }));
+  setPlotType = event => {
+    if (!event) {
+      this.setState({ plotType: null });
+      return;
+    }
+    this.setState({ plotType: event.target.value });
+  };
+
+  setShowMultiple = event =>
+    this.setState({ showMultiple: event.target.value });
 
   togglePlot = plotType => this.setState({ plotType });
 
@@ -48,8 +56,8 @@ class CirclePage extends React.Component {
           visits={visits}
           predictedVisit={predictedVisit}
           plotType={plotType}
+          setPlotType={this.setPlotType}
           displayType={displayType}
-          togglePlot={this.togglePlot}
           setDisplayType={this.setDisplayType}
           setShowMultiple={this.setShowMultiple}
           selectedVisit={selectedVisit}
@@ -78,7 +86,8 @@ class CirclePage extends React.Component {
             paddingBottom: 24
           }}
         >
-          Visit: {visit.date.toISOString().slice(0, 10)} {visit.predicted && '(Predicted)'}
+          Visit: {visit.date.toISOString().slice(0, 10)}{' '}
+          {visit.predicted && '(Predicted)'}
         </div>
 
         <div
@@ -101,7 +110,7 @@ class CirclePage extends React.Component {
             config={config}
           />
           <Circle
-            onClick={() => this.togglePlot('lfa')}
+            onClick={() => this.togglePlot('lhfa')}
             label="Length-for-age"
             zscore={visit.lfa}
             config={config}

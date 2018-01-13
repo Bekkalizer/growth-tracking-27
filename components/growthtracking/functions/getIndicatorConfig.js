@@ -24,7 +24,7 @@ const indicatorConfigs = (female, displayType) => ({
     measurement1: 'age', // replace string with corresponding data value string from config
     measurement2: 'weight' // replace string with corresponding data value string from config
   },
-  lfa: {
+  lhfa: {
     title: 'Length-for-age',
     xtitle: 'Age (months)',
     ytitle: 'Height (cm)',

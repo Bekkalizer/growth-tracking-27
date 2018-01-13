@@ -40,8 +40,7 @@
     "react": "^16.1.1",
     "react-color": "^2.13.8",
     "react-dom": "^16.1.1",
-    "react-highcharts": "^15.0.0",
-    "react-select": "^2.0.0-alpha.1"
+    "react-highcharts": "^15.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.8.0",

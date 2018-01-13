@@ -23,7 +23,7 @@ const getDataSeries = (
         marker: {
           symbol: 'circle'
         },
-        color: 'black',
+        color: '#428bca',
         lineWidth: 3,
         name: 'Predicted',
         dashStyle: 'shortdot'
@@ -34,7 +34,7 @@ const getDataSeries = (
         marker: {
           symbol: 'circle'
         },
-        color: 'black',
+        color: '#428bca',
         lineWidth: 3,
         name: 'Patient'
       }
@@ -52,7 +52,7 @@ const getDataSeries = (
       marker: {
         symbol: 'circle'
       },
-      color: 'black',
+      color: '#428bca',
       lineWidth: 3,
       name: 'Predicted',
       dashStyle: 'shortdot'
@@ -63,7 +63,7 @@ const getDataSeries = (
       marker: {
         symbol: 'circle'
       },
-      color: 'black',
+      color: '#428bca',
       lineWidth: 3,
       name: 'Patient'
     }
@@ -94,9 +94,10 @@ const getPlotConfig = (
 
   const deviations = getDeviations(dataSet, displayType);
 
-  const patientLine = showMultiple
-    ? visits.map(visit => [visit[measurement1], visit[measurement2]])
-    : [[selectedVisit[measurement1], selectedVisit[measurement2]]];
+  const patientLine =
+    showMultiple === 'multiple'
+      ? visits.map(visit => [visit[measurement1], visit[measurement2]])
+      : [[selectedVisit[measurement1], selectedVisit[measurement2]]];
 
   const predictedLine = [
     [
@@ -163,7 +164,7 @@ const getPlotConfig = (
       }
     },
     xAxis: {
-      gridLineWidth: 1,
+      gridLineWidth: 0,
       tickInterval: formatDivisor,
       labels: {
         formatter() {
@@ -176,6 +177,7 @@ const getPlotConfig = (
       }
     },
     yAxis: {
+      gridLineWidth: 0,
       maxPadding: 0,
       tickInterval: 1,
       title: {
@@ -217,7 +219,13 @@ const getPlotConfig = (
           Percentile: ${getCentile(zscore)}%`;
       }
     },
-    series: getDataSeries(displayType, deviations, colors, patientLine, predictedLine),
+    series: getDataSeries(
+      displayType,
+      deviations,
+      colors,
+      patientLine,
+      predictedLine
+    ),
     legend: {
       align: 'left',
       verticalAlign: 'top',

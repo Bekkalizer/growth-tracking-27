@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ReactHighcharts from 'react-highcharts';
 import HighchartsMore from 'highcharts-more';
 import HighchartsExporting from 'highcharts-exporting';
-import Select from 'react-select';
 import HighchartsOfflineExporting from 'highcharts-offline-exporting';
 
 import { getIndicatorConfig, getPlotConfig } from '../../functions';
@@ -17,8 +16,8 @@ const PlotPage = ({
   visits,
   predictedVisit,
   plotType,
+  setPlotType,
   displayType,
-  togglePlot,
   setDisplayType,
   setShowMultiple,
   selectedVisit,
@@ -44,34 +43,103 @@ const PlotPage = ({
 
   return (
     <div>
-      <button
-        onClick={() => togglePlot(null)}
-        className="btn btn-primary small-horizontal-spacing"
-      >
-        Return
-      </button>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div
+          style={{
+            fontSize: '1.3rem',
+            margin: 6
+          }}
+        >
+          Graph
+        </div>
 
-      <Select
-        name="display-select"
-        value={displayType}
-        onChange={setDisplayType}
-        simpleValue
-        options={[
-          { value: 'zscore', label: 'Z-score' },
-          { value: 'percentile', label: 'Percentile' }
-        ]}
-      />
+        <select
+          style={{
+            display: 'inline-block',
+            padding: '6px 12px',
+            marginBottom: 0,
+            fontSize: '14px',
+            fontWeight: 'normal',
+            lineHeight: '1.428571429',
+            textAlign: 'center',
+            whiteSpace: 'nowrap',
+            verticalAlign: 'middle',
+            cursor: 'pointer',
+            borderRadius: 4,
+            userSelect: 'none'
+          }}
+          value={plotType}
+          onChange={setPlotType}
+        >
+          <option value="wfl">Weight-for-length</option>
+          <option value="wfa">Weight-for-age</option>
+          <option value="lhfa">Length-for-age</option>
+          <option value="bfa">BMI-for-age</option>
+          <option value="acfa">MUAC-for-age</option>
+        </select>
 
-      <button
-        onClick={setShowMultiple}
-        className="btn btn-primary small-horizontal-spacing"
-      >
-        Dropdown (multiple)
-      </button>
+        <select
+          style={{
+            marginLeft: 20,
+            marginRight: 20,
+            display: 'inline-block',
+            padding: '6px 12px',
+            marginBottom: 0,
+            fontSize: '14px',
+            fontWeight: 'normal',
+            lineHeight: '1.428571429',
+            textAlign: 'center',
+            whiteSpace: 'nowrap',
+            verticalAlign: 'middle',
+            cursor: 'pointer',
+            borderRadius: 4,
+            userSelect: 'none'
+          }}
+          value={displayType}
+          onChange={setDisplayType}
+        >
+          <option value="zscore">Z-score</option>
+          <option value="percentile">Percentile</option>
+        </select>
+        <div
+          style={{
+            fontSize: '1.3rem',
+            margin: 6
+          }}
+        >
+          Show
+        </div>
+        <select
+          style={{
+            display: 'inline-block',
+            padding: '6px 12px',
+            marginBottom: 0,
+            fontSize: '14px',
+            fontWeight: 'normal',
+            lineHeight: '1.428571429',
+            textAlign: 'center',
+            whiteSpace: 'nowrap',
+            verticalAlign: 'middle',
+            cursor: 'pointer',
+            borderRadius: 4,
+            userSelect: 'none'
+          }}
+          value={showMultiple}
+          onChange={setShowMultiple}
+        >
+          <option value="single">Single-point</option>
+          <option value="multiple">Multiple points</option>
+        </select>
 
-      <div className="title small-vertical-spacing">
-        Dropdown {indicatorConfig.title}
+        <button
+          onClick={() => setPlotType(null)}
+          className="btn btn-primary small-horizontal-spacing"
+        >
+          Return
+        </button>
       </div>
+
+      <hr />
 
       <ReactHighcharts config={plotConfig} />
     </div>
@@ -82,14 +150,14 @@ PlotPage.propTypes = {
   config: PropTypes.object.isRequired,
   visits: PropTypes.array.isRequired,
   predictedVisit: PropTypes.object.isRequired,
-  togglePlot: PropTypes.func.isRequired,
+  setPlotType: PropTypes.func.isRequired,
   setShowMultiple: PropTypes.func.isRequired,
   setDisplayType: PropTypes.func.isRequired,
   displayType: PropTypes.string.isRequired,
   plotType: PropTypes.string.isRequired,
   selectedVisit: PropTypes.object.isRequired,
   patient: PropTypes.object.isRequired,
-  showMultiple: PropTypes.bool.isRequired
+  showMultiple: PropTypes.string.isRequired
 };
 
 export default PlotPage;
