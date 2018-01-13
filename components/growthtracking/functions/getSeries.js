@@ -4,21 +4,21 @@ const getSeries = (
   data,
   color,
   showInLegend = false,
-  visible = true,
+  visible = true
 ) => ({
   type,
   name: label,
   data,
-  lineWidth: 1,
+  lineWidth: 2,
   color,
   animation: false,
   fillOpacity: 1,
   enableMouseTracking: false,
   marker: {
-    radius: 0,
+    radius: 0
   },
   showInLegend,
-  visible,
+  visible
 });
 
 export default getSeries;

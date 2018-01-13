@@ -112,7 +112,7 @@ class CirclePage extends React.Component {
           <Circle
             onClick={() => this.togglePlot('lhfa')}
             label="Length-for-age"
-            zscore={visit.lfa}
+            zscore={visit.lhfa}
             config={config}
           />
           <Circle

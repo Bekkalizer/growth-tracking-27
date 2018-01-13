@@ -40,35 +40,23 @@ class App extends React.Component {
     const tmpHeight = lastVisit.height * 2 - secondLastVisit.height;
     const tmpMuac = lastVisit.muac * 2 - secondLastVisit.muac;
 
-    const weight =
-      lastVisit.weight + (tmpWeight - lastVisit.weight) / ageDiff;
-    const height =
-      lastVisit.height + (tmpHeight - lastVisit.height) / ageDiff;
+    const weight = lastVisit.weight + (tmpWeight - lastVisit.weight) / ageDiff;
+    const height = lastVisit.height + (tmpHeight - lastVisit.height) / ageDiff;
     const muac = lastVisit.muac + (tmpMuac - lastVisit.muac) / ageDiff;
     const bmi = weight / (height / 100) ** 2;
 
-    const predWfl = getWeightForLength(
-      gender,
-      weight,
-      height
-    );
-    const predWfa = getWeightForAge(
-      gender,
-      weight,
-      age
-    );
-    const predLfa = getLengthForAge(
-      gender,
-      height,
-      age
-    );
+    const predWfl = getWeightForLength(gender, weight, height);
+    const predWfa = getWeightForAge(gender, weight, age);
+    const predLhfa = getLengthForAge(gender, height, age);
     const predBfa = getBMIForAge(gender, bmi, age);
     const predAcfa = getMUACForAge(gender, muac, age);
 
     return {
       predicted: true,
       index: lastVisit.index + 1,
-      date: new Date(new Date(lastVisit.date).setDate(lastVisit.date.getDate() + 30.25)),
+      date: new Date(
+        new Date(lastVisit.date).setDate(lastVisit.date.getDate() + 30.25)
+      ),
       age,
       weight,
       height,
@@ -76,7 +64,7 @@ class App extends React.Component {
       bmi,
       wfl: predWfl === null ? null : Math.round(predWfl * 100) / 100,
       wfa: predWfa === null ? null : Math.round(predWfa * 100) / 100,
-      lfa: predLfa === null ? null : Math.round(predLfa * 100) / 100,
+      lhfa: predLhfa === null ? null : Math.round(predLhfa * 100) / 100,
       bfa: predBfa === null ? null : Math.round(predBfa * 100) / 100,
       acfa: predAcfa === null ? null : Math.round(predAcfa * 100) / 100
     };
@@ -172,7 +160,7 @@ class App extends React.Component {
 
         const rawWfl = getWeightForLength(patient.gender, weight, height);
         const rawWfa = getWeightForAge(patient.gender, weight, age);
-        const rawLfa = getLengthForAge(patient.gender, height, age);
+        const rawLhfa = getLengthForAge(patient.gender, height, age);
         const rawBfa = getBMIForAge(patient.gender, bmi, age);
         const rawAcfa = getMUACForAge(patient.gender, muac, age);
         return {
@@ -184,7 +172,7 @@ class App extends React.Component {
           height,
           wfl: rawWfl === null ? null : Math.round(rawWfl * 100) / 100,
           wfa: rawWfa === null ? null : Math.round(rawWfa * 100) / 100,
-          lfa: rawLfa === null ? null : Math.round(rawLfa * 100) / 100,
+          lhfa: rawLhfa === null ? null : Math.round(rawLhfa * 100) / 100,
           bfa: rawBfa === null ? null : Math.round(rawBfa * 100) / 100,
           acfa: rawAcfa === null ? null : Math.round(rawAcfa * 100) / 100,
           completedBy: event.completedBy
