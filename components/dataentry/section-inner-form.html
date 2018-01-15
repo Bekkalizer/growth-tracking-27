@@ -334,7 +334,7 @@
                 {{'unsupported_value_type' | translate}}:  {{prStDes[de.id].dataElement.valueType}}
             </div>
         </div>
-        <div ng-messages="innerForm.foo.$error" ng-if="interacted(innerForm.foo, outerDataEntryForm)" class="required" ng-messages-include="../dhis-web-commons/angular-forms/error-messages.html">
+        <div ng-messages="innerForm.foo.$error" ng-if="interacted(innerForm.foo, outerDataEntryForm)" class="required" ng-messages-include="https://hmis.moh.gov.rw/fbf/dhis-web-commons/angular-forms/error-messages.html">
             <!-- URL error message is temporarily placed here. Should be placed with the other error messages in the core. -->
             <span ng-message="urlValidator">{{'url_error' | translate}}</span>
         </div>

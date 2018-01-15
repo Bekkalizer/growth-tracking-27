@@ -210,9 +210,9 @@ trackerCapture.controller('DataEntryController',
         popupWin.document.open();
         popupWin.document.write('<html>\n\
                                         <head>\n\
-                                                <link rel="stylesheet" type="text/css" href="../dhis-web-commons/bootstrap/css/bootstrap.min.css" />\n\
-                                                <link type="text/css" rel="stylesheet" href="../dhis-web-commons/javascripts/angular/plugins/select.css">\n\
-                                                <link type="text/css" rel="stylesheet" href="../dhis-web-commons/javascripts/angular/plugins/select2.css">\n\
+                                                <link rel="stylesheet" type="text/css" href="https://hmis.moh.gov.rw/fbf/dhis-web-commons/bootstrap/css/bootstrap.min.css" />\n\
+                                                <link type="text/css" rel="stylesheet" href="https://hmis.moh.gov.rw/fbf/dhis-web-commons/javascripts/angular/plugins/select.css">\n\
+                                                <link type="text/css" rel="stylesheet" href="https://hmis.moh.gov.rw/fbf/dhis-web-commons/javascripts/angular/plugins/select2.css">\n\
                                                 <link rel="stylesheet" type="text/css" href="styles/style.css" />\n\
                                                 <link rel="stylesheet" type="text/css" href="styles/print.css" />\n\
                                         </head>\n\
@@ -2954,7 +2954,7 @@ trackerCapture.controller('DataEntryController',
             return;
         }
         
-        $window.open('../api/events/files?eventUid=' + eventUid +'&dataElementUid=' + dataElementUid, '_blank', '');
+        $window.open('https://hmis.moh.gov.rw/fbf/api/events/files?eventUid=' + eventUid +'&dataElementUid=' + dataElementUid, '_blank', '');
         if(e){
             e.stopPropagation();
             e.preventDefault();

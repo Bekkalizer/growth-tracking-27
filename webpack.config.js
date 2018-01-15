@@ -81,7 +81,7 @@ module.exports = {
             ]),
             scripts: makeScriptTags([
                 'core/tracker-capture.js',
-                '../main.js',
+                '../app.js',
             ]),
         }),
     ],
@@ -101,7 +101,7 @@ module.exports = {
                 { path: '/dhis-web-core-resource/**', target: dhisConfig.baseUrl, bypass:bypass, changeOrigin: true },
                 { path: '/icons/**', target: dhisConfig.baseUrl, bypass:bypass, changeOrigin: true },
                 { path: '/images/**', target: dhisConfig.baseUrl, bypass:bypass, changeOrigin: true },
-                { path: '/main.js', target: dhisConfig.baseUrl, bypass:bypass, changeOrigin: true },
+                { path: '/app.js', target: dhisConfig.baseUrl, bypass:bypass, changeOrigin: true },
         ],
     },
 };

@@ -181,8 +181,8 @@ trackerCapture.controller('TeiReportController',
         popupWin.document.open();
         popupWin.document.write('<html>\n\
                                         <head>\n\
-                                                <link rel="stylesheet" type="text/css" href="../dhis-web-commons/bootstrap/css/bootstrap.min.css" />\n\
-                                                <link rel="stylesheet" type="text/css" href="../dhis-web-commons/css/print.css" />\n\
+                                                <link rel="stylesheet" type="text/css" href="https://hmis.moh.gov.rw/fbf/dhis-web-commons/bootstrap/css/bootstrap.min.css" />\n\
+                                                <link rel="stylesheet" type="text/css" href="https://hmis.moh.gov.rw/fbf/dhis-web-commons/css/print.css" />\n\
                                                 <link rel="stylesheet" type="text/css" href="styles/style.css" />\n\
                                                 <link rel="stylesheet" type="text/css" href="styles/print.css" />\n\
                                         </head>\n\
