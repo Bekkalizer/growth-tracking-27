@@ -3,14 +3,13 @@ import { getCentile, getDeviations, getSeries } from '../functions';
 const getDataSeries = (displayType, deviations, colors) => {
   if (displayType === 'zscore') {
     return [
-      getSeries('arearange', 'SD 3-4', deviations.SD4_SD3, colors.SD3_4, true),
-      getSeries('arearange', 'SD 2-3', deviations.SD3_SD2, colors.SD2_3, true),
-      getSeries('arearange', 'SD 1-2', deviations.SD2_SD1, colors.SD1_2, true),
-      getSeries('arearange', 'SD 0-1', deviations.SD1_nSD1, colors.SD0_1),
-      getSeries('arearange', 'SD 1-2', deviations.nSD1_nSD2, colors.SD1_2),
-      getSeries('arearange', 'SD 2-3', deviations.nSD2_nSD3, colors.SD2_3),
-      getSeries('arearange', 'SD 3-4', deviations.nSD3_nSD4, colors.SD3_4),
-      getSeries('line', 'Median', deviations.SD0, colors.SD3_4, true)
+      getSeries('line', '+3 SD', deviations.SD3, colors.SD3_4, true),
+      getSeries('line', '+2 SD', deviations.SD2, colors.SD2_3, true),
+      getSeries('line', '+1 SD', deviations.SD1, colors.SD1_2, true),
+      getSeries('line', 'Median', deviations.SD0, colors.SD0_1, true),
+      getSeries('line', '-1 SD', deviations.SD1neg, colors.SD1_2, true),
+      getSeries('line', '-2 SD', deviations.SD2neg, colors.SD2_3, true),
+      getSeries('line', '-3 SD', deviations.SD3neg, colors.SD3_4, true)
     ];
   }
   return [
