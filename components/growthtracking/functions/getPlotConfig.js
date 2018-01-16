@@ -101,7 +101,8 @@ const getPlotConfig = (
 
   return {
     title: {
-      text: ''
+      text: indicatorConfig.title,
+      x: -140
     },
     chart: {
       zoomType: 'xy',
@@ -122,7 +123,13 @@ const getPlotConfig = (
         enabled: false
       },
       series: {
-        animation: false
+        animation: false,
+        // Prevent user from disabling series through clicking the legend
+        events: {
+          legendItemClick(e) {
+            e.preventDefault();
+          }
+        }
       }
     },
     xAxis: {
@@ -212,7 +219,7 @@ const getPlotConfig = (
           const zscore = predictedVisit[plotType];
           return `
           <b>Predicted visit</b> <br />
-          ${xtitle}: ${x} <br />
+          ${xtitle}: ${ageBased ? predictedVisit.ageInMonths : x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />
           Percentile: ${getCentile(zscore)}%`;
@@ -227,7 +234,7 @@ const getPlotConfig = (
                       1}: ${visit.eventDate
             .toISOString()
             .slice(0, 10)}</b> <br />
-                    ${xtitle}: ${x} <br />
+                    ${xtitle}: ${ageBased ? visit.ageInMonths : x} <br />
                     ${ytitle}: ${y} <br />
                     Z-score: ${zscore} <br />
                     Percentile: ${getCentile(zscore)}%`;
@@ -238,7 +245,7 @@ const getPlotConfig = (
         return `
           <b>${selectedVisit.index +
             1}: ${selectedVisit.eventDate.toISOString().slice(0, 10)}</b> <br />
-          ${xtitle}: ${x} <br />
+          ${xtitle}: ${ageBased ? selectedVisit.ageInMonths : x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />
           Percentile: ${getCentile(zscore)}%`;
@@ -268,14 +275,30 @@ const getPlotConfig = (
         name: 'Patient',
         zIndex: 5,
         showInLegend: false
+      },
+      // This is an empty series that adds the plotline to the legend.
+      {
+        color: '#FF0000',
+        name: `Age: ${selectedVisit.ageInMonths} months, ${
+          displayType === 'zscore'
+            ? `Z-score: ${selectedVisit[plotType]}`
+            : `Percentile: ${getCentile(selectedVisit[plotType])}%`
+        }`,
+        dashStyle: 'shortdash',
+        marker: {
+          enabled: false
+        }
       }
     ],
     legend: {
       align: 'left',
       verticalAlign: 'top',
-      x: 50,
+      x: 70,
+      y: 30,
       floating: true,
-      layout: 'vertical'
+      layout: 'vertical',
+      borderColor: '#c3c3c3',
+      borderWidth: 1
     }
   };
 };

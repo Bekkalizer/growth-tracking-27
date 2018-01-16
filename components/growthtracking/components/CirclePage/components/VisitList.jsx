@@ -78,6 +78,7 @@ class VisitList extends React.Component {
               >
                 Date
               </Th>
+              <Th>Observer</Th>
               <Th
                 style={{
                   textAlign: 'right'
@@ -85,7 +86,6 @@ class VisitList extends React.Component {
               >
                 Age (months)
               </Th>
-              <Th>Observer</Th>
               <Th
                 style={{
                   textAlign: 'right'
@@ -141,8 +141,8 @@ class VisitList extends React.Component {
                   <Td style={{ paddingLeft: 24 }}>
                     {v.eventDate.toISOString().slice(0, 10)}
                   </Td>
-                  <Td>{v.ageInMonths}</Td>
                   <Td>{v.completedBy}</Td>
+                  <Td>{v.ageInMonths}</Td>
                   <Td>{v.weight}</Td>
                   <Td>{v.height}</Td>
                   <Td style={{ paddingRight: 24 }}>{v.muac}</Td>
@@ -160,8 +160,8 @@ class VisitList extends React.Component {
                     {predictedVisit.eventDate.toISOString().slice(0, 10)}{' '}
                     (Predicted)
                   </Td>
+                  <Td>-</Td>
                   <Td>{predictedVisit.ageInMonths}</Td>
-                  <Td>{predictedVisit.completedBy}</Td>
                   <Td>{predictedVisit.weight}</Td>
                   <Td>{predictedVisit.height}</Td>
                   <Td style={{ paddingRight: 24 }}>{predictedVisit.muac}</Td>
