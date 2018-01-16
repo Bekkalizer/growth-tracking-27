@@ -50,7 +50,7 @@ const PlotPage = ({
             margin: 6
           }}
         >
-          Graph
+          Plot
         </div>
 
         <select

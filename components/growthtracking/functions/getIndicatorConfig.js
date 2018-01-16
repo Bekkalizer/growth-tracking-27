@@ -21,7 +21,7 @@ const indicatorConfigs = (female, displayType) => ({
         ? female ? sdSets.wfaGirlsSd : sdSets.wfaBoysSd
         : female ? centileSets.wfaGirls : centileSets.wfaBoys,
     ageBased: true,
-    measurement1: 'age', // replace string with corresponding data value string from config
+    measurement1: 'ageInDays', // replace string with corresponding data value string from config
     measurement2: 'weight' // replace string with corresponding data value string from config
   },
   lhfa: {
@@ -33,7 +33,7 @@ const indicatorConfigs = (female, displayType) => ({
         ? female ? sdSets.lhfaGirlsSd : sdSets.lhfaBoysSd
         : female ? centileSets.lhfaGirls : centileSets.lhfaBoys,
     ageBased: true,
-    measurement1: 'age', // replace string with corresponding data value string from config
+    measurement1: 'ageInDays', // replace string with corresponding data value string from config
     measurement2: 'height' // replace string with corresponding data value string from config
   },
   bfa: {
@@ -46,7 +46,7 @@ const indicatorConfigs = (female, displayType) => ({
         ? female ? sdSets.bfaGirlsSd : sdSets.bfaBoysSd
         : female ? centileSets.bfaGirls : centileSets.bfaBoys,
     ageBased: true,
-    measurement1: 'age', // replace string with corresponding data value string from config
+    measurement1: 'ageInDays', // replace string with corresponding data value string from config
     measurement2: 'bmi' // replace string with corresponding data value string from config
   },
   acfa: {
@@ -58,7 +58,7 @@ const indicatorConfigs = (female, displayType) => ({
         ? female ? sdSets.acfaGirlsSd : sdSets.acfaBoysSd
         : female ? centileSets.acfaGirls : centileSets.acfaBoys,
     ageBased: true,
-    measurement1: 'age', // replace string with corresponding data value string from config
+    measurement1: 'ageInDays', // replace string with corresponding data value string from config
     measurement2: 'muac' // replace string with corresponding data value string from config
   }
 });

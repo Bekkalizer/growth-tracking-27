@@ -33,31 +33,54 @@ class App extends React.Component {
     const lastVisit = visits[visits.length - 1];
     const secondLastVisit = visits[visits.length - 2];
 
-    const age = lastVisit.age + 30.25;
-    const ageDiff = (lastVisit.age - secondLastVisit.age) / 30.25;
+    // Using +30 days instead of +30.25. When adding just one month to the previous total, +30 is enough accuracy.
+    const ageInDays = lastVisit.ageInDays + 30;
 
-    const tmpWeight = lastVisit.weight * 2 - secondLastVisit.weight;
-    const tmpHeight = lastVisit.height * 2 - secondLastVisit.height;
-    const tmpMuac = lastVisit.muac * 2 - secondLastVisit.muac;
+    // If predicted age is higher than 726, we have passed the 24 month threshold for the child and should not predict any future visits
+    if (ageInDays > 726) return null;
 
-    const weight = lastVisit.weight + (tmpWeight - lastVisit.weight) / ageDiff;
-    const height = lastVisit.height + (tmpHeight - lastVisit.height) / ageDiff;
-    const muac = lastVisit.muac + (tmpMuac - lastVisit.muac) / ageDiff;
+    const ageInMonths = lastVisit.ageInMonths + 1;
+    const ageDiff = (lastVisit.ageInDays - secondLastVisit.ageInDays) / 30.25;
+
+    const weight =
+      Math.round(
+        (lastVisit.weight +
+          (lastVisit.weight * 2 - secondLastVisit.weight - lastVisit.weight) /
+            ageDiff) *
+          10
+      ) / 10;
+    const height =
+      Math.round(
+        (lastVisit.height +
+          (lastVisit.height * 2 - secondLastVisit.height - lastVisit.height) /
+            ageDiff) *
+          10
+      ) / 10;
+    const muac =
+      Math.round(
+        (lastVisit.muac +
+          (lastVisit.muac * 2 - secondLastVisit.muac - lastVisit.muac) /
+            ageDiff) *
+          10
+      ) / 10;
     const bmi = weight / (height / 100) ** 2;
 
     const predWfl = getWeightForLength(gender, weight, height);
-    const predWfa = getWeightForAge(gender, weight, age);
-    const predLhfa = getLengthForAge(gender, height, age);
-    const predBfa = getBMIForAge(gender, bmi, age);
-    const predAcfa = getMUACForAge(gender, muac, age);
+    const predWfa = getWeightForAge(gender, weight, ageInDays);
+    const predLhfa = getLengthForAge(gender, height, ageInDays);
+    const predBfa = getBMIForAge(gender, bmi, ageInDays);
+    const predAcfa = getMUACForAge(gender, muac, ageInDays);
 
     return {
       predicted: true,
       index: lastVisit.index + 1,
-      date: new Date(
-        new Date(lastVisit.date).setDate(lastVisit.date.getDate() + 30.25)
+      eventDate: new Date(
+        new Date(lastVisit.eventDate).setDate(
+          lastVisit.eventDate.getDate() + 30.25
+        )
       ),
-      age,
+      ageInDays,
+      ageInMonths,
       weight,
       height,
       muac,
@@ -132,20 +155,31 @@ class App extends React.Component {
     };
     console.log('patient:', patient);
 
-    const visits = events
-      .reduce((acc, val) => {
-        if (!val.completedDate) return acc;
-        if (acc.find(v => v.eventDate === val.eventDate)) return acc;
-        acc.push(val);
-        return acc;
-      }, [])
+    const completedEvents = events.reduce((acc, val) => {
+      if (!val.completedDate) return acc;
+      if (acc.find(v => v.eventDate === val.eventDate)) return acc;
+      acc.push(val);
+      return acc;
+    }, []);
+
+    if (completedEvents.length === 0) {
+      return (
+        <div className="alert alert-warning">No completed events found.</div>
+      );
+    }
+
+    const visits = completedEvents
       .sort((a, b) => a.eventDate > b.eventDate)
       .map((event, index) => {
         console.log(event);
-        const date = new Date(event.eventDate);
-        const age =
-          event.dataValues.find(val => val.dataElement === 'WeCHX2qGTPy')
-            .value * 30.25;
+        const eventDate = new Date(event.eventDate);
+        const ageInMonths = Number(
+          event.dataValues.find(val => val.dataElement === 'WeCHX2qGTPy').value
+        );
+        // Get a more accurate age by calculating age based on birth date and event date
+        const ageInDays = Math.floor(
+          (Date.parse(eventDate) - Date.parse(patient.birthdate)) / 86400000
+        );
         const muac = Number(
           event.dataValues.find(val => val.dataElement === 'ySphlmZ7fKG').value
         );
@@ -159,17 +193,19 @@ class App extends React.Component {
         const bmi = weight / (height / 100) ** 2;
 
         const rawWfl = getWeightForLength(patient.gender, weight, height);
-        const rawWfa = getWeightForAge(patient.gender, weight, age);
-        const rawLhfa = getLengthForAge(patient.gender, height, age);
-        const rawBfa = getBMIForAge(patient.gender, bmi, age);
-        const rawAcfa = getMUACForAge(patient.gender, muac, age);
+        const rawWfa = getWeightForAge(patient.gender, weight, ageInDays);
+        const rawLhfa = getLengthForAge(patient.gender, height, ageInDays);
+        const rawBfa = getBMIForAge(patient.gender, bmi, ageInDays);
+        const rawAcfa = getMUACForAge(patient.gender, muac, ageInDays);
         return {
           index,
-          date,
-          age,
+          eventDate,
+          ageInMonths,
+          ageInDays,
           muac,
           weight,
           height,
+          bmi,
           wfl: rawWfl === null ? null : Math.round(rawWfl * 100) / 100,
           wfa: rawWfa === null ? null : Math.round(rawWfa * 100) / 100,
           lhfa: rawLhfa === null ? null : Math.round(rawLhfa * 100) / 100,

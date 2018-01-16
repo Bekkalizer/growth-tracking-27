@@ -1,13 +1,5 @@
-const getSeries = (
+const getSeries = (type, data, color) => ({
   type,
-  label,
-  data,
-  color,
-  showInLegend = false,
-  visible = true
-) => ({
-  type,
-  name: label,
   data,
   lineWidth: 2,
   color,
@@ -17,8 +9,7 @@ const getSeries = (
   marker: {
     radius: 0
   },
-  showInLegend,
-  visible
+  showInLegend: false
 });
 
 export default getSeries;

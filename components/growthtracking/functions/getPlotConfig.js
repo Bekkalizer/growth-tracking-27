@@ -3,22 +3,57 @@ import { getCentile, getDeviations, getSeries } from '../functions';
 const getDataSeries = (displayType, deviations, colors) => {
   if (displayType === 'zscore') {
     return [
-      getSeries('arearange', 'SD 3-4', deviations.SD4_SD3, colors.SD3_4, true),
-      getSeries('arearange', 'SD 2-3', deviations.SD3_SD2, colors.SD2_3, true),
-      getSeries('arearange', 'SD 1-2', deviations.SD2_SD1, colors.SD1_2, true),
-      getSeries('arearange', 'SD 0-1', deviations.SD1_nSD1, colors.SD0_1),
-      getSeries('arearange', 'SD 1-2', deviations.nSD1_nSD2, colors.SD1_2),
-      getSeries('arearange', 'SD 2-3', deviations.nSD2_nSD3, colors.SD2_3),
-      getSeries('arearange', 'SD 3-4', deviations.nSD3_nSD4, colors.SD3_4),
-      getSeries('line', 'Median', deviations.SD0, colors.SD3_4, true)
+      getSeries('line', deviations.SD3, colors.SD3_4),
+      getSeries('line', deviations.SD2, colors.SD2_3),
+      getSeries('line', deviations.SD1, colors.SD1_2),
+      getSeries('line', deviations.SD0, colors.SD0_1),
+      getSeries('line', deviations.SD1neg, colors.SD1_2),
+      getSeries('line', deviations.SD2neg, colors.SD2_3),
+      getSeries('line', deviations.SD3neg, colors.SD3_4)
     ];
   }
   return [
-    getSeries('line', '3rd', deviations.P3, colors.SD2_3, true),
-    getSeries('line', '15th', deviations.P15, colors.SD1_2, true),
-    getSeries('line', '50th', deviations.P50, colors.SD0_1, true),
-    getSeries('line', '85th', deviations.P85, colors.SD1_2, true),
-    getSeries('line', '97th', deviations.P97, colors.SD2_3, true)
+    getSeries('line', deviations.P3, colors.SD2_3),
+    getSeries('line', deviations.P15, colors.SD1_2),
+    getSeries('line', deviations.P50, colors.SD0_1),
+    getSeries('line', deviations.P85, colors.SD1_2),
+    getSeries('line', deviations.P97, colors.SD2_3)
+  ];
+};
+
+const getPlotLabel = (label, deviation, color) => ({
+  color: 'white',
+  width: 0,
+  label: {
+    text: label,
+    align: 'right',
+    style: {
+      color,
+      fontWeight: 'bold'
+    }
+  },
+  value: deviation[deviation.length - 1][1],
+  zIndex: 5
+});
+
+const getPlotLabels = (displayType, deviations, colors) => {
+  if (displayType === 'zscore') {
+    return [
+      getPlotLabel('+3 SD', deviations.SD3, colors.SD3_4),
+      getPlotLabel('+2 SD', deviations.SD2, colors.SD2_3),
+      getPlotLabel('+1 SD', deviations.SD1, colors.SD1_2),
+      getPlotLabel('Median', deviations.SD0, colors.SD0_1),
+      getPlotLabel('-1 SD', deviations.SD1neg, colors.SD1_2),
+      getPlotLabel('-2 SD', deviations.SD2neg, colors.SD2_3),
+      getPlotLabel('-3 SD', deviations.SD3neg, colors.SD3_4)
+    ];
+  }
+  return [
+    getPlotLabel('3rd', deviations.P3, colors.SD2_3),
+    getPlotLabel('15th', deviations.P15, colors.SD1_2),
+    getPlotLabel('50th', deviations.P50, colors.SD0_1),
+    getPlotLabel('85th', deviations.P85, colors.SD1_2),
+    getPlotLabel('97th', deviations.P97, colors.SD2_3)
   ];
 };
 
@@ -52,7 +87,7 @@ const getPlotConfig = (
       : [[selectedVisit[measurement1], selectedVisit[measurement2]]];
 
   const predictedLine =
-    showMultiple === 'multiple'
+    showMultiple === 'multiple' && predictedVisit !== null
       ? [
           [
             visits[visits.length - 1][measurement1],
@@ -66,7 +101,8 @@ const getPlotConfig = (
 
   return {
     title: {
-      text: ''
+      text: indicatorConfig.title,
+      x: -140
     },
     chart: {
       zoomType: 'xy',
@@ -87,7 +123,13 @@ const getPlotConfig = (
         enabled: false
       },
       series: {
-        animation: false
+        animation: false,
+        // Prevent user from disabling series through clicking the legend
+        events: {
+          legendItemClick(e) {
+            e.preventDefault();
+          }
+        }
       }
     },
     xAxis: {
@@ -111,6 +153,15 @@ const getPlotConfig = (
           dashStyle: 'shortdash',
           zIndex: 4
         })),
+        predictedVisit && showMultiple === 'multiple'
+          ? {
+              color: '#e3e3e3',
+              width: 1,
+              value: predictedVisit[measurement1],
+              dashStyle: 'shortdash',
+              zIndex: 4
+            }
+          : [],
         {
           color: 'red',
           width: 1,
@@ -136,32 +187,23 @@ const getPlotConfig = (
           dashStyle: 'shortdash',
           zIndex: 4
         })),
+        predictedVisit && showMultiple === 'multiple'
+          ? {
+              color: '#e3e3e3',
+              width: 1,
+              value: predictedVisit[measurement2],
+              dashStyle: 'shortdash',
+              zIndex: 4
+            }
+          : [],
         {
           color: 'red',
           width: 1,
           value: selectedVisit[measurement2],
           dashStyle: 'shortdash',
           zIndex: 4
-        }
-        /* TODO: Add labels to the end of each 
-        {
-          color: 'white',
-          width: 0,
-          label: {
-            text: 'SD 3+',
-            align: 'right',
-            style: {
-              color: colors.SD3_4,
-              fontWeight: 'bold'
-            }
-          },
-          value:
-            (deviations.SD4_SD3[deviations.SD4_SD3.length - 1][1] +
-              deviations.SD4_SD3[deviations.SD4_SD3.length - 1][2] * 2) /
-            3,
-          zIndex: 5
-        }
-        */
+        },
+        ...getPlotLabels(displayType, deviations, colors)
       ]
     },
     tooltip: {
@@ -177,7 +219,7 @@ const getPlotConfig = (
           const zscore = predictedVisit[plotType];
           return `
           <b>Predicted visit</b> <br />
-          ${xtitle}: ${x} <br />
+          ${xtitle}: ${ageBased ? predictedVisit.ageInMonths : x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />
           Percentile: ${getCentile(zscore)}%`;
@@ -188,10 +230,11 @@ const getPlotConfig = (
           const zscore = visit[plotType];
 
           return `
-                    <b>${visit.index + 1}: ${visit.date
+                    <b>${visit.index +
+                      1}: ${visit.eventDate
             .toISOString()
             .slice(0, 10)}</b> <br />
-                    ${xtitle}: ${x} <br />
+                    ${xtitle}: ${ageBased ? visit.ageInMonths : x} <br />
                     ${ytitle}: ${y} <br />
                     Z-score: ${zscore} <br />
                     Percentile: ${getCentile(zscore)}%`;
@@ -201,8 +244,8 @@ const getPlotConfig = (
 
         return `
           <b>${selectedVisit.index +
-            1}: ${selectedVisit.date.toISOString().slice(0, 10)}</b> <br />
-          ${xtitle}: ${x} <br />
+            1}: ${selectedVisit.eventDate.toISOString().slice(0, 10)}</b> <br />
+          ${xtitle}: ${ageBased ? selectedVisit.ageInMonths : x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />
           Percentile: ${getCentile(zscore)}%`;
@@ -219,7 +262,8 @@ const getPlotConfig = (
         lineWidth: 2,
         name: 'Predicted',
         dashStyle: 'shortdot',
-        zIndex: 5
+        zIndex: 5,
+        showInLegend: false
       },
       {
         data: patientLine,
@@ -229,15 +273,32 @@ const getPlotConfig = (
         color: '#428bca',
         lineWidth: 2,
         name: 'Patient',
-        zIndex: 5
+        zIndex: 5,
+        showInLegend: false
+      },
+      // This is an empty series that adds the plotline to the legend.
+      {
+        color: '#FF0000',
+        name: `Age: ${selectedVisit.ageInMonths} months, ${
+          displayType === 'zscore'
+            ? `Z-score: ${selectedVisit[plotType]}`
+            : `Percentile: ${getCentile(selectedVisit[plotType])}%`
+        }`,
+        dashStyle: 'shortdash',
+        marker: {
+          enabled: false
+        }
       }
     ],
     legend: {
       align: 'left',
       verticalAlign: 'top',
-      x: 50,
+      x: 70,
+      y: 30,
       floating: true,
-      layout: 'vertical'
+      layout: 'vertical',
+      borderColor: '#c3c3c3',
+      borderWidth: 1
     }
   };
 };
