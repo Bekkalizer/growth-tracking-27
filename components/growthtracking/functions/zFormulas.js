@@ -104,12 +104,6 @@ const getBMIForAge = (female, bmi, age) => {
   return getAgeBasedZscore(dataset, bmi, age);
 };
 
-const getHCForAge = (female, hc, age) => {
-  const dataset = female ? centileSets.hcfaGirls : centileSets.hcfaBoys;
-
-  return getAgeBasedZscore(dataset, hc, age);
-};
-
 const getMUACForAge = (female, muac, age) => {
   if (age < 91) return null;
 
@@ -118,29 +112,10 @@ const getMUACForAge = (female, muac, age) => {
   return getAgeBasedZscore(dataset, muac, age);
 };
 
-const getTSForAge = (female, ts, age) => {
-  if (age < 91) return null;
-
-  const dataset = female ? centileSets.tsfaGirls : centileSets.tsfaBoys;
-
-  return getAgeBasedZscore(dataset, ts, age);
-};
-
-const getSSForAge = (female, ss, age) => {
-  if (age < 91) return null;
-
-  const dataset = female ? centileSets.ssfaGirls : centileSets.ssfaBoys;
-
-  return getAgeBasedZscore(dataset, ss, age);
-};
-
 export {
   getWeightForLength,
   getWeightForAge,
   getLengthForAge,
   getBMIForAge,
-  getHCForAge,
-  getMUACForAge,
-  getTSForAge,
-  getSSForAge
+  getMUACForAge
 };
