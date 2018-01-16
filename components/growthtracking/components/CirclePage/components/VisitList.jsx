@@ -78,6 +78,13 @@ class VisitList extends React.Component {
               >
                 Date
               </Th>
+              <Th
+                style={{
+                  textAlign: 'right'
+                }}
+              >
+                Age (months)
+              </Th>
               <Th>Observer</Th>
               <Th
                 style={{
@@ -132,8 +139,9 @@ class VisitList extends React.Component {
                   selected={visit.index === v.index}
                 >
                   <Td style={{ paddingLeft: 24 }}>
-                    {v.date.toISOString().slice(0, 10)}
+                    {v.eventDate.toISOString().slice(0, 10)}
                   </Td>
+                  <Td>{v.ageInMonths}</Td>
                   <Td>{v.completedBy}</Td>
                   <Td>{v.weight}</Td>
                   <Td>{v.height}</Td>
@@ -149,8 +157,10 @@ class VisitList extends React.Component {
                   selected={visit.index === predictedVisit.index}
                 >
                   <Td style={{ paddingLeft: 24 }}>
-                    {predictedVisit.date.toISOString().slice(0, 10)} (Predicted)
+                    {predictedVisit.eventDate.toISOString().slice(0, 10)}{' '}
+                    (Predicted)
                   </Td>
+                  <Td>{predictedVisit.ageInMonths}</Td>
                   <Td>{predictedVisit.completedBy}</Td>
                   <Td>{predictedVisit.weight}</Td>
                   <Td>{predictedVisit.height}</Td>
@@ -167,9 +177,13 @@ class VisitList extends React.Component {
 
 VisitList.propTypes = {
   visit: PropTypes.object.isRequired,
-  predictedVisit: PropTypes.object.isRequired,
+  predictedVisit: PropTypes.object,
   visits: PropTypes.arrayOf(PropTypes.object).isRequired,
   setVisit: PropTypes.func.isRequired
+};
+
+VisitList.defaultProps = {
+  predictedVisit: null
 };
 
 export default VisitList;

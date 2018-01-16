@@ -86,7 +86,7 @@ class CirclePage extends React.Component {
             paddingBottom: 24
           }}
         >
-          Visit: {visit.date.toISOString().slice(0, 10)}{' '}
+          Visit: {visit.eventDate.toISOString().slice(0, 10)}{' '}
           {visit.predicted && '(Predicted)'}
         </div>
 
@@ -135,7 +135,7 @@ class CirclePage extends React.Component {
 
 CirclePage.propTypes = {
   visits: PropTypes.arrayOf(PropTypes.object),
-  predictedVisit: PropTypes.object.isRequired,
+  predictedVisit: PropTypes.object,
   toggleConfig: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
@@ -144,7 +144,8 @@ CirclePage.propTypes = {
 };
 
 CirclePage.defaultProps = {
-  visits: []
+  visits: [],
+  predictedVisit: null
 };
 
 export default CirclePage;

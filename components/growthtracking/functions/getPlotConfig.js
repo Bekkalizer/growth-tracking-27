@@ -52,7 +52,7 @@ const getPlotConfig = (
       : [[selectedVisit[measurement1], selectedVisit[measurement2]]];
 
   const predictedLine =
-    showMultiple === 'multiple'
+    showMultiple === 'multiple' && predictedVisit !== null
       ? [
           [
             visits[visits.length - 1][measurement1],
@@ -188,7 +188,8 @@ const getPlotConfig = (
           const zscore = visit[plotType];
 
           return `
-                    <b>${visit.index + 1}: ${visit.date
+                    <b>${visit.index +
+                      1}: ${visit.eventDate
             .toISOString()
             .slice(0, 10)}</b> <br />
                     ${xtitle}: ${x} <br />
@@ -201,7 +202,7 @@ const getPlotConfig = (
 
         return `
           <b>${selectedVisit.index +
-            1}: ${selectedVisit.date.toISOString().slice(0, 10)}</b> <br />
+            1}: ${selectedVisit.eventDate.toISOString().slice(0, 10)}</b> <br />
           ${xtitle}: ${x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />

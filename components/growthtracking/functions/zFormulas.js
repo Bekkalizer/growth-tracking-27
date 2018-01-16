@@ -32,8 +32,8 @@ const getWeightForLength = (female, weight, height) => {
     ? centileSets.wflGirls[lowheight.toFixed(1)]
     : centileSets.wflBoys[lowheight.toFixed(1)];
   const highlms = female
-    ? centileSets.wflGirls[maxheight]
-    : centileSets.wflBoys[maxheight];
+    ? centileSets.wflGirls[maxheight.toFixed(1)]
+    : centileSets.wflBoys[maxheight.toFixed(1)];
 
   // If no data is found, return null;
   if (!lowlms || !highlms) return null;
