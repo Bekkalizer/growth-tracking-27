@@ -132,13 +132,18 @@ class App extends React.Component {
     };
     console.log('patient:', patient);
 
-    const visits = events
-      .reduce((acc, val) => {
-        if (!val.completedDate) return acc;
-        if (acc.find(v => v.eventDate === val.eventDate)) return acc;
-        acc.push(val);
-        return acc;
-      }, [])
+    const completedEvents = events.reduce((acc, val) => {
+      if (!val.completedDate) return acc;
+      if (acc.find(v => v.eventDate === val.eventDate)) return acc;
+      acc.push(val);
+      return acc;
+    }, []);
+
+    if (completedEvents.length === 0) {
+      return <div className="alert alert-warning ng-binding">No completed events found.</div>
+    }
+
+    const visits = completedEvents
       .sort((a, b) => a.eventDate > b.eventDate)
       .map((event, index) => {
         console.log(event);
