@@ -35,6 +35,7 @@ const getWeightForLength = (female, weight, height) => {
     ? centileSets.wflGirls[maxheight]
     : centileSets.wflBoys[maxheight];
 
+  // If no data is found, return null;
   if (!lowlms || !highlms) return null;
 
   const steps = Math.round((height - lowheight) * 10);
@@ -72,6 +73,9 @@ const getAgeBasedZscore = (dataset, measurement, age) => {
 
   const lowlms = dataset[lms.low];
   const highlms = dataset[lms.high];
+
+  // If no data is found, return null
+  if (!lowlms || !highlms) return null;
 
   const steps = age - lms.low;
 

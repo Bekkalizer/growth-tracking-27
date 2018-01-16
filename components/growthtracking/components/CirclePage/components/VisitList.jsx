@@ -108,7 +108,11 @@ class VisitList extends React.Component {
         <div
           style={{
             maxHeight: 216,
-            overflow: 'auto'
+            overflow: 'auto',
+            borderStyle: 'solid',
+            borderLeft: 'none',
+            borderRight: 'none',
+            borderWidth: 1
           }}
         >
           <table
@@ -136,23 +140,23 @@ class VisitList extends React.Component {
                   <Td style={{ paddingRight: 24 }}>{v.muac}</Td>
                 </Tr>
               ))}
-              {predictedVisit && 
-              <Tr
-                index={predictedVisit.index}
-                onClick={() => setVisit(predictedVisit.index)}
-                toggleHover={() => this.toggleHover(predictedVisit.index)}
-                hovered={this.state.hovered === predictedVisit.index}
-                selected={visit.index === predictedVisit.index}
-              >
-                <Td style={{ paddingLeft: 24 }}>
-                  {predictedVisit.date.toISOString().slice(0, 10)} (Predicted)
-                </Td>
-                <Td>{predictedVisit.completedBy}</Td>
-                <Td>{predictedVisit.weight}</Td>
-                <Td>{predictedVisit.height}</Td>
-                <Td style={{ paddingRight: 24 }}>{predictedVisit.muac}</Td>
-              </Tr>
-              }
+              {predictedVisit && (
+                <Tr
+                  index={predictedVisit.index}
+                  onClick={() => setVisit(predictedVisit.index)}
+                  toggleHover={() => this.toggleHover(predictedVisit.index)}
+                  hovered={this.state.hovered === predictedVisit.index}
+                  selected={visit.index === predictedVisit.index}
+                >
+                  <Td style={{ paddingLeft: 24 }}>
+                    {predictedVisit.date.toISOString().slice(0, 10)} (Predicted)
+                  </Td>
+                  <Td>{predictedVisit.completedBy}</Td>
+                  <Td>{predictedVisit.weight}</Td>
+                  <Td>{predictedVisit.height}</Td>
+                  <Td style={{ paddingRight: 24 }}>{predictedVisit.muac}</Td>
+                </Tr>
+              )}
             </tbody>
           </table>
         </div>
