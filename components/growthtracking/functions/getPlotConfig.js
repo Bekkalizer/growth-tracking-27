@@ -3,21 +3,57 @@ import { getCentile, getDeviations, getSeries } from '../functions';
 const getDataSeries = (displayType, deviations, colors) => {
   if (displayType === 'zscore') {
     return [
-      getSeries('line', '+3 SD', deviations.SD3, colors.SD3_4, true),
-      getSeries('line', '+2 SD', deviations.SD2, colors.SD2_3, true),
-      getSeries('line', '+1 SD', deviations.SD1, colors.SD1_2, true),
-      getSeries('line', 'Median', deviations.SD0, colors.SD0_1, true),
-      getSeries('line', '-1 SD', deviations.SD1neg, colors.SD1_2, true),
-      getSeries('line', '-2 SD', deviations.SD2neg, colors.SD2_3, true),
-      getSeries('line', '-3 SD', deviations.SD3neg, colors.SD3_4, true)
+      getSeries('line', deviations.SD3, colors.SD3_4),
+      getSeries('line', deviations.SD2, colors.SD2_3),
+      getSeries('line', deviations.SD1, colors.SD1_2),
+      getSeries('line', deviations.SD0, colors.SD0_1),
+      getSeries('line', deviations.SD1neg, colors.SD1_2),
+      getSeries('line', deviations.SD2neg, colors.SD2_3),
+      getSeries('line', deviations.SD3neg, colors.SD3_4)
     ];
   }
   return [
-    getSeries('line', '3rd', deviations.P3, colors.SD2_3, true),
-    getSeries('line', '15th', deviations.P15, colors.SD1_2, true),
-    getSeries('line', '50th', deviations.P50, colors.SD0_1, true),
-    getSeries('line', '85th', deviations.P85, colors.SD1_2, true),
-    getSeries('line', '97th', deviations.P97, colors.SD2_3, true)
+    getSeries('line', deviations.P3, colors.SD2_3),
+    getSeries('line', deviations.P15, colors.SD1_2),
+    getSeries('line', deviations.P50, colors.SD0_1),
+    getSeries('line', deviations.P85, colors.SD1_2),
+    getSeries('line', deviations.P97, colors.SD2_3)
+  ];
+};
+
+const getPlotLabel = (label, deviation, color) => ({
+  color: 'white',
+  width: 0,
+  label: {
+    text: label,
+    align: 'right',
+    style: {
+      color,
+      fontWeight: 'bold'
+    }
+  },
+  value: deviation[deviation.length - 1][1],
+  zIndex: 5
+});
+
+const getPlotLabels = (displayType, deviations, colors) => {
+  if (displayType === 'zscore') {
+    return [
+      getPlotLabel('+3 SD', deviations.SD3, colors.SD3_4),
+      getPlotLabel('+2 SD', deviations.SD2, colors.SD2_3),
+      getPlotLabel('+1 SD', deviations.SD1, colors.SD1_2),
+      getPlotLabel('Median', deviations.SD0, colors.SD0_1),
+      getPlotLabel('-1 SD', deviations.SD1neg, colors.SD1_2),
+      getPlotLabel('-2 SD', deviations.SD2neg, colors.SD2_3),
+      getPlotLabel('-3 SD', deviations.SD3neg, colors.SD3_4)
+    ];
+  }
+  return [
+    getPlotLabel('3rd', deviations.P3, colors.SD2_3),
+    getPlotLabel('15th', deviations.P15, colors.SD1_2),
+    getPlotLabel('50th', deviations.P50, colors.SD0_1),
+    getPlotLabel('85th', deviations.P85, colors.SD1_2),
+    getPlotLabel('97th', deviations.P97, colors.SD2_3)
   ];
 };
 
@@ -110,6 +146,15 @@ const getPlotConfig = (
           dashStyle: 'shortdash',
           zIndex: 4
         })),
+        predictedVisit && showMultiple === 'multiple'
+          ? {
+              color: '#e3e3e3',
+              width: 1,
+              value: predictedVisit[measurement1],
+              dashStyle: 'shortdash',
+              zIndex: 4
+            }
+          : [],
         {
           color: 'red',
           width: 1,
@@ -135,32 +180,23 @@ const getPlotConfig = (
           dashStyle: 'shortdash',
           zIndex: 4
         })),
+        predictedVisit && showMultiple === 'multiple'
+          ? {
+              color: '#e3e3e3',
+              width: 1,
+              value: predictedVisit[measurement2],
+              dashStyle: 'shortdash',
+              zIndex: 4
+            }
+          : [],
         {
           color: 'red',
           width: 1,
           value: selectedVisit[measurement2],
           dashStyle: 'shortdash',
           zIndex: 4
-        }
-        /* TODO: Add labels to the end of each 
-        {
-          color: 'white',
-          width: 0,
-          label: {
-            text: 'SD 3+',
-            align: 'right',
-            style: {
-              color: colors.SD3_4,
-              fontWeight: 'bold'
-            }
-          },
-          value:
-            (deviations.SD4_SD3[deviations.SD4_SD3.length - 1][1] +
-              deviations.SD4_SD3[deviations.SD4_SD3.length - 1][2] * 2) /
-            3,
-          zIndex: 5
-        }
-        */
+        },
+        ...getPlotLabels(displayType, deviations, colors)
       ]
     },
     tooltip: {
@@ -219,7 +255,8 @@ const getPlotConfig = (
         lineWidth: 2,
         name: 'Predicted',
         dashStyle: 'shortdot',
-        zIndex: 5
+        zIndex: 5,
+        showInLegend: false
       },
       {
         data: patientLine,
@@ -229,7 +266,8 @@ const getPlotConfig = (
         color: '#428bca',
         lineWidth: 2,
         name: 'Patient',
-        zIndex: 5
+        zIndex: 5,
+        showInLegend: false
       }
     ],
     legend: {

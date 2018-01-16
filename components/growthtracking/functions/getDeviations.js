@@ -23,18 +23,18 @@ const getDeviations = (dataSet, displayType) => {
   }
   return Object.entries(dataSet).reduce(
     (acc, value) => ({
-      SD2: [...acc.P3, [Number(value[0]), value[1].P3]],
-      SD1: [...acc.P15, [Number(value[0]), value[1].P15]],
-      SD0: [...acc.P50, [Number(value[0]), value[1].P50]],
-      SD1neg: [...acc.P85, [Number(value[0]), value[1].P85]],
-      SD2neg: [...acc.P97, [Number(value[0]), value[1].P97]]
+      P3: [...acc.P3, [Number(value[0]), value[1].P3]],
+      P15: [...acc.P15, [Number(value[0]), value[1].P15]],
+      P50: [...acc.P50, [Number(value[0]), value[1].P50]],
+      P85: [...acc.P85, [Number(value[0]), value[1].P85]],
+      P97: [...acc.P97, [Number(value[0]), value[1].P97]]
     }),
     {
-      SD2: [],
-      SD1: [],
-      SD0: [],
-      SD1neg: [],
-      SD2neg: []
+      P3: [],
+      P15: [],
+      P50: [],
+      P85: [],
+      P97: []
     }
   );
 };
