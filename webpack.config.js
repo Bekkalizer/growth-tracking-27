@@ -46,7 +46,7 @@ function makeLinkTags(stylesheets) {
 function makeScriptTags(scripts) {
     return function (hash) {
         return scripts
-            .map(script => (`<script src="${script}?_=${hash}"></script>`))
+            .map(script => (`<script src="${script}"></script>`))
             .join(`\n`);
     };
 }
@@ -56,7 +56,7 @@ module.exports = {
     entry: './scripts/index.js',
     output: {
         path: path.join(__dirname, '/build'),
-        filename: 'app-[hash].js'
+        filename: 'app.js'
     },
     module: {
         loaders: [
@@ -81,7 +81,7 @@ module.exports = {
             ]),
             scripts: makeScriptTags([
                 'core/tracker-capture.js',
-                '../app.js',
+                'app.js',
             ]),
         }),
     ],
