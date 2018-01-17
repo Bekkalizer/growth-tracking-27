@@ -257,7 +257,7 @@ const getPlotConfig = (
           const zscore = predictedVisit[plotType];
           return `
           <b>Predicted visit</b> <br />
-          ${xtitle}: ${ageBased ? predictedVisit.ageInMonths : x} <br />
+          ${xtitle}: ${x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />
           Percentile: ${getCentile(zscore)}%`;
@@ -272,7 +272,7 @@ const getPlotConfig = (
                       1}: ${visit.eventDate
             .toISOString()
             .slice(0, 10)}</b> <br />
-                    ${xtitle}: ${ageBased ? visit.ageInMonths : x} <br />
+                    ${xtitle}: ${x} <br />
                     ${ytitle}: ${y} <br />
                     Z-score: ${zscore} <br />
                     Percentile: ${getCentile(zscore)}%`;
@@ -283,7 +283,7 @@ const getPlotConfig = (
         return `
           <b>${selectedVisit.index +
             1}: ${selectedVisit.eventDate.toISOString().slice(0, 10)}</b> <br />
-          ${xtitle}: ${ageBased ? selectedVisit.ageInMonths : x} <br />
+          ${xtitle}: ${x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />
           Percentile: ${getCentile(zscore)}%`;
@@ -293,7 +293,7 @@ const getPlotConfig = (
       // This is an empty series that adds the plotline to the legend.
       {
         color: '#FF0000',
-        name: `Age: ${selectedVisit.ageInMonths} months, ${
+        name: `Age: ${Math.round(selectedVisit.ageInDays / 30.25)} months, ${
           displayType === 'zscore'
             ? `Z-score: ${selectedVisit[plotType]}`
             : `Percentile: ${getCentile(selectedVisit[plotType])}%`

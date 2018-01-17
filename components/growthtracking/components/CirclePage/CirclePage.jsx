@@ -29,7 +29,7 @@ class CirclePage extends React.Component {
 
   setPlotType = event => {
     if (!event) {
-      this.setState({ plotType: null });
+      this.setState({ plotType: null, hovered: null });
       return;
     }
     this.setState({ plotType: event.target.value });
