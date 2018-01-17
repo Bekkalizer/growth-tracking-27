@@ -60,7 +60,7 @@ class VisitList extends React.Component {
 
     return (
       <div>
-        <div style={{ height: 50, fontSize: 20, paddingLeft: 24 }}>Visits</div>
+        <div style={{ height: 50, fontSize: 20, paddingLeft: 24 }}>Completed visits:</div>
 
         <table
           style={{

@@ -86,7 +86,7 @@ class CirclePage extends React.Component {
             paddingBottom: 24
           }}
         >
-          Visit: {visit.eventDate.toISOString().slice(0, 10)}{' '}
+          Showing z-scores for visit {visit.index + 1} on {visit.eventDate.toISOString().slice(0, 10)}{' '}
           {visit.predicted && '(Predicted)'}
         </div>
 
