@@ -11,7 +11,7 @@
         </ul>
     </div>
     
-    <img id="ouwt_loader" src="../images/ajax-loader-bar.gif" alt="{{'in_progress'| translate}}"/>
+    <img id="ouwt_loader" src="https://hmis.moh.gov.rw/fbf/images/ajax-loader-bar.gif" alt="{{'in_progress'| translate}}"/>
     
     <div class="small-horizontal-spacing" ng-if="!treeLoaded">
         {{'loading_tree'| translate}}
@@ -28,7 +28,7 @@
     <form name="outerForm" novalidate>               
         <div ng-include="'components/report/report-form.html'"></div>
     </form>    
-    <img src="../images/ajax-loader-bar.gif" ng-if="!dataReady && reportStarted"/>
+    <img src="https://hmis.moh.gov.rw/fbf/images/ajax-loader-bar.gif" ng-if="!dataReady && reportStarted"/>
     <div ng-if="dataReady">
         <div ng-switch="teiList.length">                    
             <div ng-switch-when="undefined">
