@@ -146,7 +146,7 @@ class VisitList extends React.Component {
                     {v.eventDate.toISOString().slice(0, 10)}
                   </Td>
                   <Td>{v.completedBy}</Td>
-                  <Td>{v.ageInMonths}</Td>
+                  <Td>{Math.round(v.ageInDays / 30.25)}</Td>
                   <Td>{v.weight}</Td>
                   <Td>{v.height}</Td>
                   <Td style={{ paddingRight: 24 }}>{v.muac}</Td>
@@ -165,7 +165,7 @@ class VisitList extends React.Component {
                     (Predicted)
                   </Td>
                   <Td>-</Td>
-                  <Td>{predictedVisit.ageInMonths}</Td>
+                  <Td>{Math.round(predictedVisit.ageInDays / 30.25)}</Td>
                   <Td>{predictedVisit.weight}</Td>
                   <Td>{predictedVisit.height}</Td>
                   <Td style={{ paddingRight: 24 }}>{predictedVisit.muac}</Td>
