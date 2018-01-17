@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Tr = ({ index, onClick, toggleHover, hovered, selected, ...props }) => {
   const getColor = () => {
-    if (selected) return '#F5F5F5';
+    if (selected) return '#928c8c';
     if (hovered) return '#EEEEEE';
     return 'white';
   };
