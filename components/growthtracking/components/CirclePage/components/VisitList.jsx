@@ -15,6 +15,7 @@ const Tr = ({ index, onClick, toggleHover, hovered, selected, ...props }) => {
       onMouseLeave={() => toggleHover(null)}
       style={{
         backgroundColor: getColor(),
+        color: selected ? 'white' : 'black',
         height: 48,
         borderTop: 'solid 1px #0000004a',
         cursor: 'pointer'

@@ -48,7 +48,13 @@ class CirclePage extends React.Component {
       toggleConfig,
       config
     } = this.props;
-    const { selectedVisit, plotType, displayType, showMultiple, hovered } = this.state;
+    const {
+      selectedVisit,
+      plotType,
+      displayType,
+      showMultiple,
+      hovered
+    } = this.state;
 
     const visit = selectedVisit;
 
@@ -89,7 +95,8 @@ class CirclePage extends React.Component {
             paddingBottom: 24
           }}
         >
-          Showing z-scores for visit {visit.index + 1} on {visit.eventDate.toISOString().slice(0, 10)}{' '}
+          Showing z-scores for visit {visit.index + 1} on{' '}
+          {visit.eventDate.toISOString().slice(0, 10)}:{' '}
           {visit.predicted && '(Predicted)'}
         </div>
 
