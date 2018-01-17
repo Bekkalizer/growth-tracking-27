@@ -1,11 +1,11 @@
 import React from 'react';
 
-const p = (scale, color, zscore, percentile) => (
+const p = (scale, color, zscore, percentile, hovered) => (
   <div
     // Centile text style
     style={{
       textAlign: 'center',
-      color,
+      color: hovered ? 'white' : color,
       fontSize: `${3.3 * scale}rem`,
       fontWeight: 'bold',
       paddingTop: `${2 * scale}rem`,
@@ -31,11 +31,11 @@ const p = (scale, color, zscore, percentile) => (
   </div>
 );
 
-const z = (scale, color, zscore, percentile) => (
+const z = (scale, color, zscore, percentile, hovered) => (
   <div
     // Z-score text style
     style={{
-      color,
+      color: hovered ? 'white' : color,
       paddingTop: `${1.7 * scale}rem`,
       fontWeight: 'bold',
       fontSize: `${3.8 * scale}rem`,
@@ -46,13 +46,13 @@ const z = (scale, color, zscore, percentile) => (
   </div>
 );
 
-const zp = (scale, color, zscore, percentile) => (
+const zp = (scale, color, zscore, percentile, hovered) => (
   <div>
     <div
       // Centile text style
       style={{
         textAlign: 'center',
-        color,
+        color: hovered ? 'white' : color,
         fontSize: `${3.3 * scale}rem`,
         fontWeight: 'bold',
         paddingTop: `${1.2 * scale}rem`,
@@ -66,7 +66,7 @@ const zp = (scale, color, zscore, percentile) => (
     <div
       // Divider line style
       style={{
-        borderBottom: `${2 * scale}px solid ${color}`,
+        borderBottom: `${2 * scale}px solid ${hovered ? 'white' : color}`,
         width: '70%',
         margin: '0 auto',
       }}
@@ -78,7 +78,7 @@ const zp = (scale, color, zscore, percentile) => (
         marginBottom: -6 * scale,
         display: 'flex',
         justifyContent: 'center',
-        color,
+        color: hovered ? 'white' : color,
         fontSize: `${1.8 * scale}rem`,
         marginTop: 2 * scale,
       }}
@@ -101,13 +101,13 @@ const zp = (scale, color, zscore, percentile) => (
   </div>
 );
 
-const pz = (scale, color, zscore, percentile) => (
+const pz = (scale, color, zscore, percentile, hovered) => (
   <div>
     <div
       // Centile text style
       style={{
         textAlign: 'center',
-        color,
+        color: hovered ? 'white' : color,
         fontSize: `${3.3 * scale}rem`,
         fontWeight: 'bold',
         paddingTop: `${1.2 * scale}rem`,
@@ -135,7 +135,7 @@ const pz = (scale, color, zscore, percentile) => (
     <div
       // Divider line style
       style={{
-        borderBottom: `${2 * scale}px solid ${color}`,
+        borderBottom: `${2 * scale}px solid ${hovered ? 'white' : color}`,
         width: '70%',
         margin: '0 auto',
       }}
@@ -143,7 +143,7 @@ const pz = (scale, color, zscore, percentile) => (
 
     <div
       // Z-score text style
-      style={{ color, fontSize: `${1.8 * scale}rem`, marginTop: 2 * scale }}
+      style={{ color: hovered ? 'white' : color, fontSize: `${1.8 * scale}rem`, marginTop: 2 * scale }}
     >
       {zscore}
     </div>

@@ -11,8 +11,11 @@ class CirclePage extends React.Component {
     selectedVisit: this.props.visits[this.props.visits.length - 1],
     plotType: null,
     displayType: 'zscore',
-    showMultiple: 'single'
+    showMultiple: 'single',
+    hovered: null
   };
+
+  toggleHover = index => this.setState({ hovered: index });
 
   setVisit = selectedVisit => {
     if (selectedVisit >= Object.values(this.props.visits).length) {
@@ -45,7 +48,13 @@ class CirclePage extends React.Component {
       toggleConfig,
       config
     } = this.props;
-    const { selectedVisit, plotType, displayType, showMultiple } = this.state;
+    const {
+      selectedVisit,
+      plotType,
+      displayType,
+      showMultiple,
+      hovered
+    } = this.state;
 
     const visit = selectedVisit;
 
@@ -86,7 +95,8 @@ class CirclePage extends React.Component {
             paddingBottom: 24
           }}
         >
-          Visit: {visit.eventDate.toISOString().slice(0, 10)}{' '}
+          Showing z-scores for visit {visit.index + 1} on{' '}
+          {visit.eventDate.toISOString().slice(0, 10)}:{' '}
           {visit.predicted && '(Predicted)'}
         </div>
 
@@ -98,34 +108,49 @@ class CirclePage extends React.Component {
           }}
         >
           <Circle
+            index={1}
             onClick={() => this.togglePlot('wfl')}
             label="Weight-for-length"
             zscore={visit.wfl}
             config={config}
+            toggleHover={this.toggleHover}
+            hovered={hovered === 1}
           />
           <Circle
+            index={2}
             onClick={() => this.togglePlot('wfa')}
             label="Weight-for-age"
             zscore={visit.wfa}
             config={config}
+            toggleHover={this.toggleHover}
+            hovered={hovered === 2}
           />
           <Circle
+            index={3}
             onClick={() => this.togglePlot('lhfa')}
             label="Length-for-age"
             zscore={visit.lhfa}
             config={config}
+            toggleHover={this.toggleHover}
+            hovered={hovered === 3}
           />
           <Circle
+            index={4}
             onClick={() => this.togglePlot('bfa')}
             label="BMI-for-age"
             zscore={visit.bfa}
             config={config}
+            toggleHover={this.toggleHover}
+            hovered={hovered === 4}
           />
           <Circle
+            index={5}
             onClick={() => this.togglePlot('acfa')}
             label="MUAC-for-age"
             zscore={visit.acfa}
             config={config}
+            toggleHover={this.toggleHover}
+            hovered={hovered === 5}
           />
         </div>
       </div>

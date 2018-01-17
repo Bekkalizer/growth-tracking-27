@@ -6,7 +6,7 @@ import CircleAnimation from './CircleAnimation.jsx';
 import { getCentile, getColor } from '../../../../functions';
 import * as circleStyles from './circleStyles.jsx';
 
-const Circle = ({ onClick, zscore, label, config, disabled, ...rest }) => {
+const Circle = ({ index, onClick, zscore, label, config, disabled, hovered, toggleHover, ...rest }) => {
   if (zscore === null) {
     return null;
   }
@@ -37,6 +37,8 @@ const Circle = ({ onClick, zscore, label, config, disabled, ...rest }) => {
         cursor: onClick ? 'pointer' : 'unset',
       }}
       onClick={onClick}
+      onMouseEnter={() => toggleHover(index)}
+      onMouseLeave={() => toggleHover(null)}
     >
       {animated && (
         <CircleAnimation
@@ -54,9 +56,10 @@ const Circle = ({ onClick, zscore, label, config, disabled, ...rest }) => {
           height: `${120 * scale}px`,
           border: `${8 * scale}px solid ${color}`,
           margin: 'auto',
+          backgroundColor: hovered ? color : 'white',
         }}
       >
-        {circleStyles[display](scale, color, zscore, percentile)}
+        {circleStyles[display](scale, color, zscore, percentile, hovered)}
       </div>
       {label && (
         <div

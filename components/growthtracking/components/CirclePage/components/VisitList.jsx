@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Tr = ({ index, onClick, toggleHover, hovered, selected, ...props }) => {
   const getColor = () => {
-    if (selected) return '#F5F5F5';
+    if (selected) return '#928c8c';
     if (hovered) return '#EEEEEE';
     return 'white';
   };
@@ -11,10 +11,11 @@ const Tr = ({ index, onClick, toggleHover, hovered, selected, ...props }) => {
   return (
     <tr
       onClick={onClick}
-      onMouseEnter={toggleHover}
-      onMouseLeave={toggleHover}
+      onMouseEnter={() => toggleHover(index)}
+      onMouseLeave={() => toggleHover(null)}
       style={{
         backgroundColor: getColor(),
+        color: selected ? 'white' : 'black',
         height: 48,
         borderTop: 'solid 1px #0000004a',
         cursor: 'pointer'
@@ -56,11 +57,14 @@ class VisitList extends React.Component {
   toggleHover = index => this.setState({ hovered: index });
 
   render() {
+    const { hovered } = this.state;
     const { visit, visits, setVisit, predictedVisit } = this.props;
 
     return (
       <div>
-        <div style={{ height: 50, fontSize: 20, paddingLeft: 24 }}>Visits</div>
+        <div style={{ height: 50, fontSize: 20, paddingLeft: 24 }}>
+          Completed visits:
+        </div>
 
         <table
           style={{
@@ -134,8 +138,8 @@ class VisitList extends React.Component {
                   key={v.index}
                   index={v.index}
                   onClick={() => setVisit(v.index)}
-                  toggleHover={() => this.toggleHover(v.index)}
-                  hovered={this.state.hovered === v.index}
+                  toggleHover={this.toggleHover}
+                  hovered={hovered === v.index}
                   selected={visit.index === v.index}
                 >
                   <Td style={{ paddingLeft: 24 }}>
@@ -152,8 +156,8 @@ class VisitList extends React.Component {
                 <Tr
                   index={predictedVisit.index}
                   onClick={() => setVisit(predictedVisit.index)}
-                  toggleHover={() => this.toggleHover(predictedVisit.index)}
-                  hovered={this.state.hovered === predictedVisit.index}
+                  toggleHover={this.toggleHover}
+                  hovered={hovered === predictedVisit.index}
                   selected={visit.index === predictedVisit.index}
                 >
                   <Td style={{ paddingLeft: 24 }}>

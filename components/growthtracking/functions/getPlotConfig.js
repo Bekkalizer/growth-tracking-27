@@ -57,6 +57,25 @@ const getPlotLabels = (displayType, deviations, colors) => {
   ];
 };
 
+const getVisitPlotlines = (patientVisits, patientVisit, showMultiple, axis) => {
+  if (showMultiple === 'multiple') {
+    return patientVisits.map(visit => ({
+      color: '#e3e3e3',
+      width: 1,
+      value: axis === 'x' ? visit[0] : visit[1],
+      dashStyle: 'shortdash',
+      zIndex: 4
+    }));
+  }
+  return patientVisit.map(visit => ({
+    color: '#e3e3e3',
+    width: 1,
+    value: axis === 'x' ? visit[0] : visit[1],
+    dashStyle: 'shortdash',
+    zIndex: 4
+  }));
+};
+
 const getPlotConfig = (
   indicatorConfig,
   appConfig,
@@ -81,10 +100,13 @@ const getPlotConfig = (
 
   const deviations = getDeviations(dataSet, displayType);
 
-  const patientLine =
-    showMultiple === 'multiple'
-      ? visits.map(visit => [visit[measurement1], visit[measurement2]])
-      : [[selectedVisit[measurement1], selectedVisit[measurement2]]];
+  const patientVisits = visits.map(visit => [
+    visit[measurement1],
+    visit[measurement2]
+  ]);
+  const patientVisit = [
+    [selectedVisit[measurement1], selectedVisit[measurement2]]
+  ];
 
   const predictedLine =
     showMultiple === 'multiple' && predictedVisit !== null
@@ -98,7 +120,8 @@ const getPlotConfig = (
       : null;
 
   const formatDivisor = ageBased ? 30.25 : 1;
-
+  const zoomOffset = ageBased ? 30.25 * 5 : 5;
+  
   return {
     title: {
       text: indicatorConfig.title,
@@ -112,7 +135,34 @@ const getPlotConfig = (
           y: 10
         }
       },
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      /*
+      events: {
+        load() {
+          this.xAxis[0].setExtremes(
+            patientVisits[0][0] - zoomOffset > 0
+              ? patientVisits[0][0] - zoomOffset
+              : 0,
+            patientVisits[patientVisits.length - 1][0] + zoomOffset <
+            deviations.SD0[deviations.SD0.length - 1][0]
+              ? patientVisits[patientVisits.length - 1][0] + zoomOffset
+              : deviations.SD0[deviations.SD0.length - 1][0],
+            // predictedLine[predictedLine.length - 1][0] + 5, // TODO: modify to handle case where predicted line doesnt exist
+            false
+          );
+          this.yAxis[0].setExtremes(
+            patientVisits[0][1] - 5 > 0 ? patientVisits[0][1] - 5 : 0,
+            patientVisits[patientVisits.length - 1][1] - 5 > 0
+              ? patientVisits[patientVisits.length - 1][1] + 5
+              : 0,
+            // predictedLine[predictedLine.length - 1][1] + 5, // TODO: modify to handle case where predicted line doesnt exist
+            false
+          );
+          this.showResetZoom();
+          this.redraw();
+        }
+      }
+      */
     },
     credits: false,
     plotOptions: {
@@ -146,13 +196,7 @@ const getPlotConfig = (
         text: xtitle
       },
       plotLines: [
-        ...patientLine.map(visit => ({
-          color: '#e3e3e3',
-          width: 1,
-          value: visit[0],
-          dashStyle: 'shortdash',
-          zIndex: 4
-        })),
+        ...getVisitPlotlines(patientVisits, patientVisit, showMultiple, 'x'),
         predictedVisit && showMultiple === 'multiple'
           ? {
               color: '#e3e3e3',
@@ -180,13 +224,7 @@ const getPlotConfig = (
         text: ytitle
       },
       plotLines: [
-        ...patientLine.map(visit => ({
-          color: '#e3e3e3',
-          width: 1,
-          value: visit[1],
-          dashStyle: 'shortdash',
-          zIndex: 4
-        })),
+        ...getVisitPlotlines(patientVisits, patientVisit, showMultiple, 'y'),
         predictedVisit && showMultiple === 'multiple'
           ? {
               color: '#e3e3e3',
@@ -252,30 +290,6 @@ const getPlotConfig = (
       }
     },
     series: [
-      ...getDataSeries(displayType, deviations, colors),
-      {
-        data: predictedLine,
-        marker: {
-          symbol: 'circle'
-        },
-        color: '#428bca',
-        lineWidth: 2,
-        name: 'Predicted',
-        dashStyle: 'shortdot',
-        zIndex: 5,
-        showInLegend: false
-      },
-      {
-        data: patientLine,
-        marker: {
-          symbol: 'circle'
-        },
-        color: '#428bca',
-        lineWidth: 2,
-        name: 'Patient',
-        zIndex: 5,
-        showInLegend: false
-      },
       // This is an empty series that adds the plotline to the legend.
       {
         color: '#FF0000',
@@ -288,6 +302,30 @@ const getPlotConfig = (
         marker: {
           enabled: false
         }
+      },
+      ...getDataSeries(displayType, deviations, colors),
+      {
+        data: predictedLine,
+        marker: {
+          symbol: 'circle'
+        },
+        color: '#c3c3c3',
+        lineWidth: 2,
+        name: 'Predicted',
+        dashStyle: 'shortdot',
+        zIndex: 5,
+        showInLegend: predictedLine !== null
+      },
+      {
+        data: showMultiple === 'multiple' ? patientVisits : patientVisit,
+        marker: {
+          symbol: 'circle'
+        },
+        color: '#428bca',
+        lineWidth: 2,
+        name: 'Patient',
+        zIndex: 5,
+        showInLegend: false
       }
     ],
     legend: {
@@ -298,7 +336,8 @@ const getPlotConfig = (
       floating: true,
       layout: 'vertical',
       borderColor: '#c3c3c3',
-      borderWidth: 1
+      borderWidth: 1,
+      backgroundColor: 'white'
     }
   };
 };
