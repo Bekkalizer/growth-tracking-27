@@ -46,12 +46,12 @@ import 'leaflet-geocoder-mapzen';
 import 'leaflet-contextmenu';
 import 'd2-tracker/lib/Google.js';
 
-L.Icon.Default.imagePath = 'https://hmis.moh.gov.rw/fbf/dhis-web-commons/leaflet/images';
+L.Icon.Default.imagePath = '../../../dhis-web-commons/leaflet/images';
 
 /* App Module */
 angular.module('trackerCapture')
 
-.value('DHIS2URL', 'https://hmis.moh.gov.rw/fbf/api')
+.value('DHIS2URL', '../../../api')
 
 .value('DHIS2COORDINATESIZE', 6)
 
@@ -75,7 +75,7 @@ angular.module('trackerCapture')
     }).when('/program-statistics',{
         templateUrl:'components/report/program-statistics.html',
         controller: 'ProgramStatisticsController',
-        css: 'https://hmis.moh.gov.rw/fbf/dhis-web-commons/javascripts/nvd3/nv.d3.css'
+        css: '../../../dhis-web-commons/javascripts/nvd3/nv.d3.css'
     }).when('/overdue-events',{
         templateUrl:'components/report/overdue-events.html',
         controller: 'OverdueEventsController'
@@ -83,7 +83,7 @@ angular.module('trackerCapture')
         templateUrl:'components/report/upcoming-events.html',
         controller: 'UpcomingEventsController'
     }).otherwise({
-        redirectTo : 'https://hmis.moh.gov.rw/fbf/dhis-web-commons/security/login.action'
+        redirectTo : '../../../dhis-web-commons/security/login.action'
     });
 
     $translateProvider.preferredLanguage('en');

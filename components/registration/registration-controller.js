@@ -608,7 +608,7 @@ trackerCapture.controller('RegistrationController',
             lat = coordinates[1];
         }
         var modalInstance = $modal.open({
-            templateUrl: 'https://hmis.moh.gov.rw/fbf/dhis-web-commons/angular-forms/map.html',
+            templateUrl: '../../../dhis-web-commons/angular-forms/map.html',
             controller: 'MapController',
             windowClass: 'modal-full-window',
             resolve: {
@@ -635,7 +635,7 @@ trackerCapture.controller('RegistrationController',
             lat = coordinates[1];
         }
         var modalInstance = $modal.open({
-            templateUrl: 'https://hmis.moh.gov.rw/fbf/dhis-web-commons/angular-forms/map.html',
+            templateUrl: '../../../dhis-web-commons/angular-forms/map.html',
             controller: 'MapController',
             windowClass: 'modal-full-window',
             resolve: {
@@ -655,7 +655,7 @@ trackerCapture.controller('RegistrationController',
 
     $scope.showProgramStageMap = function(event){
         var modalInstance = $modal.open({
-            templateUrl: 'https://hmis.moh.gov.rw/fbf/dhis-web-commons/angular-forms/map.html',
+            templateUrl: '../../../dhis-web-commons/angular-forms/map.html',
             controller: 'MapController',
             windowClass: 'modal-full-window',
             resolve: {

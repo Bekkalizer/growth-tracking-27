@@ -11,7 +11,7 @@
         </ul>
     </div>
     
-    <img id="ouwt_loader" src="https://hmis.moh.gov.rw/fbf/images/ajax-loader-bar.gif" alt="{{'in_progress'| translate}}"/>
+    <img id="ouwt_loader" src="../../../images/ajax-loader-bar.gif" alt="{{'in_progress'| translate}}"/>
     
     <div class="small-horizontal-spacing" ng-if="!treeLoaded">
         {{'loading_tree'| translate}}
@@ -112,7 +112,7 @@
                                        min-date="today" 
                                        max-date="report.endDate ? report.endDate : ''" 
                                        ng-required="true"/> 
-                                <div ng-messages="outerForm.reportStartDate.$error" ng-if="interacted(outerForm.reportStartDate)" class="required" ng-messages-include="https://hmis.moh.gov.rw/fbf/dhis-web-commons/angular-forms/error-messages.html"></div>
+                                <div ng-messages="outerForm.reportStartDate.$error" ng-if="interacted(outerForm.reportStartDate)" class="required" ng-messages-include="../../../dhis-web-commons/angular-forms/error-messages.html"></div>
                                 <input type="text" 
                                        name="reportEndDate" 
                                        placeholder="{{'end_date'| translate}} ({{dhis2CalendarFormat.keyDateFormat}})" 
@@ -122,7 +122,7 @@
                                        ng-model="report.endDate" 
                                        min-date="report.startDate ? report.startDate : today" 
                                        ng-required="true"/>                            
-                                <div ng-messages="outerForm.reportEndDate.$error" ng-if="interacted(outerForm.reportEndDate)" class="required" ng-messages-include="https://hmis.moh.gov.rw/fbf/dhis-web-commons/angular-forms/error-messages.html"></div>
+                                <div ng-messages="outerForm.reportEndDate.$error" ng-if="interacted(outerForm.reportEndDate)" class="required" ng-messages-include="../../../dhis-web-commons/angular-forms/error-messages.html"></div>
                             </div>
                         </td>
                     </tr>
@@ -160,7 +160,7 @@
     </form>    
     <!--input form ends -->
 
-    <img src="https://hmis.moh.gov.rw/fbf/images/ajax-loader-bar.gif" ng-if="reportStarted && !reportFinished"/>
+    <img src="../../../images/ajax-loader-bar.gif" ng-if="reportStarted && !reportFinished"/>
 
     <!-- upcoming events list begins -->
     <div ng-if="reportFinished">
