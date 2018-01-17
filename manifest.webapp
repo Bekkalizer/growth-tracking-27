@@ -1,7 +1,7 @@
 {
     "version": "0.1",
     "name": "FBF Analytics",
-    "description": "FBF Analytics",
+    "description": "FBF Anthro",
     "launch_path": "index.html",
     "icons": {
         "16": "/img/icons/mortar-16.png",
