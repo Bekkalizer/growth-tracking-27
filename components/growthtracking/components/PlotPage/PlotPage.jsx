@@ -127,8 +127,8 @@ const PlotPage = ({
           value={showMultiple}
           onChange={setShowMultiple}
         >
-          <option value="single">Single-point</option>
           <option value="multiple">Multiple points</option>
+          <option value="single">Single-point</option>
         </select>
 
         <button

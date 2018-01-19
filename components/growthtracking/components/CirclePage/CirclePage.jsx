@@ -11,7 +11,7 @@ class CirclePage extends React.Component {
     selectedVisit: this.props.visits[this.props.visits.length - 1],
     plotType: null,
     displayType: 'zscore',
-    showMultiple: 'single',
+    showMultiple: 'multiple',
     hovered: null
   };
 
