@@ -37,16 +37,6 @@ const getDeviations = (dataSet, displayType) => {
           [Number(value[0]), value[1].SD3neg, value[1].SD4neg]
         ],
         SD0: [...acc.SD0, [Number(value[0]), value[1].SD0]]
-        /* non filles areas
-        SD3: [...acc.SD3, [Number(value[0]), value[1].SD3]],
-        SD2: [...acc.SD2, [Number(value[0]), value[1].SD2]],
-        SD1: [...acc.SD1, [Number(value[0]), value[1].SD1]],
-        SD0: [...acc.SD0, [Number(value[0]), value[1].SD0]],
-        SD1neg: [...acc.SD1neg, [Number(value[0]), value[1].SD1neg]],
-        SD2neg: [...acc.SD2neg, [Number(value[0]), value[1].SD2neg]],
-        SD3neg: [...acc.SD3neg, [Number(value[0]), value[1].SD3neg]]
-        */
-      }
       ),
       {
         SD4_SD3: [],
@@ -59,26 +49,11 @@ const getDeviations = (dataSet, displayType) => {
         nSD2_nSD3: [],
         nSD3_nSD4: [],
         SD0: []
-        /*
-        SD3: [],
-        SD2: [],
-        SD1: [],
-        SD0: [],
-        SD1neg: [],
-        SD2neg: [],
-        SD3neg: []
-        */
       }
     );
   }
   return Object.entries(dataSet).reduce(
     (acc, value) => ({
-      /*
-      nSD2_nSD3: [
-          ...acc.nSD2_nSD3,
-          [Number(value[0]), value[1].SD2neg, value[1].SD3neg]
-        ],
-      */
       P01: [
         ...acc.P01,
         [Number(value[0]), value[1].P01, value[1].P3]
@@ -100,11 +75,6 @@ const getDeviations = (dataSet, displayType) => {
         ...acc.P97,
         [Number(value[0]), value[1].P97, value[1].P999]
       ],
-      /*  P999: [
-          ...acc.P999, 
-          [Number(value[0]), value[1].P999]
-        ] */
-
     }),
     {
       P01: [],
@@ -113,7 +83,6 @@ const getDeviations = (dataSet, displayType) => {
       P50: [],
       P85: [],
       P97: [],
-      // P999: []
     }
   );
 };

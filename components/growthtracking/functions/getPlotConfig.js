@@ -2,9 +2,7 @@ import { getCentile, getDeviations, getSeries } from '../functions';
 
 const getDataSeries = (displayType, deviations, colors) => {
   if (displayType === 'zscore') {
-    console.log('deviation:', getSeries('arearange', 'SD 3-4', deviations.SD4_SD3, colors.SD3_4, true));
     return [
-
       getSeries('arearange', deviations.SD4_SD3, colors.SD2_3, true),
       getSeries('arearange', deviations.SD3_SD2, colors.SD1_2, true),
       getSeries('arearange', deviations.SD2_SD1, colors.SD0_1, true),
@@ -14,36 +12,15 @@ const getDataSeries = (displayType, deviations, colors) => {
       getSeries('arearange', deviations.nSD2_nSD3, colors.SD1_2),
       getSeries('arearange', deviations.nSD3_nSD4, colors.SD2_3),
       getSeries('line', deviations.SD0, colors.SD3_4, true)
-      /*
-      getSeries('line', deviations.SD3, colors.SD3_4),
-      getSeries('line', deviations.SD2, colors.SD2_3),
-      getSeries('line', deviations.SD1, colors.SD1_2),
-      getSeries('line', deviations.SD0, colors.SD0_1),
-      getSeries('line', deviations.SD1neg, colors.SD1_2),
-      getSeries('line', deviations.SD2neg, colors.SD2_3),
-      getSeries('line', deviations.SD3neg, colors.SD3_4)
-      */
     ];
   }
   return [
-
     getSeries('arearange', deviations.P01, colors.SD2_3),
     getSeries('arearange', deviations.P3, colors.SD1_2),
     getSeries('arearange', deviations.P15, colors.SD0_1),
     getSeries('arearange', deviations.P85, colors.SD1_2),
     getSeries('arearange', deviations.P97, colors.SD2_3),
-    // getSeries('arearange', deviations.P999, colors.SD2_3),
-
     getSeries('line', deviations.P50, colors.SD3_4),
-
-    /*getSeries('line', deviations.P01, colors.SD2_3),
-    getSeries('line', deviations.P3, colors.SD2_3),
-    getSeries('line', deviations.P15, colors.SD1_2),
-    getSeries('line', deviations.P50, colors.SD0_1),
-    getSeries('line', deviations.P85, colors.SD1_2),
-    getSeries('line', deviations.P97, colors.SD2_3),
-    getSeries('line', deviations.P999, colors.SD2_3)*/
-
   ];
 };
 
