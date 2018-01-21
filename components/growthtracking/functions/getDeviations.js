@@ -37,7 +37,7 @@ const getDeviations = (dataSet, displayType) => {
           [Number(value[0]), value[1].SD3neg, value[1].SD4neg]
         ],
         SD0: [...acc.SD0, [Number(value[0]), value[1].SD0]]
-      ),
+      }),
       {
         SD4_SD3: [],
         SD3_SD2: [],

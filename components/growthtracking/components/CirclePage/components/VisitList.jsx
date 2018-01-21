@@ -58,7 +58,7 @@ class VisitList extends React.Component {
 
   render() {
     const { hovered } = this.state;
-    const { visit, visits, setVisit, predictedVisit } = this.props;
+    const { visit, visits, setVisit } = this.props;
 
     return (
       <div>
@@ -152,25 +152,6 @@ class VisitList extends React.Component {
                   <Td style={{ paddingRight: 24 }}>{v.muac}</Td>
                 </Tr>
               ))}
-              {predictedVisit && (
-                <Tr
-                  index={predictedVisit.index}
-                  onClick={() => setVisit(predictedVisit.index)}
-                  toggleHover={this.toggleHover}
-                  hovered={hovered === predictedVisit.index}
-                  selected={visit.index === predictedVisit.index}
-                >
-                  <Td style={{ paddingLeft: 24 }}>
-                    {predictedVisit.eventDate.toISOString().slice(0, 10)}{' '}
-                    (Predicted)
-                  </Td>
-                  <Td>-</Td>
-                  <Td>{Math.round(predictedVisit.ageInDays / 30.25)}</Td>
-                  <Td>{predictedVisit.weight}</Td>
-                  <Td>{predictedVisit.height}</Td>
-                  <Td style={{ paddingRight: 24 }}>{predictedVisit.muac}</Td>
-                </Tr>
-              )}
             </tbody>
           </table>
         </div>
@@ -181,13 +162,8 @@ class VisitList extends React.Component {
 
 VisitList.propTypes = {
   visit: PropTypes.object.isRequired,
-  predictedVisit: PropTypes.object,
   visits: PropTypes.arrayOf(PropTypes.object).isRequired,
   setVisit: PropTypes.func.isRequired
-};
-
-VisitList.defaultProps = {
-  predictedVisit: null
 };
 
 export default VisitList;

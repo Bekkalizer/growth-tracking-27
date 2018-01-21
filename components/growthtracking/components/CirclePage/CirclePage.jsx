@@ -18,11 +18,7 @@ class CirclePage extends React.Component {
   toggleHover = index => this.setState({ hovered: index });
 
   setVisit = selectedVisit => {
-    if (selectedVisit >= Object.values(this.props.visits).length) {
-      this.setState({ selectedVisit: this.props.predictedVisit });
-    } else {
-      this.setState({ selectedVisit: this.props.visits[selectedVisit] });
-    }
+    this.setState({ selectedVisit: this.props.visits[selectedVisit] });
   };
 
   setDisplayType = event => this.setState({ displayType: event.target.value });
@@ -43,7 +39,6 @@ class CirclePage extends React.Component {
   render() {
     const {
       visits,
-      predictedVisit,
       patient,
       toggleConfig,
       config
@@ -63,7 +58,6 @@ class CirclePage extends React.Component {
         <PlotPage
           config={config}
           visits={visits}
-          predictedVisit={predictedVisit}
           plotType={plotType}
           setPlotType={this.setPlotType}
           displayType={displayType}
@@ -84,7 +78,6 @@ class CirclePage extends React.Component {
           setVisit={this.setVisit}
           visits={visits}
           visit={visit}
-          predictedVisit={predictedVisit}
         />
 
         <div
@@ -97,7 +90,6 @@ class CirclePage extends React.Component {
         >
           Showing z-scores for visit {visit.index + 1} on{' '}
           {visit.eventDate.toISOString().slice(0, 10)}:{' '}
-          {visit.predicted && '(Predicted)'}
         </div>
 
         <div
@@ -160,7 +152,6 @@ class CirclePage extends React.Component {
 
 CirclePage.propTypes = {
   visits: PropTypes.arrayOf(PropTypes.object),
-  predictedVisit: PropTypes.object,
   toggleConfig: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
@@ -170,7 +161,6 @@ CirclePage.propTypes = {
 
 CirclePage.defaultProps = {
   visits: [],
-  predictedVisit: null
 };
 
 export default CirclePage;

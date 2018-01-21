@@ -27,72 +27,6 @@ class App extends React.Component {
     }
   }
 
-  predictVisit = (visits, gender) => {
-    if (visits.length < 2) return null;
-
-    const lastVisit = visits[visits.length - 1];
-    const secondLastVisit = visits[visits.length - 2];
-
-    // Using +30 days instead of +30.25. When adding just one month to the previous total, +30 is enough accuracy.
-    const ageInDays = lastVisit.ageInDays + 30;
-
-    // If predicted age is higher than 726, we have passed the 24 month threshold for the child and should not predict any future visits
-    if (ageInDays > 726) return null;
-
-    const ageInMonths = lastVisit.ageInMonths + 1;
-    const ageDiff = (lastVisit.ageInDays - secondLastVisit.ageInDays) / 30.25;
-
-    const weight =
-      Math.round(
-        (lastVisit.weight +
-          (lastVisit.weight * 2 - secondLastVisit.weight - lastVisit.weight) /
-            ageDiff) *
-          10
-      ) / 10;
-    const height =
-      Math.round(
-        (lastVisit.height +
-          (lastVisit.height * 2 - secondLastVisit.height - lastVisit.height) /
-            ageDiff) *
-          10
-      ) / 10;
-    const muac =
-      Math.round(
-        (lastVisit.muac +
-          (lastVisit.muac * 2 - secondLastVisit.muac - lastVisit.muac) /
-            ageDiff) *
-          10
-      ) / 10;
-    const bmi = weight / (height / 100) ** 2;
-
-    const predWfl = getWeightForLength(gender, weight, height);
-    const predWfa = getWeightForAge(gender, weight, ageInDays);
-    const predLhfa = getLengthForAge(gender, height, ageInDays);
-    const predBfa = getBMIForAge(gender, bmi, ageInDays);
-    const predAcfa = getMUACForAge(gender, muac, ageInDays);
-
-    return {
-      predicted: true,
-      index: lastVisit.index + 1,
-      eventDate: new Date(
-        new Date(lastVisit.eventDate).setDate(
-          lastVisit.eventDate.getDate() + 30.25
-        )
-      ),
-      ageInDays,
-      ageInMonths,
-      weight,
-      height,
-      muac,
-      bmi,
-      wfl: predWfl === null ? null : Math.round(predWfl * 100) / 100,
-      wfa: predWfa === null ? null : Math.round(predWfa * 100) / 100,
-      lhfa: predLhfa === null ? null : Math.round(predLhfa * 100) / 100,
-      bfa: predBfa === null ? null : Math.round(predBfa * 100) / 100,
-      acfa: predAcfa === null ? null : Math.round(predAcfa * 100) / 100
-    };
-  };
-
   saveConfig = config => {
     // TODO: Prevent save if no change
     // TODO: Add feedback when saving
@@ -217,15 +151,11 @@ class App extends React.Component {
 
     console.log('visits:', visits);
 
-    const predictedVisit = this.predictVisit(visits, patient.gender);
-    console.log('predicted:', predictedVisit);
-
     return (
       <div>
         {!this.state.showConfig && (
           <CirclePage
             visits={visits}
-            predictedVisit={predictedVisit}
             patient={patient}
             toggleConfig={this.toggleConfig}
             config={config}

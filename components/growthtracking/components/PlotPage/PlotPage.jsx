@@ -14,7 +14,6 @@ HighchartsOfflineExporting(ReactHighcharts.Highcharts);
 const PlotPage = ({
   config,
   visits,
-  predictedVisit,
   plotType,
   setPlotType,
   displayType,
@@ -34,7 +33,6 @@ const PlotPage = ({
     indicatorConfig,
     config,
     visits,
-    predictedVisit,
     selectedVisit,
     plotType,
     displayType,
@@ -149,7 +147,6 @@ const PlotPage = ({
 PlotPage.propTypes = {
   config: PropTypes.object.isRequired,
   visits: PropTypes.array.isRequired,
-  predictedVisit: PropTypes.object.isRequired,
   setPlotType: PropTypes.func.isRequired,
   setShowMultiple: PropTypes.func.isRequired,
   setDisplayType: PropTypes.func.isRequired,

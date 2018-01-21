@@ -83,7 +83,6 @@ const getPlotConfig = (
   indicatorConfig,
   appConfig,
   visits,
-  predictedVisit,
   selectedVisit,
   plotType,
   displayType,
@@ -111,17 +110,6 @@ const getPlotConfig = (
     [selectedVisit[measurement1], selectedVisit[measurement2]]
   ];
 
-  const predictedLine =
-    showMultiple === 'multiple' && predictedVisit !== null
-      ? [
-        [
-          visits[visits.length - 1][measurement1],
-          visits[visits.length - 1][measurement2]
-        ],
-        [predictedVisit[measurement1], predictedVisit[measurement2]]
-      ]
-      : null;
-
   const formatDivisor = ageBased ? 30.25 : 1;
   const zoomOffset = ageBased ? 30.25 * 5 : 5;
 
@@ -139,33 +127,7 @@ const getPlotConfig = (
         }
       },
       backgroundColor: 'white',
-      /*
-      events: {
-        load() {
-          this.xAxis[0].setExtremes(
-            patientVisits[0][0] - zoomOffset > 0
-              ? patientVisits[0][0] - zoomOffset
-              : 0,
-            patientVisits[patientVisits.length - 1][0] + zoomOffset <
-            deviations.SD0[deviations.SD0.length - 1][0]
-              ? patientVisits[patientVisits.length - 1][0] + zoomOffset
-              : deviations.SD0[deviations.SD0.length - 1][0],
-            // predictedLine[predictedLine.length - 1][0] + 5, // TODO: modify to handle case where predicted line doesnt exist
-            false
-          );
-          this.yAxis[0].setExtremes(
-            patientVisits[0][1] - 5 > 0 ? patientVisits[0][1] - 5 : 0,
-            patientVisits[patientVisits.length - 1][1] - 5 > 0
-              ? patientVisits[patientVisits.length - 1][1] + 5
-              : 0,
-            // predictedLine[predictedLine.length - 1][1] + 5, // TODO: modify to handle case where predicted line doesnt exist
-            false
-          );
-          this.showResetZoom();
-          this.redraw();
-        }
-      }
-      */
+
     },
     credits: false,
     plotOptions: {
@@ -200,15 +162,6 @@ const getPlotConfig = (
       },
       plotLines: [
         ...getVisitPlotlines(patientVisits, patientVisit, showMultiple, 'x'),
-        predictedVisit && showMultiple === 'multiple'
-          ? {
-            color: '#e3e3e3',
-            width: 1,
-            value: predictedVisit[measurement1],
-            dashStyle: 'shortdash',
-            zIndex: 4
-          }
-          : [],
         {
           color: 'red',
           width: 1,
@@ -228,15 +181,6 @@ const getPlotConfig = (
       },
       plotLines: [
         ...getVisitPlotlines(patientVisits, patientVisit, showMultiple, 'y'),
-        predictedVisit && showMultiple === 'multiple'
-          ? {
-            color: '#e3e3e3',
-            width: 1,
-            value: predictedVisit[measurement2],
-            dashStyle: 'shortdash',
-            zIndex: 4
-          }
-          : [],
         {
           color: 'red',
           width: 1,
@@ -253,18 +197,6 @@ const getPlotConfig = (
           ? Math.round(this.x / formatDivisor)
           : Math.round(this.x * 100) / 100;
         const y = Math.round(this.y * 100) / 100;
-
-        if (this.series.name === 'Predicted') {
-          if (this.point.index === 0) return false;
-
-          const zscore = predictedVisit[plotType];
-          return `
-          <b>Predicted visit</b> <br />
-          ${xtitle}: ${x} <br />
-          ${ytitle}: ${y} <br />
-          Z-score: ${zscore} <br />
-          Percentile: ${getCentile(zscore)}%`;
-        }
 
         if (showMultiple === 'multiple') {
           const visit = visits[this.point.index];
@@ -307,18 +239,6 @@ const getPlotConfig = (
         }
       },
       ...getDataSeries(displayType, deviations, colors),
-      {
-        data: predictedLine,
-        marker: {
-          symbol: 'circle'
-        },
-        color: '#c3c3c3',
-        lineWidth: 2,
-        name: 'Predicted',
-        dashStyle: 'shortdot',
-        zIndex: 5,
-        showInLegend: predictedLine !== null
-      },
       {
         data: showMultiple === 'multiple' ? patientVisits : patientVisit,
         marker: {
