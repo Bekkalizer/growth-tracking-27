@@ -22,7 +22,7 @@ class ColorSettings extends React.Component {
   };
 
   render() {
-    const { setColor, setLabel, config } = this.props;
+    const { setColor, setLabel, config, } = this.props;
     const { labels, colors } = config;
     const { show } = this.state;
 
@@ -55,6 +55,7 @@ class ColorSettings extends React.Component {
               <b>{descriptions[id]}</b>
 
               <Circle
+                index={index}
                 onClick={() => this.toggleShow(id)}
                 zscore={index}
                 config={config}

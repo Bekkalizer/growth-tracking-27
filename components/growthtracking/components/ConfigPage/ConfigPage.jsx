@@ -89,7 +89,10 @@ class ConfigPage extends React.Component {
 
         <SettingWrapper
           SettingComponent={
-            <DisplaySettings setDisplay={this.setDisplay} config={config} />
+            <DisplaySettings
+              setDisplay={this.setDisplay}
+              config={config}
+            />
           }
           title="Display"
           restoreDefault={() => this.restoreDefault('display')}

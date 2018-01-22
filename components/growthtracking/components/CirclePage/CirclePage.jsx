@@ -11,11 +11,8 @@ class CirclePage extends React.Component {
     selectedVisit: this.props.visits[this.props.visits.length - 1],
     plotType: null,
     displayType: 'zscore',
-    showMultiple: 'multiple',
-    hovered: null
+    showMultiple: 'multiple'
   };
-
-  toggleHover = index => this.setState({ hovered: index });
 
   setVisit = selectedVisit => {
     this.setState({ selectedVisit: this.props.visits[selectedVisit] });
@@ -25,7 +22,7 @@ class CirclePage extends React.Component {
 
   setPlotType = event => {
     if (!event) {
-      this.setState({ plotType: null, hovered: null });
+      this.setState({ plotType: null });
       return;
     }
     this.setState({ plotType: event.target.value });
@@ -47,8 +44,7 @@ class CirclePage extends React.Component {
       selectedVisit,
       plotType,
       displayType,
-      showMultiple,
-      hovered
+      showMultiple
     } = this.state;
 
     const visit = selectedVisit;
@@ -100,49 +96,34 @@ class CirclePage extends React.Component {
           }}
         >
           <Circle
-            index={1}
             onClick={() => this.togglePlot('wfl')}
             label="Weight-for-length"
             zscore={visit.wfl}
             config={config}
-            toggleHover={this.toggleHover}
-            hovered={hovered === 1}
           />
           <Circle
-            index={2}
             onClick={() => this.togglePlot('wfa')}
             label="Weight-for-age"
             zscore={visit.wfa}
             config={config}
-            toggleHover={this.toggleHover}
-            hovered={hovered === 2}
           />
           <Circle
-            index={3}
             onClick={() => this.togglePlot('lhfa')}
             label="Length-for-age"
             zscore={visit.lhfa}
             config={config}
-            toggleHover={this.toggleHover}
-            hovered={hovered === 3}
           />
           <Circle
-            index={4}
             onClick={() => this.togglePlot('bfa')}
             label="BMI-for-age"
             zscore={visit.bfa}
             config={config}
-            toggleHover={this.toggleHover}
-            hovered={hovered === 4}
           />
           <Circle
-            index={5}
             onClick={() => this.togglePlot('acfa')}
             label="MUAC-for-age"
             zscore={visit.acfa}
             config={config}
-            toggleHover={this.toggleHover}
-            hovered={hovered === 5}
           />
         </div>
       </div>
