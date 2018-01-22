@@ -7,7 +7,6 @@ import {
   getWeightForLength,
   getWeightForAge,
   getLengthForAge,
-  getBMIForAge,
   getMUACForAge
 } from './functions';
 import { defaultConfig, validateConfig } from './datasets/defaultConfig';
@@ -124,12 +123,9 @@ class App extends React.Component {
           event.dataValues.find(val => val.dataElement === 'VCYJkaP96KZ').value
         );
 
-        const bmi = weight / (height / 100) ** 2;
-
         const rawWfl = getWeightForLength(patient.gender, weight, height);
         const rawWfa = getWeightForAge(patient.gender, weight, ageInDays);
         const rawLhfa = getLengthForAge(patient.gender, height, ageInDays);
-        const rawBfa = getBMIForAge(patient.gender, bmi, ageInDays);
         const rawAcfa = getMUACForAge(patient.gender, muac, ageInDays);
         return {
           index,
@@ -139,11 +135,9 @@ class App extends React.Component {
           muac,
           weight,
           height,
-          bmi,
           wfl: rawWfl === null ? null : Math.round(rawWfl * 100) / 100,
           wfa: rawWfa === null ? null : Math.round(rawWfa * 100) / 100,
           lhfa: rawLhfa === null ? null : Math.round(rawLhfa * 100) / 100,
-          bfa: rawBfa === null ? null : Math.round(rawBfa * 100) / 100,
           acfa: rawAcfa === null ? null : Math.round(rawAcfa * 100) / 100,
           completedBy: event.completedBy
         };

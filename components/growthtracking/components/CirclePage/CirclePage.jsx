@@ -114,12 +114,6 @@ class CirclePage extends React.Component {
             config={config}
           />
           <Circle
-            onClick={() => this.togglePlot('bfa')}
-            label="BMI-for-age"
-            zscore={visit.bfa}
-            config={config}
-          />
-          <Circle
             onClick={() => this.togglePlot('acfa')}
             label="MUAC-for-age"
             zscore={visit.acfa}
