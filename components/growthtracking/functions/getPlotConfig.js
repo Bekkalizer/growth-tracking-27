@@ -111,6 +111,7 @@ const getPlotConfig = (
   ];
 
   const formatDivisor = ageBased ? 30.25 : 1;
+  const minorFormatDivisor = ageBased ? (30.25 / 2) : 1;
   const zoomOffset = ageBased ? 30.25 * 5 : 5;
 
   return {
@@ -151,6 +152,12 @@ const getPlotConfig = (
       maxPadding: 0.04,
       gridLineWidth: 0,
       tickInterval: formatDivisor,
+      minorTickInterval: minorFormatDivisor,
+      minorTickPosition: 'outside',
+      minorTickLength: 5,
+      minorTickWidth: 1,
+      minorGridLineWidth: 0,
+
       labels: {
         formatter() {
           // if chart is based on age, divide days by 30.25 to get months
@@ -176,6 +183,11 @@ const getPlotConfig = (
       maxPadding: 0.08,
       tickInterval: 1,
       tickWidth: 1,
+      minorTickInterval: 1,
+      minorTickLength: 5,
+      minorTickWidth: 1,
+      minorGridLineWidth: 0,
+
       title: {
         text: ytitle
       },
