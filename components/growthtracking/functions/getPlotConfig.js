@@ -117,7 +117,7 @@ const getPlotConfig = (
   return {
     title: {
       text: indicatorConfig.title,
-      x: -140
+      x: 0
     },
     chart: {
       zoomType: 'xy',
