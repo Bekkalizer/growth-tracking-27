@@ -19,6 +19,7 @@ class Circle extends React.Component {
     const {
       onClick,
       zscore,
+      rdata,
       label,
       config,
       disabled,
@@ -79,7 +80,7 @@ class Circle extends React.Component {
             backgroundColor: hovered ? color : 'white',
           }}
         >
-          {circleStyles[display](scale, color, zscore, percentile, hovered)}
+          {circleStyles[display](scale, color, zscore, percentile, hovered, rdata)}
         </div>
         {label && (
           <div
@@ -98,6 +99,7 @@ class Circle extends React.Component {
 Circle.propTypes = {
   onClick: PropTypes.func,
   zscore: PropTypes.number,
+  rdata: PropTypes.number,
   label: PropTypes.string,
   config: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
@@ -108,6 +110,7 @@ Circle.propTypes = {
 Circle.defaultProps = {
   label: null,
   zscore: null,
+  rdata: null,
   onClick: null,
   disabled: false,
 };
