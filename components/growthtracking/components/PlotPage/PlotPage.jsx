@@ -21,7 +21,8 @@ const PlotPage = ({
   setShowMultiple,
   selectedVisit,
   patient,
-  showMultiple
+  showMultiple,
+  setVisit
 }) => {
   const indicatorConfig = getIndicatorConfig(
     patient.gender,
@@ -36,7 +37,8 @@ const PlotPage = ({
     selectedVisit,
     plotType,
     displayType,
-    showMultiple
+    showMultiple,
+    setVisit
   );
 
   return (
