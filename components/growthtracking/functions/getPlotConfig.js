@@ -60,25 +60,6 @@ const getPlotLabels = (displayType, deviations, colors) => {
   ];
 };
 
-const getVisitPlotlines = (patientVisits, patientVisit, showMultiple, axis) => {
-  if (showMultiple === 'multiple') {
-    return patientVisits.map(visit => ({
-      color: '#e3e3e3',
-      width: 1,
-      value: axis === 'x' ? visit[0] : visit[1],
-      dashStyle: 'shortdash',
-      zIndex: 4
-    }));
-  }
-  return patientVisit.map(visit => ({
-    color: '#e3e3e3',
-    width: 1,
-    value: axis === 'x' ? visit[0] : visit[1],
-    dashStyle: 'shortdash',
-    zIndex: 4
-  }));
-};
-
 const getPlotConfig = (
   indicatorConfig,
   appConfig,
@@ -86,7 +67,8 @@ const getPlotConfig = (
   selectedVisit,
   plotType,
   displayType,
-  showMultiple
+  showMultiple,
+  setVisit
 ) => {
   if (!indicatorConfig) return null;
 
@@ -113,6 +95,7 @@ const getPlotConfig = (
   const formatDivisor = ageBased ? 30.25 : 1;
   const minorFormatDivisor = ageBased ? (30.25 / 2) : 1;
   const zoomOffset = ageBased ? 30.25 * 5 : 5;
+
 
   return {
     title: {
@@ -144,7 +127,12 @@ const getPlotConfig = (
         events: {
           legendItemClick(e) {
             e.preventDefault();
+          },
+          click(e) {
+            const index = this.xData.indexOf(e.point.x)
+            setVisit(index);
           }
+
         }
       }
     },
@@ -168,7 +156,6 @@ const getPlotConfig = (
         text: xtitle
       },
       plotLines: [
-        ...getVisitPlotlines(patientVisits, patientVisit, showMultiple, 'x'),
         {
           color: 'red',
           width: 1,
@@ -192,7 +179,6 @@ const getPlotConfig = (
         text: ytitle
       },
       plotLines: [
-        ...getVisitPlotlines(patientVisits, patientVisit, showMultiple, 'y'),
         {
           color: 'red',
           width: 1,

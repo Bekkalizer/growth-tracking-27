@@ -54,6 +54,7 @@ class CirclePage extends React.Component {
         <PlotPage
           config={config}
           visits={visits}
+          setVisit={this.setVisit}
           plotType={plotType}
           setPlotType={this.setPlotType}
           displayType={displayType}
