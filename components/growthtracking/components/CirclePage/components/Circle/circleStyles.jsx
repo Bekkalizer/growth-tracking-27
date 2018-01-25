@@ -52,13 +52,13 @@ const z = (scale, color, zscore, percentile, hovered, rdata) => {
       // Z-score text style
       style={{
         color: hovered ? 'white' : color,
-        paddingTop: `${1.7 * scale}rem`,
+        paddingTop: `${2.5 * scale}rem`,
         fontWeight: 'bold',
-        fontSize: `${3.8 * scale}rem`,
+        fontSize: `${2.3 * scale}rem`,
         marginTop: 2 * scale,
       }}
     >
-      {rdata}
+      {rdata}cm
     </div>
   );
 }
@@ -135,7 +135,7 @@ const zp = (scale, color, zscore, percentile, hovered, rdata) => {
           justifyContent: 'center',
         }}
       >
-        {rdata}
+        {rdata}cm
       </div>
       <div
         // Divider line style
@@ -271,7 +271,7 @@ const pz = (scale, color, zscore, percentile, hovered, rdata) => {
         // Z-score text style
         style={{ color: hovered ? 'white' : color, fontSize: `${1.8 * scale}rem`, marginTop: 2 * scale }}
       >
-        {rdata}
+        {rdata}cm
       </div>
     </div>
   );
