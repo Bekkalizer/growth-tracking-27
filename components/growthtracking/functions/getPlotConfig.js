@@ -3,21 +3,24 @@ import { getCentile, getDeviations, getSeries } from '../functions';
 const getDataSeries = (displayType, deviations, colors) => {
   if (displayType === 'zscore') {
     return [
-      getSeries('line', deviations.SD3, colors.SD3_4),
-      getSeries('line', deviations.SD2, colors.SD2_3),
-      getSeries('line', deviations.SD1, colors.SD1_2),
-      getSeries('line', deviations.SD0, colors.SD0_1),
-      getSeries('line', deviations.SD1neg, colors.SD1_2),
-      getSeries('line', deviations.SD2neg, colors.SD2_3),
-      getSeries('line', deviations.SD3neg, colors.SD3_4)
+      getSeries('arearange', deviations.SD4_SD3, colors.SD2_3, true),
+      getSeries('arearange', deviations.SD3_SD2, colors.SD1_2, true),
+      getSeries('arearange', deviations.SD2_SD1, colors.SD0_1, true),
+      getSeries('arearange', deviations.SD1_SD0, colors.SD0_1),
+      getSeries('arearange', deviations.SD0_nSD1, colors.SD0_1),
+      getSeries('arearange', deviations.nSD1_nSD2, colors.SD0_1),
+      getSeries('arearange', deviations.nSD2_nSD3, colors.SD1_2),
+      getSeries('arearange', deviations.nSD3_nSD4, colors.SD2_3),
+      getSeries('line', deviations.SD0, colors.SD3_4, true)
     ];
   }
   return [
-    getSeries('line', deviations.P3, colors.SD2_3),
-    getSeries('line', deviations.P15, colors.SD1_2),
-    getSeries('line', deviations.P50, colors.SD0_1),
-    getSeries('line', deviations.P85, colors.SD1_2),
-    getSeries('line', deviations.P97, colors.SD2_3)
+    getSeries('arearange', deviations.P01, colors.SD2_3),
+    getSeries('arearange', deviations.P3, colors.SD1_2),
+    getSeries('arearange', deviations.P15, colors.SD0_1),
+    getSeries('arearange', deviations.P85, colors.SD1_2),
+    getSeries('arearange', deviations.P97, colors.SD2_3),
+    getSeries('line', deviations.P50, colors.SD3_4),
   ];
 };
 
@@ -39,18 +42,18 @@ const getPlotLabel = (label, deviation, color) => ({
 const getPlotLabels = (displayType, deviations, colors) => {
   if (displayType === 'zscore') {
     return [
-      getPlotLabel('+3 SD', deviations.SD3, colors.SD3_4),
-      getPlotLabel('+2 SD', deviations.SD2, colors.SD2_3),
-      getPlotLabel('+1 SD', deviations.SD1, colors.SD1_2),
-      getPlotLabel('Median', deviations.SD0, colors.SD0_1),
-      getPlotLabel('-1 SD', deviations.SD1neg, colors.SD1_2),
-      getPlotLabel('-2 SD', deviations.SD2neg, colors.SD2_3),
-      getPlotLabel('-3 SD', deviations.SD3neg, colors.SD3_4)
+      getPlotLabel('+3 SD', deviations.SD4_SD3, colors.SD2_3),
+      getPlotLabel('+2 SD', deviations.SD3_SD2, colors.SD1_2),
+      getPlotLabel('+1 SD', deviations.SD2_SD1, colors.SD0_1),
+      getPlotLabel('Median', deviations.SD0, colors.SD3_4),
+      getPlotLabel('-1 SD', deviations.nSD1_nSD2, colors.SD0_1),
+      getPlotLabel('-2 SD', deviations.nSD2_nSD3, colors.SD1_2),
+      getPlotLabel('-3 SD', deviations.nSD3_nSD4, colors.SD2_3)
     ];
   }
   return [
-    getPlotLabel('3rd', deviations.P3, colors.SD2_3),
-    getPlotLabel('15th', deviations.P15, colors.SD1_2),
+    getPlotLabel('3rd', deviations.P01, colors.SD2_3),
+    getPlotLabel('15th', deviations.P3, colors.SD1_2),
     getPlotLabel('50th', deviations.P50, colors.SD0_1),
     getPlotLabel('85th', deviations.P85, colors.SD1_2),
     getPlotLabel('97th', deviations.P97, colors.SD2_3)
@@ -80,7 +83,6 @@ const getPlotConfig = (
   indicatorConfig,
   appConfig,
   visits,
-  predictedVisit,
   selectedVisit,
   plotType,
   displayType,
@@ -108,24 +110,14 @@ const getPlotConfig = (
     [selectedVisit[measurement1], selectedVisit[measurement2]]
   ];
 
-  const predictedLine =
-    showMultiple === 'multiple' && predictedVisit !== null
-      ? [
-          [
-            visits[visits.length - 1][measurement1],
-            visits[visits.length - 1][measurement2]
-          ],
-          [predictedVisit[measurement1], predictedVisit[measurement2]]
-        ]
-      : null;
-
   const formatDivisor = ageBased ? 30.25 : 1;
+  const minorFormatDivisor = ageBased ? (30.25 / 2) : 1;
   const zoomOffset = ageBased ? 30.25 * 5 : 5;
-  
+
   return {
     title: {
       text: indicatorConfig.title,
-      x: -140
+      x: 0
     },
     chart: {
       zoomType: 'xy',
@@ -136,33 +128,7 @@ const getPlotConfig = (
         }
       },
       backgroundColor: 'white',
-      /*
-      events: {
-        load() {
-          this.xAxis[0].setExtremes(
-            patientVisits[0][0] - zoomOffset > 0
-              ? patientVisits[0][0] - zoomOffset
-              : 0,
-            patientVisits[patientVisits.length - 1][0] + zoomOffset <
-            deviations.SD0[deviations.SD0.length - 1][0]
-              ? patientVisits[patientVisits.length - 1][0] + zoomOffset
-              : deviations.SD0[deviations.SD0.length - 1][0],
-            // predictedLine[predictedLine.length - 1][0] + 5, // TODO: modify to handle case where predicted line doesnt exist
-            false
-          );
-          this.yAxis[0].setExtremes(
-            patientVisits[0][1] - 5 > 0 ? patientVisits[0][1] - 5 : 0,
-            patientVisits[patientVisits.length - 1][1] - 5 > 0
-              ? patientVisits[patientVisits.length - 1][1] + 5
-              : 0,
-            // predictedLine[predictedLine.length - 1][1] + 5, // TODO: modify to handle case where predicted line doesnt exist
-            false
-          );
-          this.showResetZoom();
-          this.redraw();
-        }
-      }
-      */
+
     },
     credits: false,
     plotOptions: {
@@ -186,6 +152,12 @@ const getPlotConfig = (
       maxPadding: 0.04,
       gridLineWidth: 0,
       tickInterval: formatDivisor,
+      minorTickInterval: minorFormatDivisor,
+      minorTickPosition: 'outside',
+      minorTickLength: 5,
+      minorTickWidth: 1,
+      minorGridLineWidth: 0,
+
       labels: {
         formatter() {
           // if chart is based on age, divide days by 30.25 to get months
@@ -197,15 +169,6 @@ const getPlotConfig = (
       },
       plotLines: [
         ...getVisitPlotlines(patientVisits, patientVisit, showMultiple, 'x'),
-        predictedVisit && showMultiple === 'multiple'
-          ? {
-              color: '#e3e3e3',
-              width: 1,
-              value: predictedVisit[measurement1],
-              dashStyle: 'shortdash',
-              zIndex: 4
-            }
-          : [],
         {
           color: 'red',
           width: 1,
@@ -220,20 +183,16 @@ const getPlotConfig = (
       maxPadding: 0.08,
       tickInterval: 1,
       tickWidth: 1,
+      minorTickInterval: 1,
+      minorTickLength: 5,
+      minorTickWidth: 1,
+      minorGridLineWidth: 0,
+
       title: {
         text: ytitle
       },
       plotLines: [
         ...getVisitPlotlines(patientVisits, patientVisit, showMultiple, 'y'),
-        predictedVisit && showMultiple === 'multiple'
-          ? {
-              color: '#e3e3e3',
-              width: 1,
-              value: predictedVisit[measurement2],
-              dashStyle: 'shortdash',
-              zIndex: 4
-            }
-          : [],
         {
           color: 'red',
           width: 1,
@@ -251,27 +210,15 @@ const getPlotConfig = (
           : Math.round(this.x * 100) / 100;
         const y = Math.round(this.y * 100) / 100;
 
-        if (this.series.name === 'Predicted') {
-          if (this.point.index === 0) return false;
-
-          const zscore = predictedVisit[plotType];
-          return `
-          <b>Predicted visit</b> <br />
-          ${xtitle}: ${x} <br />
-          ${ytitle}: ${y} <br />
-          Z-score: ${zscore} <br />
-          Percentile: ${getCentile(zscore)}%`;
-        }
-
         if (showMultiple === 'multiple') {
           const visit = visits[this.point.index];
           const zscore = visit[plotType];
 
           return `
                     <b>${visit.index +
-                      1}: ${visit.eventDate
-            .toISOString()
-            .slice(0, 10)}</b> <br />
+            1}: ${visit.eventDate
+              .toISOString()
+              .slice(0, 10)}</b> <br />
                     ${xtitle}: ${x} <br />
                     ${ytitle}: ${y} <br />
                     Z-score: ${zscore} <br />
@@ -282,7 +229,7 @@ const getPlotConfig = (
 
         return `
           <b>${selectedVisit.index +
-            1}: ${selectedVisit.eventDate.toISOString().slice(0, 10)}</b> <br />
+          1}: ${selectedVisit.eventDate.toISOString().slice(0, 10)}</b> <br />
           ${xtitle}: ${x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />
@@ -297,25 +244,13 @@ const getPlotConfig = (
           displayType === 'zscore'
             ? `Z-score: ${selectedVisit[plotType]}`
             : `Percentile: ${getCentile(selectedVisit[plotType])}%`
-        }`,
+          }`,
         dashStyle: 'shortdash',
         marker: {
           enabled: false
         }
       },
       ...getDataSeries(displayType, deviations, colors),
-      {
-        data: predictedLine,
-        marker: {
-          symbol: 'circle'
-        },
-        color: '#c3c3c3',
-        lineWidth: 2,
-        name: 'Predicted',
-        dashStyle: 'shortdot',
-        zIndex: 5,
-        showInLegend: predictedLine !== null
-      },
       {
         data: showMultiple === 'multiple' ? patientVisits : patientVisit,
         marker: {

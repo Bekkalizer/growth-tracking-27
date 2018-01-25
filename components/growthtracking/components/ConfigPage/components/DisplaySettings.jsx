@@ -65,6 +65,7 @@ const DisplaySettings = ({ setDisplay, config }) => {
   );
 };
 
+
 DisplaySettings.propTypes = {
   setDisplay: PropTypes.func.isRequired,
   config: PropTypes.objectOf(

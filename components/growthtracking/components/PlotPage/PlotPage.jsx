@@ -14,7 +14,6 @@ HighchartsOfflineExporting(ReactHighcharts.Highcharts);
 const PlotPage = ({
   config,
   visits,
-  predictedVisit,
   plotType,
   setPlotType,
   displayType,
@@ -34,7 +33,6 @@ const PlotPage = ({
     indicatorConfig,
     config,
     visits,
-    predictedVisit,
     selectedVisit,
     plotType,
     displayType,
@@ -74,7 +72,6 @@ const PlotPage = ({
           <option value="wfl">Weight-for-length</option>
           <option value="wfa">Weight-for-age</option>
           <option value="lhfa">Length-for-age</option>
-          <option value="bfa">BMI-for-age</option>
           <option value="acfa">MUAC-for-age</option>
         </select>
 
@@ -127,8 +124,8 @@ const PlotPage = ({
           value={showMultiple}
           onChange={setShowMultiple}
         >
-          <option value="single">Single-point</option>
           <option value="multiple">Multiple points</option>
+          <option value="single">Single-point</option>
         </select>
 
         <button
@@ -149,7 +146,6 @@ const PlotPage = ({
 PlotPage.propTypes = {
   config: PropTypes.object.isRequired,
   visits: PropTypes.array.isRequired,
-  predictedVisit: PropTypes.object.isRequired,
   setPlotType: PropTypes.func.isRequired,
   setShowMultiple: PropTypes.func.isRequired,
   setDisplayType: PropTypes.func.isRequired,

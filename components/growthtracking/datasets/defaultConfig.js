@@ -29,7 +29,7 @@ const defaultConfig = {
   colors: defaultColors,
   labels: defaultLabels,
   scale: 1,
-  display: 'pz',
+  display: 'z',
   animation: defaultAnimation,
 };
 

@@ -51,18 +51,18 @@ const getAgeBasedLms = (dataset, age) =>
   dataset[age]
     ? { exact: dataset[age] }
     : Object.keys(dataset).reduce(
-        (acc, value) => {
-          const num = Number(value);
-          if (acc.low === null || (acc.low < num && num < age)) {
-            acc.low = num;
-          }
-          if (acc.high === null && num > age) {
-            acc.high = num;
-          }
-          return acc;
-        },
-        { low: null, high: null }
-      );
+      (acc, value) => {
+        const num = Number(value);
+        if (acc.low === null || (acc.low < num && num < age)) {
+          acc.low = num;
+        }
+        if (acc.high === null && num > age) {
+          acc.high = num;
+        }
+        return acc;
+      },
+      { low: null, high: null }
+    );
 
 const getAgeBasedZscore = (dataset, measurement, age) => {
   const lms = getAgeBasedLms(dataset, age);
@@ -98,12 +98,6 @@ const getLengthForAge = (female, height, age) => {
   return getAgeBasedZscore(dataset, height, age);
 };
 
-const getBMIForAge = (female, bmi, age) => {
-  const dataset = female ? centileSets.bfaGirls : centileSets.bfaBoys;
-
-  return getAgeBasedZscore(dataset, bmi, age);
-};
-
 const getMUACForAge = (female, muac, age) => {
   if (age < 91) return null;
 
@@ -116,6 +110,5 @@ export {
   getWeightForLength,
   getWeightForAge,
   getLengthForAge,
-  getBMIForAge,
   getMUACForAge
 };
