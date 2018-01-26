@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { VisitList, Circle } from './components';
+import { VisitList, Circle, ReferalAlert } from './components';
 import ConfigButton from '../ConfigButton.jsx';
 import PlotPage from '../PlotPage';
 
@@ -11,7 +11,8 @@ class CirclePage extends React.Component {
     selectedVisit: this.props.visits[this.props.visits.length - 1],
     plotType: null,
     displayType: 'zscore',
-    showMultiple: 'multiple'
+    showMultiple: 'multiple',
+    displayAlert: true
   };
 
   setVisit = selectedVisit => {
@@ -32,6 +33,8 @@ class CirclePage extends React.Component {
     this.setState({ showMultiple: event.target.value });
 
   togglePlot = plotType => this.setState({ plotType });
+
+  toggleAlert = () => this.setState(state => ({ displayAlert: !state.displayAlert }));
 
   render() {
     const {
@@ -88,6 +91,13 @@ class CirclePage extends React.Component {
           {visit.eventDate.toISOString().slice(0, 10)}:{' '}
         </div>
 
+        {this.state.displayAlert && (
+          <ReferalAlert
+            toggleAlert={this.toggleAlert}
+            visit={visit}
+          />
+        )}
+
         <div
           style={{
             display: 'flex',
@@ -95,6 +105,7 @@ class CirclePage extends React.Component {
             justifyContent: 'center'
           }}
         >
+
           <Circle
             onClick={() => this.togglePlot('wfl')}
             label="Weight-for-length"
