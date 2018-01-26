@@ -57,6 +57,7 @@ class CirclePage extends React.Component {
         <PlotPage
           config={config}
           visits={visits}
+          setVisit={this.setVisit}
           plotType={plotType}
           setPlotType={this.setPlotType}
           displayType={displayType}
@@ -128,6 +129,7 @@ class CirclePage extends React.Component {
             onClick={() => this.togglePlot('acfa')}
             label="MUAC-for-age"
             zscore={visit.acfa}
+            rdata={visit.muac}
             config={config}
           />
         </div>
