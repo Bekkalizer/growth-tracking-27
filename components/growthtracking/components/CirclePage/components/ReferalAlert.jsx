@@ -19,6 +19,9 @@ class ReferalAlert extends React.Component {
     if (visit.lhfa < -2) {
       console.log('check wfa: ', visit.lhfa);
       message.push('Length-For-Age is critically low, refer to district hospital');
+    } if (visit.muac < -12.5) {
+      console.log('check wfa: ', visit.muac);
+      message.push('MUAC is critically low, refer to district hospital');
     }
     return message;
   };
