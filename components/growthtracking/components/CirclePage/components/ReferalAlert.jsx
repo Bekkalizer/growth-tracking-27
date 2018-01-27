@@ -33,8 +33,8 @@ class ReferalAlert extends React.Component {
       return (
         <div className="alert alert-warning">
           <div>
-            {alertMsg.map((m, index) => (
-              <p key={Math.random()} >{m}</p>
+            {alertMsg.map(m => (
+              <p>{m}</p>
             ))}
           </div>
           <button className="error-close-button"
