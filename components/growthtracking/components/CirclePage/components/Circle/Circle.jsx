@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import CircleAnimation from './CircleAnimation.jsx';
 
-import { getCentile, getColor } from '../../../../functions';
+import { getCentile, getMuacZscoreColor } from '../../../../functions';
 import * as circleStyles from './circleStyles.jsx';
 
 class Circle extends React.Component {
@@ -34,7 +34,7 @@ class Circle extends React.Component {
     const threshold = rest.threshold || config.animation.threshold;
 
     const absoluteValue = Math.abs(zscore);
-    const color = getColor(colors, absoluteValue, disabled);
+    const color = getMuacZscoreColor(colors, absoluteValue, disabled, rdata);
     const percentile = getCentile(zscore);
 
     const animated = !disabled && threshold !== 0 && absoluteValue >= threshold;

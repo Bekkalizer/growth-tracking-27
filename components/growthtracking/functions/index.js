@@ -12,7 +12,7 @@ import {
 import getIndicatorConfig from './getIndicatorConfig';
 import getPlotConfig from './getPlotConfig';
 import getSeries from './getSeries';
-import getColor from './getColor';
+import getMuacZscoreColor from './getMuacZscoreColor';
 
 export {
   getDeviations,
@@ -27,5 +27,5 @@ export {
   getIndicatorConfig,
   getPlotConfig,
   getSeries,
-  getColor,
+  getMuacZscoreColor,
 };

@@ -56,14 +56,7 @@ class ReferalAlert extends React.Component {
 }
 
 ReferalAlert.propTypes = {
-  visit: PropTypes.arrayOf(PropTypes.object),
   toggleAlert: PropTypes.func.isRequired,
 }
-
-ReferalAlert.defaultProps = {
-  visit: [],
-};
-
-
 
 export default ReferalAlert;
