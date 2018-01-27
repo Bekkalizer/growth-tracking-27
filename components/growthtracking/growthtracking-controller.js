@@ -11,36 +11,38 @@ const getInitialConfig = (get, create) =>
   get('growthTracker', 'config')
     .then(result => result.data)
     .catch(
-      () =>
-        create('growthTracker', 'config', defaultConfig)
-          .then(() => defaultConfig)
-          .catch(err => console.log(err)), // TODO: Figure out what to do if both config collection and config creation fails
-    );
+    () =>
+      create('growthTracker', 'config', defaultConfig)
+        .then(() => defaultConfig)
+        .catch(err => console.log(err)), // TODO: Figure out what to do if both config collection and config creation fails
+  );
 
 trackerCapture
   .controller(
-    'GrowthTrackingController',
-    (
-      $scope,
-      $location,
-      CurrentSelection,
-      DHIS2EventFactory,
-      DHIS2DataElementFactory,
-      DataStoreFactory,
-    ) => {
-      $scope.trackedEvents = DHIS2EventFactory.getEventsByProgram(
-        $location.search().tei,
-        $location.search().program,
-        null,
-      ).then(events => events);
-      $scope.dataElements = DHIS2DataElementFactory.getDataElements().then(
-        dataElements => dataElements,
-      );
+  'GrowthTrackingController',
+  (
+    $scope,
+    $location,
+    CurrentSelection,
+    DHIS2EventFactory,
+    DHIS2DataElementFactory,
+    DataStoreFactory,
+  ) => {
+    $scope.trackedEvents = DHIS2EventFactory.getEventsByProgram(
+      $location.search().tei,
+      $location.search().program,
+      null,
+    ).then(events => events);
+    $scope.dataElements = DHIS2DataElementFactory.getDataElements().then(
+      dataElements => dataElements,
+    );
 
-      $scope.dataStoreFunctions = DataStoreFactory;
-      $scope.trackedEntity = CurrentSelection.get().tei;
-    },
-  )
+    $scope.program = $location.search().program;
+
+    $scope.dataStoreFunctions = DataStoreFactory;
+    $scope.trackedEntity = CurrentSelection.get().tei;
+  },
+)
   .directive('reactapp', () => ({
     restrict: 'E',
 
@@ -55,6 +57,7 @@ trackerCapture
         scope.dataElements,
         scope.trackedEntity,
         initialConfig,
+        scope.program,
       ]).then(values => {
         ReactDOM.render(
           <App
@@ -62,6 +65,7 @@ trackerCapture
             dataElements={values[1]}
             trackedEntity={values[2]}
             initialConfig={values[3]}
+            program={values[4]}
             updateConfig={scope.dataStoreFunctions.update}
           />,
           el[0],
