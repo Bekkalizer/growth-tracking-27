@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-class ReferalAlert extends React.Component {
+class ReferralAlert extends React.Component {
 
 
   checkAlert = (visit) => {
@@ -55,8 +55,8 @@ class ReferalAlert extends React.Component {
   }
 }
 
-ReferalAlert.propTypes = {
+ReferralAlert.propTypes = {
   toggleAlert: PropTypes.func.isRequired,
 }
 
-export default ReferalAlert;
+export default ReferralAlert;
