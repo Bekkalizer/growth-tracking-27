@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { VisitList, Circle, ReferalAlert } from './components';
+import { VisitList, Circle, ReferralAlert } from './components';
 import ConfigButton from '../ConfigButton.jsx';
 import PlotPage from '../PlotPage';
 
@@ -93,7 +93,7 @@ class CirclePage extends React.Component {
         </div>
 
         {this.state.displayAlert && (
-          <ReferalAlert
+          <ReferralAlert
             toggleAlert={this.toggleAlert}
             visit={visit}
           />
