@@ -72,7 +72,7 @@ const getMotherPlotConfig = (
       maxPadding: 0.04,
       gridLineWidth: 0,
       tickInterval: 24 * 3600 * 1000 * 7,
-      minorTickInterval: 24 * 3600 * 1000 * 7,
+      minorTickInterval: 24 * 3600 * 1000,
       minorTickPosition: 'outside',
       minorTickLength: 5,
       minorTickWidth: 1,
@@ -87,6 +87,15 @@ const getMotherPlotConfig = (
       title: {
         text: ytitle
       },
+      maxPadding: 0.04,
+      gridLineWidth: 0,
+      tickInterval: 1,
+      minorTickInterval: 0.5,
+      minorTickPosition: 'outside',
+      minorTickLength: 5,
+      minorTickWidth: 1,
+      minorGridLineWidth: 0,
+
       crosshair: true,
     },
     series: [

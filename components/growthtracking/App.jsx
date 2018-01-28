@@ -149,9 +149,10 @@ class App extends React.Component {
           };
         });
 
+      console.log('visits:', visits);
+
       return <MotherCirclePage
         visits={visits}
-        patient={patient}
         config={config}
       />;
     } else if (program === 'U1xZvvCVWIM') {

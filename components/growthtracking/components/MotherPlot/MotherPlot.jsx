@@ -82,14 +82,6 @@ const MotherPlot = ({
           <option value="weight">Weight</option>
           <option value="muac">MUAC</option>
         </select>
-        <div
-          style={{
-            fontSize: '1.3rem',
-            margin: 6
-          }}
-        >
-          Show
-        </div>
 
         <button
           onClick={() => setPlotType(null)}

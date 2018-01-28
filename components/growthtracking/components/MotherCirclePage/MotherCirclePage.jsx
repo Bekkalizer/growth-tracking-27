@@ -35,13 +35,11 @@ class MotherCirclePage extends React.Component {
   render() {
     const {
       visits,
-      patient,
       config
     } = this.props;
     const {
       selectedVisit,
-      plotType,
-      showMultiple,
+      plotType
     } = this.state;
 
     const visit = selectedVisit;
@@ -54,17 +52,10 @@ class MotherCirclePage extends React.Component {
           setVisit={this.setVisit}
           plotType={plotType}
           setPlotType={this.setPlotType}
-          setShowMultiple={this.setShowMultiple}
-          selectedVisit={selectedVisit}
-          patient={patient}
-          showMultiple={showMultiple}
         />
       );
     }
     const mother = true;
-
-    console.log('mother visits: ', visits);
-    console.log('mother patient: ', patient);
     return (
       <div>
         <div>
@@ -133,7 +124,6 @@ class MotherCirclePage extends React.Component {
 
 MotherCirclePage.propTypes = {
   visits: PropTypes.arrayOf(PropTypes.object),
-  patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
   ).isRequired
