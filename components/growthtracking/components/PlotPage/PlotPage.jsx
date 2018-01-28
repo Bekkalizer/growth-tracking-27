@@ -155,7 +155,8 @@ PlotPage.propTypes = {
   plotType: PropTypes.string.isRequired,
   selectedVisit: PropTypes.object.isRequired,
   patient: PropTypes.object.isRequired,
-  showMultiple: PropTypes.string.isRequired
+  showMultiple: PropTypes.string.isRequired,
+  setVisit: PropTypes.func.isRequired
 };
 
 export default PlotPage;

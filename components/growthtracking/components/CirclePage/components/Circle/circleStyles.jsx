@@ -31,7 +31,8 @@ const p = (scale, color, zscore, percentile, hovered) => (
   </div>
 );
 
-const z = (scale, color, zscore, percentile, hovered, rdata) => {
+const z = (scale, color, zscore, percentile, hovered, rdata, suffix) => {
+
   if (rdata === null) {
     return (<div
       // Z-score text style
@@ -58,12 +59,12 @@ const z = (scale, color, zscore, percentile, hovered, rdata) => {
         marginTop: 2 * scale,
       }}
     >
-      {rdata}cm
+      {rdata}{suffix}
     </div>
   );
 }
 
-const zp = (scale, color, zscore, percentile, hovered, rdata) => {
+const zp = (scale, color, zscore, percentile, hovered, rdata, suffix) => {
   if (rdata === null) {
     return (
       <div>
@@ -135,7 +136,7 @@ const zp = (scale, color, zscore, percentile, hovered, rdata) => {
           justifyContent: 'center',
         }}
       >
-        {rdata}cm
+        {rdata}{suffix}
       </div>
       <div
         // Divider line style
@@ -176,7 +177,7 @@ const zp = (scale, color, zscore, percentile, hovered, rdata) => {
   );
 }
 
-const pz = (scale, color, zscore, percentile, hovered, rdata) => {
+const pz = (scale, color, zscore, percentile, hovered, rdata, suffix) => {
   if (rdata === null) {
     return (
       <div>
@@ -271,7 +272,7 @@ const pz = (scale, color, zscore, percentile, hovered, rdata) => {
         // Z-score text style
         style={{ color: hovered ? 'white' : color, fontSize: `${1.8 * scale}rem`, marginTop: 2 * scale }}
       >
-        {rdata}cm
+        {rdata}{suffix}
       </div>
     </div>
   );

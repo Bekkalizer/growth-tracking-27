@@ -13,6 +13,7 @@ import getIndicatorConfig from './getIndicatorConfig';
 import getPlotConfig from './getPlotConfig';
 import getSeries from './getSeries';
 import getMuacZscoreColor from './getMuacZscoreColor';
+import getMotherPlotConfig from './getMotherPlotConfig';
 
 export {
   getDeviations,
@@ -28,4 +29,5 @@ export {
   getPlotConfig,
   getSeries,
   getMuacZscoreColor,
+  getMotherPlotConfig
 };

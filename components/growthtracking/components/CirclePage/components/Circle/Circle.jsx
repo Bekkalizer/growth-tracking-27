@@ -12,6 +12,13 @@ class Circle extends React.Component {
     hovered: false,
   };
 
+  getColor = (colors, absoluteValue, disabled, rdata, mother) => {
+    if (mother) {
+      return '#928c8c';
+    }
+    return getMuacZscoreColor(colors, absoluteValue, disabled, rdata);
+  };
+
   toggleHover = () => this.setState(state => ({ hovered: !state.hovered }));
 
   render() {
@@ -20,9 +27,11 @@ class Circle extends React.Component {
       onClick,
       zscore,
       rdata,
+      suffix,
       label,
       config,
       disabled,
+      mother,
       ...rest
     } = this.props;
 
@@ -34,12 +43,12 @@ class Circle extends React.Component {
     const threshold = rest.threshold || config.animation.threshold;
 
     const absoluteValue = Math.abs(zscore);
-    const color = getMuacZscoreColor(colors, absoluteValue, disabled, rdata);
+    const color = this.getColor(colors, absoluteValue, disabled, rdata, mother);
     const percentile = getCentile(zscore);
 
     const animated = !disabled && threshold !== 0 && absoluteValue >= threshold;
 
-    if (zscore === null) {
+    if (zscore === null && rdata === null) {
       return null;
     }
 
@@ -80,7 +89,7 @@ class Circle extends React.Component {
             backgroundColor: hovered ? color : 'white',
           }}
         >
-          {circleStyles[display](scale, color, zscore, percentile, hovered, rdata)}
+          {circleStyles[display](scale, color, zscore, percentile, hovered, rdata, suffix)}
         </div>
         {label && (
           <div
@@ -100,6 +109,7 @@ Circle.propTypes = {
   onClick: PropTypes.func,
   zscore: PropTypes.number,
   rdata: PropTypes.number,
+  suffix: PropTypes.string,
   label: PropTypes.string,
   config: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
@@ -111,6 +121,7 @@ Circle.defaultProps = {
   label: null,
   zscore: null,
   rdata: null,
+  suffix: null,
   onClick: null,
   disabled: false,
 };

@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { VisitList, Circle, ReferralAlert } from './components';
-import ConfigButton from '../ConfigButton.jsx';
-import PlotPage from '../PlotPage';
+import { VisitList, Circle, ReferralAlert } from '../CirclePage/components';
+import MotherPlot from '../MotherPlot';
 
-class CirclePage extends React.Component {
+class MotherCirclePage extends React.Component {
   state = {
     // Defaults to the most recent visit
     selectedVisit: this.props.visits[this.props.visits.length - 1],
-    plotType: null,
-    displayType: 'zscore',
+    ploptType: null,
     showMultiple: 'multiple',
     displayAlert: true
   };
@@ -18,8 +16,6 @@ class CirclePage extends React.Component {
   setVisit = selectedVisit => {
     this.setState({ selectedVisit: this.props.visits[selectedVisit] });
   };
-
-  setDisplayType = event => this.setState({ displayType: event.target.value });
 
   setPlotType = event => {
     if (!event) {
@@ -40,28 +36,24 @@ class CirclePage extends React.Component {
     const {
       visits,
       patient,
-      toggleConfig,
       config
     } = this.props;
     const {
       selectedVisit,
       plotType,
-      displayType,
-      showMultiple
+      showMultiple,
     } = this.state;
 
     const visit = selectedVisit;
 
     if (visit && plotType) {
       return (
-        <PlotPage
+        <MotherPlot
           config={config}
           visits={visits}
           setVisit={this.setVisit}
           plotType={plotType}
           setPlotType={this.setPlotType}
-          displayType={displayType}
-          setDisplayType={this.setDisplayType}
           setShowMultiple={this.setShowMultiple}
           selectedVisit={selectedVisit}
           patient={patient}
@@ -69,17 +61,19 @@ class CirclePage extends React.Component {
         />
       );
     }
+    const mother = true;
 
+    console.log('mother visits: ', visits);
+    console.log('mother patient: ', patient);
     return (
       <div>
-        <ConfigButton toggleConfig={toggleConfig} />
-
-        <VisitList
-          setVisit={this.setVisit}
-          visits={visits}
-          visit={visit}
-        />
-
+        <div>
+          <VisitList
+            setVisit={this.setVisit}
+            visits={visits}
+            visit={visit}
+          />
+        </div>
         <div
           style={{
             fontSize: 20,
@@ -88,17 +82,18 @@ class CirclePage extends React.Component {
             paddingBottom: 24
           }}
         >
-          Showing z-scores for visit {visit.index + 1} on{' '}
+          Showing meassurements for visit {visit.index + 1} on{' '}
           {visit.eventDate.toISOString().slice(0, 10)}:{' '}
         </div>
 
-        {this.state.displayAlert && (
-          <ReferralAlert
-            toggleAlert={this.toggleAlert}
-            visit={visit}
-          />
-        )}
-
+        {
+          this.state.displayAlert && (
+            <ReferralAlert
+              toggleAlert={this.toggleAlert}
+              visit={visit}
+            />
+          )
+        }
         <div
           style={{
             display: 'flex',
@@ -106,35 +101,29 @@ class CirclePage extends React.Component {
             justifyContent: 'center'
           }}
         >
-
           <Circle
-            onClick={() => this.togglePlot('wfl')}
-            label="Weight-for-length"
-            zscore={visit.wfl}
-            suffix={'%'}
+            onClick={() => this.togglePlot('height')}
+            label="Height"
+            rdata={visit.height}
+            suffix={'cm'}
             config={config}
+            mother={mother}
           />
           <Circle
-            onClick={() => this.togglePlot('wfa')}
-            label="Weight-for-age"
-            zscore={visit.wfa}
-            suffix={'%'}
+            onClick={() => this.togglePlot('weight')}
+            label="Weight"
+            rdata={visit.weight}
+            suffix={'kg'}
             config={config}
+            mother={mother}
           />
           <Circle
-            onClick={() => this.togglePlot('lhfa')}
-            label="Length-for-age"
-            zscore={visit.lhfa}
-            suffix={'%'}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('acfa')}
-            label="MUAC-for-age"
-            zscore={visit.acfa}
+            onClick={() => this.togglePlot('muac')}
+            label="MUAC"
             rdata={visit.muac}
             suffix={'cm'}
             config={config}
+            mother={mother}
           />
         </div>
       </div>
@@ -142,17 +131,16 @@ class CirclePage extends React.Component {
   }
 }
 
-CirclePage.propTypes = {
+MotherCirclePage.propTypes = {
   visits: PropTypes.arrayOf(PropTypes.object),
-  toggleConfig: PropTypes.func.isRequired,
   patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
   ).isRequired
 };
 
-CirclePage.defaultProps = {
+MotherCirclePage.defaultProps = {
   visits: [],
 };
 
-export default CirclePage;
+export default MotherCirclePage;

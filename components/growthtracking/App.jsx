@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ConfigPage from './components/ConfigPage';
 import CirclePage from './components/CirclePage';
+import MotherCirclePage from './components/MotherCirclePage';
 import {
   getWeightForLength,
   getWeightForAge,
@@ -25,36 +26,6 @@ class App extends React.Component {
       this.saveConfig(defaultConfig);
     }
   }
-
-  saveConfig = config => {
-    // TODO: Prevent save if no change
-    // TODO: Add feedback when saving
-    this.props.updateConfig('growthTracker', 'config', config);
-
-    this.setState({
-      config
-    });
-  };
-
-  addAnimation = radius => {
-    const keyframesStyle = `
-        @-webkit-keyframes pulse {
-          0% {-webkit-transform: scale(1, 1); opacity: 1.0;}
-          100% {-webkit-transform: scale(${1.2 * radius}, ${1.2 *
-      radius}); opacity: 0.0;}
-        }`;
-    const styleElement = document.createElement('style');
-
-    document.head.appendChild(styleElement);
-
-    styleElement.sheet.insertRule(
-      keyframesStyle,
-      styleElement.sheet.cssRules.length
-    );
-  };
-
-  toggleConfig = () =>
-    this.setState(state => ({ showConfig: !state.showConfig }));
 
   getPatientData = (trackedEntity, program) => {
     if (program === 'qbQ4TP1Yy3K') {
@@ -86,6 +57,36 @@ class App extends React.Component {
       ).value
     };
   }
+
+  saveConfig = config => {
+    // TODO: Prevent save if no change
+    // TODO: Add feedback when saving
+    this.props.updateConfig('growthTracker', 'config', config);
+
+    this.setState({
+      config
+    });
+  };
+
+  addAnimation = radius => {
+    const keyframesStyle = `
+        @-webkit-keyframes pulse {
+          0% {-webkit-transform: scale(1, 1); opacity: 1.0;}
+          100% {-webkit-transform: scale(${1.2 * radius}, ${1.2 *
+      radius}); opacity: 0.0;}
+        }`;
+    const styleElement = document.createElement('style');
+
+    document.head.appendChild(styleElement);
+
+    styleElement.sheet.insertRule(
+      keyframesStyle,
+      styleElement.sheet.cssRules.length
+    );
+  };
+
+  toggleConfig = () =>
+    this.setState(state => ({ showConfig: !state.showConfig }));
 
   render() {
     const { events, trackedEntity, program } = this.props;
@@ -121,10 +122,38 @@ class App extends React.Component {
     }
 
     // mother: qbQ4TP1Yy3K
-    // child: pVHsqRBn4TY
+    // child: U1xZvvCVWIM
     // if FBFMother program is selected
     if (program === 'qbQ4TP1Yy3K') {
-      return null;
+      const visits = completedEvents
+        .sort((a, b) => a.eventDate > b.eventDate)
+        .map((event, index) => {
+          console.log(event);
+          const eventDate = new Date(event.eventDate);
+          const muac = Number(
+            event.dataValues.find(val => val.dataElement === 'ySphlmZ7fKG').value
+          );
+          const weight = Number(
+            event.dataValues.find(val => val.dataElement === 'KHyKhpRfVRS').value
+          );
+          const height = Number(
+            event.dataValues.find(val => val.dataElement === 'VCYJkaP96KZ').value
+          );
+          return {
+            index,
+            eventDate,
+            muac,
+            weight,
+            height,
+            completedBy: event.completedBy
+          };
+        });
+
+      return <MotherCirclePage
+        visits={visits}
+        patient={patient}
+        config={config}
+      />;
     } else if (program === 'U1xZvvCVWIM') {
       // if FBFChild program is selected
       const visits = completedEvents
