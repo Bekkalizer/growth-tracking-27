@@ -89,8 +89,8 @@ const getMotherPlotConfig = (
       },
       maxPadding: 0.04,
       gridLineWidth: 0,
-      tickInterval: 1,
-      minorTickInterval: 0.5,
+      tickInterval: 0.5,
+      minorTickInterval: 0.25,
       minorTickPosition: 'outside',
       minorTickLength: 5,
       minorTickWidth: 1,
@@ -111,6 +111,7 @@ const getMotherPlotConfig = (
         showInLegend: false
       }
     ],
+
   };
 
 };
