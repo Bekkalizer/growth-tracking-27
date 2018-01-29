@@ -60,8 +60,6 @@ class App extends React.Component {
       config.animation.radius || defaultConfig.animation.radius
     );
 
-    console.log('program:', program);
-
     if (this.state.showConfig) {
       return (
         <ConfigPage

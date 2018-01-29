@@ -13,34 +13,28 @@ class Alert extends React.Component {
   }
 
   getAlerts = (visit, config) => {
-    const { indicators } = config;
+    const { indicators, alerts, alertThreshold } = config;
+
+    if (alertThreshold === 0) return [];
 
     const message = [];
-    if (indicators.wfl && visit.wfl <= -2) {
-      message.push(
-        'Weight-for-Length is critically low, refer to district hospital'
-      );
+    if (indicators.wfl && Math.abs(visit.wfl) >= alertThreshold) {
+      message.push(alerts.wfl);
     }
-    if (indicators.wfa && visit.wfa <= -2) {
-      message.push(
-        'Weight-for-Age is critically low, refer to district hospital'
-      );
+    if (indicators.wfa && Math.abs(visit.wfa) >= alertThreshold) {
+      message.push(alerts.wfa);
     }
-    if (indicators.lhfa && visit.lhfa <= -2) {
-      message.push(
-        'Length-For-Age is critically low, refer to district hospital'
-      );
+    if (indicators.lhfa && Math.abs(visit.lhfa) >= alertThreshold) {
+      message.push(alerts.lhfa);
     }
-    if (indicators.muac && visit.muac < 12.5) {
-      message.push('MUAC is critically low, refer to district hospital');
+    if (indicators.muac && Math.abs(visit.muac) < 12.5) {
+      message.push(alerts.muac);
     }
-    if (indicators.bfa && visit.bfa <= -2) {
-      message.push('BMI-for-age is critically low, refer to district hospital');
+    if (indicators.bfa && Math.abs(visit.bfa) >= alertThreshold) {
+      message.push(alerts.bfa);
     }
-    if (indicators.acfa && visit.acfa <= -2) {
-      message.push(
-        'MUAC-for-age is critically low, refer to district hospital'
-      );
+    if (indicators.acfa && Math.abs(visit.acfa) >= alertThreshold) {
+      message.push(alerts.acfa);
     }
     return message;
   };

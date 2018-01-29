@@ -8,6 +8,7 @@ import SaveButton from './SaveButton.jsx';
 import RestoreButton from './RestoreButton.jsx';
 import LabeledSlider from './LabeledSlider.jsx';
 import IndicatorSettings from './IndicatorSettings.jsx';
+import AlertSettings from './AlertSettings.jsx';
 
 export {
   ColorSettings,
@@ -19,5 +20,6 @@ export {
   RestoreButton,
   SizeSettings,
   LabeledSlider,
-  IndicatorSettings
+  IndicatorSettings,
+  AlertSettings
 };

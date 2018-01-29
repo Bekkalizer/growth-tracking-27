@@ -10,7 +10,8 @@ import {
   SaveButton,
   RestoreButton,
   SizeSettings,
-  IndicatorSettings
+  IndicatorSettings,
+  AlertSettings
 } from './components';
 import { defaultConfig } from '../../datasets';
 
@@ -51,6 +52,14 @@ class ConfigPage extends React.Component {
         [indicator]: !state.indicators[indicator]
       }
     }));
+
+  setAlertMessage = (id, alert) => {
+    this.setState(state => ({
+      alerts: { ...state.alerts, [id]: alert }
+    }));
+  };
+
+  setAlertThreshold = alertThreshold => this.setState({ alertThreshold });
 
   restoreDefault = type => {
     if (!confirm('Are you sure you want to restore default settings?')) {
@@ -115,6 +124,20 @@ class ConfigPage extends React.Component {
           }
           title="Indicators"
           restoreDefault={() => this.restoreDefault('indicators')}
+        />
+
+        <hr style={{ clear: 'both' }} />
+
+        <SettingWrapper
+          SettingComponent={
+            <AlertSettings
+              setAlertMessage={this.setAlertMessage}
+              setAlertThreshold={this.setAlertThreshold}
+              config={config}
+            />
+          }
+          title="Alert Messages"
+          restoreDefault={() => this.restoreDefault('alerts')}
         />
 
         <hr style={{ clear: 'both' }} />

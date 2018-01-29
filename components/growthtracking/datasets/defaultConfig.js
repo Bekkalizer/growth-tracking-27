@@ -34,17 +34,37 @@ const defaultIndicators = {
   bfa: false
 };
 
+const defaultAlerts = {
+  wfl: 'Weight-for-length is at a dangerous level.',
+  wfa: 'Weight-for-age is at a dangerous level.',
+  lhfa: 'Length-for-age is at a dangerous level.',
+  acfa: 'MUAC-for-age is at a dangerous level.',
+  muac: 'MUAC is at a dangerous level.',
+  bfa: 'BMI-for-age is at a dangerous level.'
+};
+
 const defaultConfig = {
   colors: defaultColors,
   labels: defaultLabels,
   scale: 1,
   display: 'z',
   animation: defaultAnimation,
-  indicators: defaultIndicators
+  indicators: defaultIndicators,
+  alerts: defaultAlerts,
+  alertThreshold: 2
 };
 
 const validateConfig = config => {
-  const { colors, labels, scale, display, animation, indicators } = config;
+  const {
+    colors,
+    labels,
+    scale,
+    display,
+    animation,
+    indicators,
+    alerts,
+    alertThreshold
+  } = config;
 
   if (
     Object.keys(config).length !== Object.keys(defaultConfig).length ||
@@ -64,6 +84,7 @@ const validateConfig = config => {
     !colors.SD3_4
   )
     return false;
+
   if (!Object.values(colors).every(color => typeof color === 'string'))
     return false;
 
@@ -75,6 +96,7 @@ const validateConfig = config => {
     !labels.SD3_4
   )
     return false;
+
   if (!Object.values(labels).every(label => typeof label === 'string'))
     return false;
 
@@ -97,6 +119,14 @@ const validateConfig = config => {
       indicator => typeof indicator === 'boolean'
     )
   );
+
+  if (!Object.values(alerts).every(alert => typeof alert === 'string'))
+    return false;
+  if (Object.values(alerts).length !== 6) return false;
+
+  if (!alertThreshold) return false;
+
+  if (alertThreshold && typeof alertThreshold !== 'number') return false;
 
   return true;
 };
