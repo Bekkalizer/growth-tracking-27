@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { VisitList, Circle, ReferralAlert } from './components';
+import { VisitList, Circle, Alert } from './components';
 import ConfigButton from '../../ConfigButton.jsx';
 import PlotPage from '../PlotPage';
 
@@ -11,8 +11,7 @@ class CirclePage extends React.Component {
     selectedVisit: this.props.visits[this.props.visits.length - 1],
     plotType: null,
     displayType: 'zscore',
-    showMultiple: 'multiple',
-    displayAlert: true
+    showMultiple: 'multiple'
   };
 
   setVisit = selectedVisit => {
@@ -33,9 +32,6 @@ class CirclePage extends React.Component {
     this.setState({ showMultiple: event.target.value });
 
   togglePlot = plotType => this.setState({ plotType });
-
-  toggleAlert = () =>
-    this.setState(state => ({ displayAlert: !state.displayAlert }));
 
   render() {
     const {
@@ -88,9 +84,7 @@ class CirclePage extends React.Component {
           {visit.eventDate.toISOString().slice(0, 10)}:{' '}
         </div>
 
-        {this.state.displayAlert && (
-          <ReferralAlert toggleAlert={this.toggleAlert} visit={visit} />
-        )}
+        <Alert visit={visit} config={config} />
 
         <div
           style={{

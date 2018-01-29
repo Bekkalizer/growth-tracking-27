@@ -1,5 +1,5 @@
 import VisitList from './VisitList.jsx';
 import Circle from './Circle';
-import ReferralAlert from './ReferralAlert.jsx';
+import Alert from './Alert.jsx';
 
-export { VisitList, Circle, ReferralAlert };
+export { VisitList, Circle, Alert };

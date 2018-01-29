@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  VisitList,
-  Circle,
-  ReferralAlert
-} from '../ChildApp/CirclePage/components';
+import { VisitList, Circle, Alert } from '../ChildApp/CirclePage/components';
 import MotherPlot from './MotherPlot.jsx';
 import ConfigButton from '../ConfigButton.jsx';
 
@@ -14,8 +10,7 @@ class MotherCirclePage extends React.Component {
     // Defaults to the most recent visit
     selectedVisit: this.props.visits[this.props.visits.length - 1],
     ploptType: null,
-    showMultiple: 'multiple',
-    displayAlert: true
+    showMultiple: 'multiple'
   };
 
   setVisit = selectedVisit => {
@@ -34,9 +29,6 @@ class MotherCirclePage extends React.Component {
     this.setState({ showMultiple: event.target.value });
 
   togglePlot = plotType => this.setState({ plotType });
-
-  toggleAlert = () =>
-    this.setState(state => ({ displayAlert: !state.displayAlert }));
 
   render() {
     const { visits, toggleConfig, config, allowConfigUpdate } = this.props;
@@ -77,9 +69,7 @@ class MotherCirclePage extends React.Component {
           {visit.eventDate.toISOString().slice(0, 10)}:{' '}
         </div>
 
-        {this.state.displayAlert && (
-          <ReferralAlert toggleAlert={this.toggleAlert} visit={visit} />
-        )}
+        <Alert visit={visit} config={config} />
 
         <div
           style={{
