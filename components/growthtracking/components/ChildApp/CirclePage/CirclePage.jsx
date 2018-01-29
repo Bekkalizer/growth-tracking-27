@@ -99,32 +99,48 @@ class CirclePage extends React.Component {
             justifyContent: 'center'
           }}
         >
-          <Circle
-            onClick={() => this.togglePlot('wfl')}
-            label="Weight-for-length"
-            zscore={visit.wfl}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('wfa')}
-            label="Weight-for-age"
-            zscore={visit.wfa}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('lhfa')}
-            label="Length-for-age"
-            zscore={visit.lhfa}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('acfa')}
-            label="MUAC-for-age"
-            zscore={visit.acfa}
-            rdata={visit.muac}
-            suffix={'cm'}
-            config={config}
-          />
+          {config.indicators.wfl && (
+            <Circle
+              onClick={() => this.togglePlot('wfl')}
+              label="Weight-for-length"
+              zscore={visit.wfl}
+              config={config}
+            />
+          )}
+          {config.indicators.wfa && (
+            <Circle
+              onClick={() => this.togglePlot('wfa')}
+              label="Weight-for-age"
+              zscore={visit.wfa}
+              config={config}
+            />
+          )}
+          {config.indicators.lhfa && (
+            <Circle
+              onClick={() => this.togglePlot('lhfa')}
+              label="Length-for-age"
+              zscore={visit.lhfa}
+              config={config}
+            />
+          )}
+          {config.indicators.acfa && (
+            <Circle
+              onClick={() => this.togglePlot('acfa')}
+              label="MUAC-for-age"
+              zscore={visit.acfa}
+              config={config}
+            />
+          )}
+          {config.indicators.muac && (
+            <Circle
+              onClick={() => this.togglePlot('acfa')}
+              label="MUAC"
+              zscore={visit.acfa}
+              rdata={visit.muac}
+              suffix="cm"
+              config={config}
+            />
+          )}
         </div>
       </div>
     );

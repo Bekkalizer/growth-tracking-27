@@ -2,27 +2,36 @@ const defaultColors = {
   SD0_1: '#BADA55',
   SD1_2: '#dede32',
   SD2_3: '#ff7070',
-  SD3_4: '#777777',
+  SD3_4: '#777777'
 };
 
 const defaultLabels = {
   SD0_1: 'SD 0-1',
   SD1_2: 'SD 1-2',
   SD2_3: 'SD 2-3',
-  SD3_4: 'SD 3+',
+  SD3_4: 'SD 3+'
 };
 
 const descriptions = {
   SD0_1: '0-1 Standard deviation range',
   SD1_2: '1-2 Standard deviation range',
   SD2_3: '2-3 Standard deviation range',
-  SD3_4: '3+ Standard deviation range',
+  SD3_4: '3+ Standard deviation range'
 };
 
 const defaultAnimation = {
   threshold: 1,
   speed: 1,
-  radius: 1,
+  radius: 1
+};
+
+const defaultIndicators = {
+  wfl: true,
+  wfa: true,
+  lfa: true,
+  acfa: false,
+  muac: true,
+  bfa: true
 };
 
 const defaultConfig = {
@@ -31,10 +40,11 @@ const defaultConfig = {
   scale: 1,
   display: 'z',
   animation: defaultAnimation,
+  indicators: defaultIndicators
 };
 
 const validateConfig = config => {
-  const { colors, labels, scale, display, animation } = config;
+  const { colors, labels, scale, display, animation, indicators } = config;
 
   if (
     Object.keys(config).length !== Object.keys(defaultConfig).length ||
@@ -82,6 +92,12 @@ const validateConfig = config => {
     return false;
   if (!Object.values(animation).every(a => typeof a === 'number')) return false;
 
+  if (
+    !Object.values(indicators).every(
+      indicator => typeof indicator === 'boolean'
+    )
+  );
+
   return true;
 };
 
@@ -91,5 +107,5 @@ export {
   defaultAnimation,
   descriptions,
   defaultConfig,
-  validateConfig,
+  validateConfig
 };
