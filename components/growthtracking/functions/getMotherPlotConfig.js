@@ -1,4 +1,3 @@
-import getIndicatorConfig from './getIndicatorConfig';
 
 const getMotherPlotConfig = (
   indicatorConfig,
@@ -29,7 +28,7 @@ const getMotherPlotConfig = (
 
   return {
     title: {
-      text: getIndicatorConfig.title,
+      text: indicatorConfig.title,
       x: 0
     },
     chart: {
@@ -42,6 +41,9 @@ const getMotherPlotConfig = (
       },
       backgroundColor: 'white',
 
+    },
+    exporting: {
+      fallbackToExportServer: false
     },
     credits: false,
     plotOptions: {
@@ -96,7 +98,23 @@ const getMotherPlotConfig = (
       minorTickWidth: 1,
       minorGridLineWidth: 0,
 
+      startOnTick: false,
+      endOnTick: false,
       crosshair: true,
+    },
+    tooltip: {
+      formatter() {
+        const visit = visits[this.point.index];
+        const data = visit[measurement2];
+        const date = new Date(this.x).toISOString()
+          .slice(0, 10);
+        return `
+                    <b>Visit: ${visit.index +
+          1}</b> <br />
+                    Date: ${date} <br />
+                    ${ytitle}: ${this.y} <br />`
+
+      }
     },
     series: [
       {

@@ -113,6 +113,9 @@ const getPlotConfig = (
       backgroundColor: 'white',
 
     },
+    exporting: {
+      fallbackToExportServer: false
+    },
     credits: false,
     plotOptions: {
       scatter: {
