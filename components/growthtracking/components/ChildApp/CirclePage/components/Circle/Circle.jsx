@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 
 import CircleAnimation from './CircleAnimation.jsx';
 
-import { getCentile, getMuacZscoreColor } from '../../../../functions';
+import { getCentile, getMuacZscoreColor } from '../../../../../functions';
 import * as circleStyles from './circleStyles.jsx';
 
 class Circle extends React.Component {
-
   state = {
-    hovered: false,
+    hovered: false
   };
 
   getColor = (colors, absoluteValue, disabled, rdata, mother) => {
@@ -22,7 +21,6 @@ class Circle extends React.Component {
   toggleHover = () => this.setState(state => ({ hovered: !state.hovered }));
 
   render() {
-
     const {
       onClick,
       zscore,
@@ -64,7 +62,7 @@ class Circle extends React.Component {
           background: 'transparent',
           border: 'none',
           outline: 'none',
-          cursor: onClick ? 'pointer' : 'unset',
+          cursor: onClick ? 'pointer' : 'unset'
         }}
         onClick={onClick}
         onMouseEnter={() => this.toggleHover()}
@@ -86,10 +84,18 @@ class Circle extends React.Component {
             height: `${120 * scale}px`,
             border: `${8 * scale}px solid ${color}`,
             margin: 'auto',
-            backgroundColor: hovered ? color : 'white',
+            backgroundColor: hovered ? color : 'white'
           }}
         >
-          {circleStyles[display](scale, color, zscore, percentile, hovered, rdata, suffix)}
+          {circleStyles[display](
+            scale,
+            color,
+            zscore,
+            percentile,
+            hovered,
+            rdata,
+            suffix
+          )}
         </div>
         {label && (
           <div
@@ -112,9 +118,9 @@ Circle.propTypes = {
   suffix: PropTypes.string,
   label: PropTypes.string,
   config: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
+    PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number])
   ).isRequired,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 Circle.defaultProps = {
@@ -123,7 +129,7 @@ Circle.defaultProps = {
   rdata: null,
   suffix: null,
   onClick: null,
-  disabled: false,
+  disabled: false
 };
 
 export default Circle;

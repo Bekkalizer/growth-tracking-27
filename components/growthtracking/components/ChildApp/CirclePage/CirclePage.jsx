@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { VisitList, Circle, ReferralAlert } from './components';
-import ConfigButton from '../ConfigButton.jsx';
+import ConfigButton from '../../ConfigButton.jsx';
 import PlotPage from '../PlotPage';
 
 class CirclePage extends React.Component {
@@ -34,21 +34,12 @@ class CirclePage extends React.Component {
 
   togglePlot = plotType => this.setState({ plotType });
 
-  toggleAlert = () => this.setState(state => ({ displayAlert: !state.displayAlert }));
+  toggleAlert = () =>
+    this.setState(state => ({ displayAlert: !state.displayAlert }));
 
   render() {
-    const {
-      visits,
-      patient,
-      toggleConfig,
-      config
-    } = this.props;
-    const {
-      selectedVisit,
-      plotType,
-      displayType,
-      showMultiple
-    } = this.state;
+    const { visits, patient, toggleConfig, config } = this.props;
+    const { selectedVisit, plotType, displayType, showMultiple } = this.state;
 
     const visit = selectedVisit;
 
@@ -74,11 +65,7 @@ class CirclePage extends React.Component {
       <div>
         <ConfigButton toggleConfig={toggleConfig} />
 
-        <VisitList
-          setVisit={this.setVisit}
-          visits={visits}
-          visit={visit}
-        />
+        <VisitList setVisit={this.setVisit} visits={visits} visit={visit} />
 
         <div
           style={{
@@ -93,10 +80,7 @@ class CirclePage extends React.Component {
         </div>
 
         {this.state.displayAlert && (
-          <ReferralAlert
-            toggleAlert={this.toggleAlert}
-            visit={visit}
-          />
+          <ReferralAlert toggleAlert={this.toggleAlert} visit={visit} />
         )}
 
         <div
@@ -106,7 +90,6 @@ class CirclePage extends React.Component {
             justifyContent: 'center'
           }}
         >
-
           <Circle
             onClick={() => this.togglePlot('wfl')}
             label="Weight-for-length"
@@ -152,7 +135,7 @@ CirclePage.propTypes = {
 };
 
 CirclePage.defaultProps = {
-  visits: [],
+  visits: []
 };
 
 export default CirclePage;

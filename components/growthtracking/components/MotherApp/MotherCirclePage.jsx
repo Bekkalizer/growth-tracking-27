@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { VisitList, Circle, ReferralAlert } from '../CirclePage/components';
-import MotherPlot from '../MotherPlot';
+import {
+  VisitList,
+  Circle,
+  ReferralAlert
+} from '../ChildApp/CirclePage/components';
+import MotherPlot from './MotherPlot.jsx';
+import ConfigButton from '../ConfigButton.jsx';
 
 class MotherCirclePage extends React.Component {
   state = {
@@ -30,17 +35,12 @@ class MotherCirclePage extends React.Component {
 
   togglePlot = plotType => this.setState({ plotType });
 
-  toggleAlert = () => this.setState(state => ({ displayAlert: !state.displayAlert }));
+  toggleAlert = () =>
+    this.setState(state => ({ displayAlert: !state.displayAlert }));
 
   render() {
-    const {
-      visits,
-      config
-    } = this.props;
-    const {
-      selectedVisit,
-      plotType
-    } = this.state;
+    const { visits, toggleConfig, config } = this.props;
+    const { selectedVisit, plotType } = this.state;
 
     const visit = selectedVisit;
 
@@ -55,16 +55,13 @@ class MotherCirclePage extends React.Component {
         />
       );
     }
-    const mother = true;
+
     return (
       <div>
-        <div>
-          <VisitList
-            setVisit={this.setVisit}
-            visits={visits}
-            visit={visit}
-          />
-        </div>
+        <ConfigButton toggleConfig={toggleConfig} />
+
+        <VisitList setVisit={this.setVisit} visits={visits} visit={visit} />
+
         <div
           style={{
             fontSize: 20,
@@ -77,14 +74,10 @@ class MotherCirclePage extends React.Component {
           {visit.eventDate.toISOString().slice(0, 10)}:{' '}
         </div>
 
-        {
-          this.state.displayAlert && (
-            <ReferralAlert
-              toggleAlert={this.toggleAlert}
-              visit={visit}
-            />
-          )
-        }
+        {this.state.displayAlert && (
+          <ReferralAlert toggleAlert={this.toggleAlert} visit={visit} />
+        )}
+
         <div
           style={{
             display: 'flex',
@@ -98,7 +91,7 @@ class MotherCirclePage extends React.Component {
             rdata={visit.height}
             suffix={'cm'}
             config={config}
-            mother={mother}
+            mother
           />
           <Circle
             onClick={() => this.togglePlot('weight')}
@@ -106,7 +99,7 @@ class MotherCirclePage extends React.Component {
             rdata={visit.weight}
             suffix={'kg'}
             config={config}
-            mother={mother}
+            mother
           />
           <Circle
             onClick={() => this.togglePlot('muac')}
@@ -114,7 +107,7 @@ class MotherCirclePage extends React.Component {
             rdata={visit.muac}
             suffix={'cm'}
             config={config}
-            mother={mother}
+            mother
           />
         </div>
       </div>
@@ -126,11 +119,12 @@ MotherCirclePage.propTypes = {
   visits: PropTypes.arrayOf(PropTypes.object),
   config: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
-  ).isRequired
+  ).isRequired,
+  toggleConfig: PropTypes.func.isRequired
 };
 
 MotherCirclePage.defaultProps = {
-  visits: [],
+  visits: []
 };
 
 export default MotherCirclePage;

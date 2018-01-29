@@ -5,7 +5,7 @@ import HighchartsMore from 'highcharts-more';
 import HighchartsExporting from 'highcharts-exporting';
 import HighchartsOfflineExporting from 'highcharts-offline-exporting';
 
-import { getIndicatorConfig, getPlotConfig } from '../../functions';
+import { getIndicatorConfig, getPlotConfig } from '../../../functions';
 
 HighchartsMore(ReactHighcharts.Highcharts);
 HighchartsExporting(ReactHighcharts.Highcharts);
