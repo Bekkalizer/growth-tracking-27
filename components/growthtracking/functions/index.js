@@ -4,10 +4,8 @@ import {
   getWeightForLength,
   getWeightForAge,
   getLengthForAge,
-  getHCForAge,
   getMUACForAge,
-  getTSForAge,
-  getSSForAge,
+  getBMIForAge
 } from './zFormulas.js';
 import getIndicatorConfig from './getIndicatorConfig';
 import getPlotConfig from './getPlotConfig';
@@ -21,10 +19,8 @@ export {
   getWeightForLength,
   getWeightForAge,
   getLengthForAge,
-  getHCForAge,
+  getBMIForAge,
   getMUACForAge,
-  getTSForAge,
-  getSSForAge,
   getIndicatorConfig,
   getPlotConfig,
   getSeries,

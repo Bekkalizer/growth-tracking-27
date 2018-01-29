@@ -56,6 +56,15 @@ const IndicatorSettings = ({ setIndicator, config }) => {
         />
 
         <Circle
+          onClick={() => setIndicator('bfa')}
+          label="BMI-for-age"
+          zscore={0.52}
+          scale={0.8}
+          config={config}
+          disabled={!indicators.bfa}
+        />
+
+        <Circle
           onClick={() => setIndicator('muac')}
           label="MUAC"
           zscore={0.52}

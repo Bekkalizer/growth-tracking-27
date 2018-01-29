@@ -6,7 +6,8 @@ import {
   getWeightForLength,
   getWeightForAge,
   getLengthForAge,
-  getMUACForAge
+  getMUACForAge,
+  getBMIForAge
 } from '../../functions';
 
 class ChildApp extends React.Component {
@@ -44,7 +45,6 @@ class ChildApp extends React.Component {
     }
 
     const patient = this.getPatientData(trackedEntity);
-    console.log('patient:', patient);
 
     const completedEvents = events.reduce((acc, val) => {
       if (!val.completedDate) return acc;
@@ -62,7 +62,6 @@ class ChildApp extends React.Component {
     const visits = completedEvents
       .sort((a, b) => a.eventDate > b.eventDate)
       .map((event, index) => {
-        console.log(event);
         const eventDate = new Date(event.eventDate);
         const ageInMonths = Number(
           event.dataValues.find(val => val.dataElement === 'WeCHX2qGTPy').value
@@ -81,10 +80,13 @@ class ChildApp extends React.Component {
           event.dataValues.find(val => val.dataElement === 'VCYJkaP96KZ').value
         );
 
+        const bmi = weight / (height / 100) ** 2;
+
         const rawWfl = getWeightForLength(patient.gender, weight, height);
         const rawWfa = getWeightForAge(patient.gender, weight, ageInDays);
         const rawLhfa = getLengthForAge(patient.gender, height, ageInDays);
         const rawAcfa = getMUACForAge(patient.gender, muac, ageInDays);
+        const rawBfa = getBMIForAge(patient.gender, bmi, ageInDays);
         return {
           index,
           eventDate,
@@ -93,15 +95,15 @@ class ChildApp extends React.Component {
           muac,
           weight,
           height,
+          bmi,
           wfl: rawWfl === null ? null : Math.round(rawWfl * 100) / 100,
           wfa: rawWfa === null ? null : Math.round(rawWfa * 100) / 100,
           lhfa: rawLhfa === null ? null : Math.round(rawLhfa * 100) / 100,
+          bfa: rawBfa === null ? null : Math.round(rawBfa * 100) / 100,
           acfa: rawAcfa === null ? null : Math.round(rawAcfa * 100) / 100,
           completedBy: event.completedBy
         };
       });
-
-    console.log('visits:', visits);
 
     return (
       <CirclePage

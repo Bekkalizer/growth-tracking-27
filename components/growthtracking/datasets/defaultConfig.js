@@ -28,10 +28,10 @@ const defaultAnimation = {
 const defaultIndicators = {
   wfl: true,
   wfa: true,
-  lfa: true,
+  lhfa: true,
   acfa: false,
   muac: true,
-  bfa: true
+  bfa: false
 };
 
 const defaultConfig = {
