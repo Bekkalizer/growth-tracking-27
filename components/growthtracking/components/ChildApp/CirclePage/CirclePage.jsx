@@ -38,7 +38,13 @@ class CirclePage extends React.Component {
     this.setState(state => ({ displayAlert: !state.displayAlert }));
 
   render() {
-    const { visits, patient, toggleConfig, config } = this.props;
+    const {
+      visits,
+      patient,
+      toggleConfig,
+      config,
+      allowConfigUpdate
+    } = this.props;
     const { selectedVisit, plotType, displayType, showMultiple } = this.state;
 
     const visit = selectedVisit;
@@ -63,7 +69,10 @@ class CirclePage extends React.Component {
 
     return (
       <div>
-        <ConfigButton toggleConfig={toggleConfig} />
+        <ConfigButton
+          toggleConfig={toggleConfig}
+          allowConfigUpdate={allowConfigUpdate}
+        />
 
         <VisitList setVisit={this.setVisit} visits={visits} visit={visit} />
 
@@ -128,7 +137,8 @@ CirclePage.propTypes = {
   patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
-  ).isRequired
+  ).isRequired,
+  allowConfigUpdate: PropTypes.bool.isRequired
 };
 
 CirclePage.defaultProps = {

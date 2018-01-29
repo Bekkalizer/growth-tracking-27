@@ -17,7 +17,13 @@ class MotherApp extends React.Component {
   });
 
   render() {
-    const { events, trackedEntity, config, toggleConfig } = this.props;
+    const {
+      events,
+      trackedEntity,
+      config,
+      toggleConfig,
+      allowConfigUpdate
+    } = this.props;
 
     if (events.length === 0) {
       return (
@@ -78,7 +84,7 @@ class MotherApp extends React.Component {
         visits={visits}
         config={config}
         toggleConfig={toggleConfig}
-        config={config}
+        allowConfigUpdate={allowConfigUpdate}
       />
     );
   }
@@ -86,7 +92,12 @@ class MotherApp extends React.Component {
 
 MotherApp.propTypes = {
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
-  trackedEntity: PropTypes.object.isRequired
+  trackedEntity: PropTypes.object.isRequired,
+  allowConfigUpdate: PropTypes.bool.isRequired,
+  toggleConfig: PropTypes.func.isRequired,
+  config: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
+  ).isRequired
 };
 
 export default MotherApp;

@@ -53,7 +53,7 @@ class App extends React.Component {
     this.setState(state => ({ showConfig: !state.showConfig }));
 
   render() {
-    const { events, trackedEntity, program } = this.props;
+    const { events, trackedEntity, program, allowConfigUpdate } = this.props;
     const { config } = this.state;
 
     this.addAnimation(
@@ -79,6 +79,7 @@ class App extends React.Component {
           trackedEntity={trackedEntity}
           events={events}
           toggleConfig={this.toggleConfig}
+          allowConfigUpdate={allowConfigUpdate}
           config={config}
         />
       );
@@ -89,6 +90,7 @@ class App extends React.Component {
         trackedEntity={trackedEntity}
         events={events}
         toggleConfig={this.toggleConfig}
+        allowConfigUpdate={allowConfigUpdate}
         config={config}
       />
     );
@@ -102,7 +104,8 @@ App.propTypes = {
   updateConfig: PropTypes.func.isRequired,
   initialConfig: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
-  ).isRequired
+  ).isRequired,
+  allowConfigUpdate: PropTypes.bool.isRequired
 };
 
 export default App;

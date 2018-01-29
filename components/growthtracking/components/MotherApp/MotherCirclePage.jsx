@@ -39,7 +39,7 @@ class MotherCirclePage extends React.Component {
     this.setState(state => ({ displayAlert: !state.displayAlert }));
 
   render() {
-    const { visits, toggleConfig, config } = this.props;
+    const { visits, toggleConfig, config, allowConfigUpdate } = this.props;
     const { selectedVisit, plotType } = this.state;
 
     const visit = selectedVisit;
@@ -58,7 +58,10 @@ class MotherCirclePage extends React.Component {
 
     return (
       <div>
-        <ConfigButton toggleConfig={toggleConfig} />
+        <ConfigButton
+          toggleConfig={toggleConfig}
+          allowConfigUpdate={allowConfigUpdate}
+        />
 
         <VisitList setVisit={this.setVisit} visits={visits} visit={visit} />
 
@@ -120,7 +123,8 @@ MotherCirclePage.propTypes = {
   config: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
   ).isRequired,
-  toggleConfig: PropTypes.func.isRequired
+  toggleConfig: PropTypes.func.isRequired,
+  allowConfigUpdate: PropTypes.bool.isRequired
 };
 
 MotherCirclePage.defaultProps = {
