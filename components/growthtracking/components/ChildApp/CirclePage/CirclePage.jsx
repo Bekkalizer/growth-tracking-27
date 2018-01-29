@@ -38,7 +38,13 @@ class CirclePage extends React.Component {
     this.setState(state => ({ displayAlert: !state.displayAlert }));
 
   render() {
-    const { visits, patient, toggleConfig, config } = this.props;
+    const {
+      visits,
+      patient,
+      toggleConfig,
+      config,
+      allowConfigUpdate
+    } = this.props;
     const { selectedVisit, plotType, displayType, showMultiple } = this.state;
 
     const visit = selectedVisit;
@@ -63,7 +69,10 @@ class CirclePage extends React.Component {
 
     return (
       <div>
-        <ConfigButton toggleConfig={toggleConfig} />
+        <ConfigButton
+          toggleConfig={toggleConfig}
+          allowConfigUpdate={allowConfigUpdate}
+        />
 
         <VisitList setVisit={this.setVisit} visits={visits} visit={visit} />
 
@@ -90,32 +99,56 @@ class CirclePage extends React.Component {
             justifyContent: 'center'
           }}
         >
-          <Circle
-            onClick={() => this.togglePlot('wfl')}
-            label="Weight-for-length"
-            zscore={visit.wfl}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('wfa')}
-            label="Weight-for-age"
-            zscore={visit.wfa}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('lhfa')}
-            label="Length-for-age"
-            zscore={visit.lhfa}
-            config={config}
-          />
-          <Circle
-            onClick={() => this.togglePlot('acfa')}
-            label="MUAC-for-age"
-            zscore={visit.acfa}
-            rdata={visit.muac}
-            suffix={'cm'}
-            config={config}
-          />
+          {config.indicators.wfl && (
+            <Circle
+              onClick={() => this.togglePlot('wfl')}
+              label="Weight-for-length"
+              zscore={visit.wfl}
+              config={config}
+            />
+          )}
+          {config.indicators.wfa && (
+            <Circle
+              onClick={() => this.togglePlot('wfa')}
+              label="Weight-for-age"
+              zscore={visit.wfa}
+              config={config}
+            />
+          )}
+          {config.indicators.lhfa && (
+            <Circle
+              onClick={() => this.togglePlot('lhfa')}
+              label="Length-for-age"
+              zscore={visit.lhfa}
+              config={config}
+            />
+          )}
+          {config.indicators.bfa && (
+            <Circle
+              onClick={() => this.togglePlot('bfa')}
+              label="BMI-for-age"
+              zscore={visit.bfa}
+              config={config}
+            />
+          )}
+          {config.indicators.acfa && (
+            <Circle
+              onClick={() => this.togglePlot('acfa')}
+              label="MUAC-for-age"
+              zscore={visit.acfa}
+              config={config}
+            />
+          )}
+          {config.indicators.muac && (
+            <Circle
+              onClick={() => this.togglePlot('acfa')}
+              label="MUAC"
+              zscore={visit.acfa}
+              rdata={visit.muac}
+              suffix="cm"
+              config={config}
+            />
+          )}
         </div>
       </div>
     );
@@ -128,7 +161,8 @@ CirclePage.propTypes = {
   patient: PropTypes.object.isRequired,
   config: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
-  ).isRequired
+  ).isRequired,
+  allowConfigUpdate: PropTypes.bool.isRequired
 };
 
 CirclePage.defaultProps = {

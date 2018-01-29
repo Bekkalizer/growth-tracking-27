@@ -74,6 +74,7 @@ const PlotPage = ({
           <option value="wfl">Weight-for-length</option>
           <option value="wfa">Weight-for-age</option>
           <option value="lhfa">Length-for-age</option>
+          <option value="bfa">BMI-for-age</option>
           <option value="acfa">MUAC-for-age</option>
         </select>
 

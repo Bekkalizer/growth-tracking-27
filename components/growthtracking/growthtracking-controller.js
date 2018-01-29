@@ -11,45 +11,52 @@ const getInitialConfig = (get, create) =>
   get('growthTracker', 'config')
     .then(result => result.data)
     .catch(
-    () =>
-      create('growthTracker', 'config', defaultConfig)
-        .then(() => defaultConfig)
-        .catch(err => console.log(err)), // TODO: Figure out what to do if both config collection and config creation fails
-  );
+      () =>
+        create('growthTracker', 'config', defaultConfig)
+          .then(() => defaultConfig)
+          .catch(err => console.log(err)) // TODO: Figure out what to do if both config collection and config creation fails
+    );
 
 trackerCapture
   .controller(
-  'GrowthTrackingController',
-  (
-    $scope,
-    $location,
-    CurrentSelection,
-    DHIS2EventFactory,
-    DHIS2DataElementFactory,
-    DataStoreFactory,
-  ) => {
-    $scope.trackedEvents = DHIS2EventFactory.getEventsByProgram(
-      $location.search().tei,
-      $location.search().program,
-      null,
-    ).then(events => events);
-    $scope.dataElements = DHIS2DataElementFactory.getDataElements().then(
-      dataElements => dataElements,
-    );
+    'GrowthTrackingController',
+    (
+      $scope,
+      $location,
+      CurrentSelection,
+      DHIS2EventFactory,
+      DHIS2DataElementFactory,
+      DataStoreFactory,
+      SessionStorageService
+    ) => {
+      $scope.trackedEvents = DHIS2EventFactory.getEventsByProgram(
+        $location.search().tei,
+        $location.search().program,
+        null
+      ).then(events => events);
+      $scope.dataElements = DHIS2DataElementFactory.getDataElements().then(
+        dataElements => dataElements
+      );
 
-    $scope.program = $location.search().program;
+      $scope.program = $location.search().program;
 
-    $scope.dataStoreFunctions = DataStoreFactory;
-    $scope.trackedEntity = CurrentSelection.get().tei;
-  },
-)
+      $scope.role = SessionStorageService.get(
+        'USER_PROFILE'
+      ).userCredentials.userRoles.some(
+        role => role.authorities.indexOf('ALL') !== -1
+      );
+
+      $scope.dataStoreFunctions = DataStoreFactory;
+      $scope.trackedEntity = CurrentSelection.get().tei;
+    }
+  )
   .directive('reactapp', () => ({
     restrict: 'E',
 
     link: (scope, el) => {
       const initialConfig = getInitialConfig(
         scope.dataStoreFunctions.get,
-        scope.dataStoreFunctions.create,
+        scope.dataStoreFunctions.create
       );
 
       Promise.all([
@@ -58,6 +65,7 @@ trackerCapture
         scope.trackedEntity,
         initialConfig,
         scope.program,
+        scope.role
       ]).then(values => {
         ReactDOM.render(
           <App
@@ -66,10 +74,11 @@ trackerCapture
             trackedEntity={values[2]}
             initialConfig={values[3]}
             program={values[4]}
+            allowConfigUpdate={values[5]}
             updateConfig={scope.dataStoreFunctions.update}
           />,
-          el[0],
+          el[0]
         );
       });
-    },
+    }
   }));

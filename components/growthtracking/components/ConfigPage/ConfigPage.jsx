@@ -10,17 +10,18 @@ import {
   SaveButton,
   RestoreButton,
   SizeSettings,
+  IndicatorSettings
 } from './components';
 import { defaultConfig } from '../../datasets';
 
 class ConfigPage extends React.Component {
   state = {
-    ...this.props.config,
+    ...this.props.config
   };
 
   setColor = (id, color) => {
     this.setState(state => ({
-      colors: { ...state.colors, [id]: color },
+      colors: { ...state.colors, [id]: color }
     }));
   };
 
@@ -28,7 +29,7 @@ class ConfigPage extends React.Component {
 
   setLabel = (id, label) => {
     this.setState(state => ({
-      labels: { ...state.labels, [id]: label },
+      labels: { ...state.labels, [id]: label }
     }));
   };
 
@@ -43,6 +44,14 @@ class ConfigPage extends React.Component {
   setThreshold = threshold =>
     this.setState(state => ({ animation: { ...state.animation, threshold } }));
 
+  setIndicator = indicator =>
+    this.setState(state => ({
+      indicators: {
+        ...state.indicators,
+        [indicator]: !state.indicators[indicator]
+      }
+    }));
+
   restoreDefault = type => {
     if (!confirm('Are you sure you want to restore default settings?')) {
       return;
@@ -50,7 +59,7 @@ class ConfigPage extends React.Component {
 
     if (type) {
       this.setState({
-        [type]: defaultConfig[type],
+        [type]: defaultConfig[type]
       });
     } else {
       this.setState({ ...defaultConfig });
@@ -89,13 +98,23 @@ class ConfigPage extends React.Component {
 
         <SettingWrapper
           SettingComponent={
-            <DisplaySettings
-              setDisplay={this.setDisplay}
-              config={config}
-            />
+            <DisplaySettings setDisplay={this.setDisplay} config={config} />
           }
           title="Display"
           restoreDefault={() => this.restoreDefault('display')}
+        />
+
+        <hr style={{ clear: 'both' }} />
+
+        <SettingWrapper
+          SettingComponent={
+            <IndicatorSettings
+              setIndicator={this.setIndicator}
+              config={config}
+            />
+          }
+          title="Indicators"
+          restoreDefault={() => this.restoreDefault('indicators')}
         />
 
         <hr style={{ clear: 'both' }} />
@@ -140,9 +159,9 @@ ConfigPage.propTypes = {
   toggleConfig: PropTypes.func.isRequired,
   saveConfig: PropTypes.func.isRequired,
   config: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string]),
+    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
   ).isRequired,
-  addAnimation: PropTypes.func.isRequired,
+  addAnimation: PropTypes.func.isRequired
 };
 
 export default ConfigPage;

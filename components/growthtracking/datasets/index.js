@@ -6,6 +6,8 @@ import lhfaGirlsSd from './SD_Tables/lhfaGirlsSd.js';
 import lhfaBoysSd from './SD_Tables/lhfaBoysSd.js';
 import acfaBoysSd from './SD_Tables/acfaBoysSd.js';
 import acfaGirlsSd from './SD_Tables/acfaGirlsSd.js';
+import bfaBoysSd from './SD_Tables/bfaBoysSd.js';
+import bfaGirlsSd from './SD_Tables/bfaGirlsSd.js';
 
 import wflBoys from './Centile_Tables/wflBoys.js';
 import wflGirls from './Centile_Tables/wflGirls.js';
@@ -15,6 +17,8 @@ import lhfaGirls from './Centile_Tables/lhfaGirls.js';
 import lhfaBoys from './Centile_Tables/lhfaBoys.js';
 import acfaBoys from './Centile_Tables/acfaBoys.js';
 import acfaGirls from './Centile_Tables/acfaGirls.js';
+import bfaBoys from './Centile_Tables/bfaBoys.js';
+import bfaGirls from './Centile_Tables/bfaGirls.js';
 
 import { defaultConfig, descriptions } from './defaultConfig';
 
@@ -27,6 +31,8 @@ const sdSets = {
   lhfaBoysSd,
   acfaBoysSd,
   acfaGirlsSd,
+  bfaBoysSd,
+  bfaGirlsSd
 };
 
 const centileSets = {
@@ -38,6 +44,8 @@ const centileSets = {
   lhfaBoys,
   acfaBoys,
   acfaGirls,
+  bfaBoys,
+  bfaGirls
 };
 
 export { sdSets, centileSets, defaultConfig, descriptions };

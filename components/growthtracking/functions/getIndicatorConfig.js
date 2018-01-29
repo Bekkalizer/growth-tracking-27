@@ -36,7 +36,18 @@ const indicatorConfigs = (female, displayType) => ({
     measurement1: 'ageInDays', // replace string with corresponding data value string from config
     measurement2: 'height' // replace string with corresponding data value string from config
   },
-
+  bfa: {
+    title: 'BMI-for-age',
+    xtitle: 'Age (months)',
+    ytitle: 'BMI',
+    dataSet:
+      displayType === 'zscore'
+        ? female ? sdSets.bfaGirlsSd : sdSets.bfaBoysSd
+        : female ? centileSets.bfaGirls : centileSets.bfaBoys,
+    ageBased: true,
+    measurement1: 'ageInDays', // replace string with corresponding data value string from config
+    measurement2: 'bmi' // replace string with corresponding data value string from config
+  },
   acfa: {
     title: 'MUAC-for-age',
     xtitle: 'Age (months)',
