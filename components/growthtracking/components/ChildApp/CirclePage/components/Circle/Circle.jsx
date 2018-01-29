@@ -3,26 +3,33 @@ import PropTypes from 'prop-types';
 
 import CircleAnimation from './CircleAnimation.jsx';
 
-import { getCentile, getColor } from '../../../../functions';
+import { getCentile, getMuacZscoreColor } from '../../../../../functions';
 import * as circleStyles from './circleStyles.jsx';
 
 class Circle extends React.Component {
-
   state = {
-    hovered: false,
+    hovered: false
+  };
+
+  getColor = (colors, absoluteValue, disabled, rdata, mother) => {
+    if (mother) {
+      return '#928c8c';
+    }
+    return getMuacZscoreColor(colors, absoluteValue, disabled, rdata);
   };
 
   toggleHover = () => this.setState(state => ({ hovered: !state.hovered }));
 
   render() {
-
     const {
       onClick,
       zscore,
       rdata,
+      suffix,
       label,
       config,
       disabled,
+      mother,
       ...rest
     } = this.props;
 
@@ -34,12 +41,12 @@ class Circle extends React.Component {
     const threshold = rest.threshold || config.animation.threshold;
 
     const absoluteValue = Math.abs(zscore);
-    const color = getColor(colors, absoluteValue, disabled);
+    const color = this.getColor(colors, absoluteValue, disabled, rdata, mother);
     const percentile = getCentile(zscore);
 
     const animated = !disabled && threshold !== 0 && absoluteValue >= threshold;
 
-    if (zscore === null) {
+    if (zscore === null && rdata === null) {
       return null;
     }
 
@@ -55,7 +62,7 @@ class Circle extends React.Component {
           background: 'transparent',
           border: 'none',
           outline: 'none',
-          cursor: onClick ? 'pointer' : 'unset',
+          cursor: onClick ? 'pointer' : 'unset'
         }}
         onClick={onClick}
         onMouseEnter={() => this.toggleHover()}
@@ -77,10 +84,18 @@ class Circle extends React.Component {
             height: `${120 * scale}px`,
             border: `${8 * scale}px solid ${color}`,
             margin: 'auto',
-            backgroundColor: hovered ? color : 'white',
+            backgroundColor: hovered ? color : 'white'
           }}
         >
-          {circleStyles[display](scale, color, zscore, percentile, hovered, rdata)}
+          {circleStyles[display](
+            scale,
+            color,
+            zscore,
+            percentile,
+            hovered,
+            rdata,
+            suffix
+          )}
         </div>
         {label && (
           <div
@@ -100,19 +115,21 @@ Circle.propTypes = {
   onClick: PropTypes.func,
   zscore: PropTypes.number,
   rdata: PropTypes.number,
+  suffix: PropTypes.string,
   label: PropTypes.string,
   config: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
+    PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number])
   ).isRequired,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 Circle.defaultProps = {
   label: null,
   zscore: null,
   rdata: null,
+  suffix: null,
   onClick: null,
-  disabled: false,
+  disabled: false
 };
 
 export default Circle;

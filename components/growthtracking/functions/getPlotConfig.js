@@ -24,39 +24,29 @@ const getDataSeries = (displayType, deviations, colors) => {
   ];
 };
 
-const getPlotLabel = (label, deviation, color) => ({
-  color: 'white',
-  width: 0,
-  label: {
-    text: label,
-    align: 'right',
-    style: {
-      color,
-      fontWeight: 'bold'
-    }
-  },
-  value: deviation[deviation.length - 1][1],
-  zIndex: 5
+const getSerieLabel = (label, SDcolor) => ({
+  color: SDcolor,
+  name: label,
+  marker: {
+    enabled: false
+  }
 });
 
-const getPlotLabels = (displayType, deviations, colors) => {
+const getSeriesLables = (displayType, colors) => {
   if (displayType === 'zscore') {
     return [
-      getPlotLabel('+3 SD', deviations.SD4_SD3, colors.SD2_3),
-      getPlotLabel('+2 SD', deviations.SD3_SD2, colors.SD1_2),
-      getPlotLabel('+1 SD', deviations.SD2_SD1, colors.SD0_1),
-      getPlotLabel('Median', deviations.SD0, colors.SD3_4),
-      getPlotLabel('-1 SD', deviations.nSD1_nSD2, colors.SD0_1),
-      getPlotLabel('-2 SD', deviations.nSD2_nSD3, colors.SD1_2),
-      getPlotLabel('-3 SD', deviations.nSD3_nSD4, colors.SD2_3)
+      getSerieLabel('Median', colors.SD3_4),
+      getSerieLabel('SD +/- 2-3', colors.SD2_3),
+      getSerieLabel('SD +/- 1-2', colors.SD1_2),
+      getSerieLabel('SD +/- 0-1', colors.SD0_1)
     ];
   }
   return [
-    getPlotLabel('3rd', deviations.P01, colors.SD2_3),
-    getPlotLabel('15th', deviations.P3, colors.SD1_2),
-    getPlotLabel('50th', deviations.P50, colors.SD0_1),
-    getPlotLabel('85th', deviations.P85, colors.SD1_2),
-    getPlotLabel('97th', deviations.P97, colors.SD2_3)
+    getSerieLabel('3rd', colors.SD2_3),
+    getSerieLabel('15th', colors.SD1_2),
+    getSerieLabel('50th', colors.SD0_1),
+    getSerieLabel('85th', colors.SD1_2),
+    getSerieLabel('97th', colors.SD2_3)
   ];
 };
 
@@ -94,8 +84,6 @@ const getPlotConfig = (
 
   const formatDivisor = ageBased ? 30.25 : 1;
   const minorFormatDivisor = ageBased ? (30.25 / 2) : 1;
-  const zoomOffset = ageBased ? 30.25 * 5 : 5;
-
 
   return {
     title: {
@@ -112,6 +100,9 @@ const getPlotConfig = (
       },
       backgroundColor: 'white',
 
+    },
+    exporting: {
+      fallbackToExportServer: false
     },
     credits: false,
     plotOptions: {
@@ -186,7 +177,6 @@ const getPlotConfig = (
           dashStyle: 'shortdash',
           zIndex: 4
         },
-        ...getPlotLabels(displayType, deviations, colors)
       ]
     },
     tooltip: {
@@ -236,6 +226,7 @@ const getPlotConfig = (
           enabled: false
         }
       },
+      ...getSeriesLables(displayType, colors),
       ...getDataSeries(displayType, deviations, colors),
       {
         data: showMultiple === 'multiple' ? patientVisits : patientVisit,

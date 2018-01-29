@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Slider from 'rc-slider/lib/Slider';
 import 'rc-slider/assets/index.css';
 
-import { Circle } from '../../CirclePage/components';
+import { Circle } from '../../ChildApp/CirclePage/components';
 import { LabeledSlider } from './index';
 
 const HighlightSettings = ({ setThreshold, setSpeed, setRadius, config }) => {
@@ -16,18 +15,18 @@ const HighlightSettings = ({ setThreshold, setSpeed, setRadius, config }) => {
     1.5: '1.5 SD',
     2: '2 SD',
     2.5: '2.5 SD',
-    3: '3 SD',
+    3: '3 SD'
   };
 
   const speedMarks = {
     0.05: 'Faster',
     1.0: 'Default',
-    2: 'Slower',
+    2: 'Slower'
   };
 
   const radiusMarks = {
     1.0: 'Default',
-    1.3: 'Bigger',
+    1.3: 'Bigger'
   };
 
   return (
@@ -71,7 +70,7 @@ const HighlightSettings = ({ setThreshold, setSpeed, setRadius, config }) => {
           display: 'flex',
           flexWrap: 'wrap',
           flexDirection: 'row',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}
       >
         <Circle zscore={0.5} config={config} scale={0.8} />
@@ -90,8 +89,8 @@ HighlightSettings.propTypes = {
   setThreshold: PropTypes.func.isRequired,
   setRadius: PropTypes.func.isRequired,
   config: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string]),
-  ).isRequired,
+    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
+  ).isRequired
 };
 
 export default HighlightSettings;

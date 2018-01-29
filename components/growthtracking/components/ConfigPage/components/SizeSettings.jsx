@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Slider from 'rc-slider/lib/Slider';
 import 'rc-slider/assets/index.css';
 
-import { Circle } from '../../CirclePage/components';
+import { Circle } from '../../ChildApp/CirclePage/components';
 
 const SizeSettings = ({ setScale, config }) => {
   const { scale } = config;
@@ -12,7 +12,7 @@ const SizeSettings = ({ setScale, config }) => {
     0.75: '75%',
     1.0: 'Default',
     1.25: '125%',
-    1.5: '150%',
+    1.5: '150%'
   };
 
   return (
@@ -31,22 +31,22 @@ const SizeSettings = ({ setScale, config }) => {
         handleStyle={{
           height: 20,
           width: 20,
-          marginTop: -5,
+          marginTop: -5
         }}
         railStyle={{
-          height: 10,
+          height: 10
         }}
         dotStyle={{
           height: 14,
           width: 14,
           marginLeft: -5,
-          bottom: -8,
+          bottom: -8
         }}
         style={{
           width: '80%',
           margin: 'auto',
           marginTop: 30,
-          marginBottom: 30,
+          marginBottom: 30
         }}
       />
 
@@ -55,7 +55,7 @@ const SizeSettings = ({ setScale, config }) => {
           display: 'flex',
           flexWrap: 'wrap',
           flexDirection: 'row',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}
       >
         <Circle
@@ -71,8 +71,8 @@ const SizeSettings = ({ setScale, config }) => {
 SizeSettings.propTypes = {
   setScale: PropTypes.func.isRequired,
   config: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string]),
-  ).isRequired,
+    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
+  ).isRequired
 };
 
 export default SizeSettings;

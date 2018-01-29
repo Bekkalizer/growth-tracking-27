@@ -5,7 +5,7 @@ import HighchartsMore from 'highcharts-more';
 import HighchartsExporting from 'highcharts-exporting';
 import HighchartsOfflineExporting from 'highcharts-offline-exporting';
 
-import { getIndicatorConfig, getPlotConfig } from '../../functions';
+import { getIndicatorConfig, getPlotConfig } from '../../../functions';
 
 HighchartsMore(ReactHighcharts.Highcharts);
 HighchartsExporting(ReactHighcharts.Highcharts);
@@ -155,7 +155,8 @@ PlotPage.propTypes = {
   plotType: PropTypes.string.isRequired,
   selectedVisit: PropTypes.object.isRequired,
   patient: PropTypes.object.isRequired,
-  showMultiple: PropTypes.string.isRequired
+  showMultiple: PropTypes.string.isRequired,
+  setVisit: PropTypes.func.isRequired
 };
 
 export default PlotPage;

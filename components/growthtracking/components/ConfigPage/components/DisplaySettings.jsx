@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Circle } from '../../CirclePage/components';
+import { Circle } from '../../ChildApp/CirclePage/components';
 
 const DisplaySettings = ({ setDisplay, config }) => {
   const { display } = config;
@@ -18,7 +18,7 @@ const DisplaySettings = ({ setDisplay, config }) => {
           display: 'flex',
           flexWrap: 'wrap',
           flexDirection: 'row',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}
       >
         <Circle
@@ -65,12 +65,11 @@ const DisplaySettings = ({ setDisplay, config }) => {
   );
 };
 
-
 DisplaySettings.propTypes = {
   setDisplay: PropTypes.func.isRequired,
   config: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string]),
-  ).isRequired,
+    PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
+  ).isRequired
 };
 
 export default DisplaySettings;
