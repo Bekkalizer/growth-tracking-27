@@ -105,7 +105,6 @@ const getMotherPlotConfig = (
     tooltip: {
       formatter() {
         const visit = visits[this.point.index];
-        const data = visit[measurement2];
         const date = new Date(this.x).toISOString()
           .slice(0, 10);
         return `
@@ -113,7 +112,6 @@ const getMotherPlotConfig = (
           1}</b> <br />
                     Date: ${date} <br />
                     ${ytitle}: ${this.y} <br />`
-
       }
     },
     series: [
@@ -129,9 +127,7 @@ const getMotherPlotConfig = (
         showInLegend: false
       }
     ],
-
   };
-
 };
 
 export default getMotherPlotConfig;
