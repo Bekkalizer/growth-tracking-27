@@ -94,21 +94,18 @@ class CirclePage extends React.Component {
             onClick={() => this.togglePlot('wfl')}
             label="Weight-for-length"
             zscore={visit.wfl}
-            suffix={'%'}
             config={config}
           />
           <Circle
             onClick={() => this.togglePlot('wfa')}
             label="Weight-for-age"
             zscore={visit.wfa}
-            suffix={'%'}
             config={config}
           />
           <Circle
             onClick={() => this.togglePlot('lhfa')}
             label="Length-for-age"
             zscore={visit.lhfa}
-            suffix={'%'}
             config={config}
           />
           <Circle
