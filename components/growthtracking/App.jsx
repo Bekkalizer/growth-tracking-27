@@ -130,6 +130,11 @@ class App extends React.Component {
         .map((event, index) => {
           console.log(event);
           const eventDate = new Date(event.eventDate);
+
+          const ageInDays = Math.floor(
+            (Date.parse(eventDate) - Date.parse(patient.birthdate)) / 86400000
+          );
+
           const muac = Number(
             event.dataValues.find(val => val.dataElement === 'ySphlmZ7fKG').value
           );
@@ -145,6 +150,7 @@ class App extends React.Component {
             muac,
             weight,
             height,
+            ageInDays,
             completedBy: event.completedBy
           };
         });
