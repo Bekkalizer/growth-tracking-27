@@ -8,8 +8,8 @@ import ConfigButton from '../ConfigButton.jsx';
 class MotherCirclePage extends React.Component {
   state = {
     // Defaults to the most recent visit
-    selectedVisit: this.props.visits[this.props.visits.length - 1],
-    ploptType: null,
+    selectedVisit: this.props.visits[0],
+    plotType: null,
     showMultiple: 'multiple'
   };
 
