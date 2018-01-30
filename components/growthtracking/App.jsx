@@ -6,6 +6,7 @@ import ChildApp from './components/ChildApp';
 import MotherApp from './components/MotherApp';
 
 import { defaultConfig, validateConfig } from './datasets/defaultConfig';
+import { programIds } from './constants';
 
 class App extends React.Component {
   state = {
@@ -56,6 +57,13 @@ class App extends React.Component {
     const { events, trackedEntity, program, allowConfigUpdate } = this.props;
     const { config } = this.state;
 
+    // No valid program found.
+    if (
+      program !== programIds.childProgramId &&
+      program !== programIds.motherProgramId
+    )
+      return null;
+
     this.addAnimation(
       config.animation.radius || defaultConfig.animation.radius
     );
@@ -71,7 +79,7 @@ class App extends React.Component {
       );
     }
 
-    if (program === 'qbQ4TP1Yy3K') {
+    if (program === programIds.motherProgramId) {
       return (
         <MotherApp
           trackedEntity={trackedEntity}

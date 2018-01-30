@@ -54,6 +54,7 @@ class ConfigPage extends React.Component {
     }));
 
   setAlertMessage = (id, alert) => {
+    console.log(id, alert);
     this.setState(state => ({
       alerts: { ...state.alerts, [id]: alert }
     }));
@@ -79,6 +80,8 @@ class ConfigPage extends React.Component {
   render() {
     const { toggleConfig, saveConfig, addAnimation } = this.props;
     const config = this.state;
+
+    console.log(config.alerts);
 
     addAnimation(config.animation.radius);
 

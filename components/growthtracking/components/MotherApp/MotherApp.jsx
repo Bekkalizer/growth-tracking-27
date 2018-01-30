@@ -2,18 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import MotherCirclePage from './MotherCirclePage.jsx';
+import { eventIds, teiIds } from '../../constants';
 
 class MotherApp extends React.Component {
   getPatientData = trackedEntity => ({
-    firstname: trackedEntity.attributes.find(
-      attr => attr.attribute === 'kim8r9m1oGE'
-    ).value,
-    lastname: trackedEntity.attributes.find(
-      attr => attr.attribute === 'blDEf5Ld0fA'
-    ).value,
-    birthdate: trackedEntity.attributes.find(
-      attr => attr.attribute === 'yj8BaYdkTA6'
-    ).value
+    firstname:
+      trackedEntity.attributes.find(
+        attr => attr.attribute === teiIds.firstname
+      ) &&
+      trackedEntity.attributes.find(attr => attr.attribute === teiIds.firstname)
+        .value,
+    lastname:
+      trackedEntity.attributes.find(
+        attr => attr.attribute === teiIds.lastname
+      ) &&
+      trackedEntity.attributes.find(attr => attr.attribute === teiIds.lastname)
+        .value,
+    birthdate:
+      trackedEntity.attributes.find(
+        attr => attr.attribute === teiIds.birthdate
+      ) &&
+      trackedEntity.attributes.find(attr => attr.attribute === teiIds.birthdate)
+        .value
   });
 
   render() {
@@ -34,7 +44,6 @@ class MotherApp extends React.Component {
     }
 
     const patient = this.getPatientData(trackedEntity);
-    console.log('patient:', patient);
 
     const completedEvents = events.reduce((acc, val) => {
       if (!val.completedDate) return acc;
@@ -52,22 +61,30 @@ class MotherApp extends React.Component {
     const visits = completedEvents
       .sort((a, b) => a.eventDate > b.eventDate)
       .map((event, index) => {
-        console.log(event);
         const eventDate = new Date(event.eventDate);
 
         const ageInDays = Math.floor(
           (Date.parse(eventDate) - Date.parse(patient.birthdate)) / 86400000
         );
 
-        const muac = Number(
-          event.dataValues.find(val => val.dataElement === 'ySphlmZ7fKG').value
-        );
-        const weight = Number(
-          event.dataValues.find(val => val.dataElement === 'KHyKhpRfVRS').value
-        );
-        const height = Number(
-          event.dataValues.find(val => val.dataElement === 'VCYJkaP96KZ').value
-        );
+        const muac =
+          event.dataValues.find(val => val.dataElement === eventIds.muac) &&
+          Number(
+            event.dataValues.find(val => val.dataElement === eventIds.muac)
+              .value
+          );
+        const weight =
+          event.dataValues.find(val => val.dataElement === eventIds.weight) &&
+          Number(
+            event.dataValues.find(val => val.dataElement === eventIds.weight)
+              .value
+          );
+        const height =
+          event.dataValues.find(val => val.dataElement === eventIds.height) &&
+          Number(
+            event.dataValues.find(val => val.dataElement === eventIds.height)
+              .value
+          );
         return {
           index,
           eventDate,
