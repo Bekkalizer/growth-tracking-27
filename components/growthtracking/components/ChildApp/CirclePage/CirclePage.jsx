@@ -8,7 +8,7 @@ import PlotPage from '../PlotPage';
 class CirclePage extends React.Component {
   state = {
     // Defaults to the most recent visit
-    selectedVisit: this.props.visits[this.props.visits.length - 1],
+    selectedVisit: this.props.visits[0],
     plotType: null,
     displayType: 'zscore',
     showMultiple: 'multiple'
