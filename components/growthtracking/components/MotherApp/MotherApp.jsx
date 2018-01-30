@@ -59,7 +59,7 @@ class MotherApp extends React.Component {
     }
 
     const visits = completedEvents
-      .sort((a, b) => a.eventDate > b.eventDate)
+      .sort((a, b) => a.eventDate < b.eventDate)
       .map((event, index) => {
         const eventDate = new Date(event.eventDate);
 

@@ -11,7 +11,7 @@ class AlertSettings extends React.Component {
     const thresholdMarks = {
       0: 'Disabled',
       0.5: '+-0.5 SD',
-      1: 'Default',
+      1: '+-1 SD',
       1.5: '+-1.5 SD',
       2: '+-2 SD',
       2.5: '+-2.5 SD',
