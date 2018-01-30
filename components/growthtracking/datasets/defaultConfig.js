@@ -1,15 +1,8 @@
 const defaultColors = {
   SD0_1: '#BADA55',
-  SD1_2: '#dede32',
-  SD2_3: '#ff7070',
-  SD3_4: '#777777'
-};
-
-const defaultLabels = {
-  SD0_1: 'SD 0-1',
-  SD1_2: 'SD 1-2',
-  SD2_3: 'SD 2-3',
-  SD3_4: 'SD 3+'
+  SD1_2: '#BADA55',
+  SD2_3: '#dede32',
+  SD3_4: '#ff7070'
 };
 
 const descriptions = {
@@ -45,7 +38,6 @@ const defaultAlerts = {
 
 const defaultConfig = {
   colors: defaultColors,
-  labels: defaultLabels,
   scale: 1,
   display: 'z',
   animation: defaultAnimation,
@@ -57,7 +49,6 @@ const defaultConfig = {
 const validateConfig = config => {
   const {
     colors,
-    labels,
     scale,
     display,
     animation,
@@ -66,15 +57,18 @@ const validateConfig = config => {
     alertThreshold
   } = config;
 
+  console.log('a');
+
   if (
     Object.keys(config).length !== Object.keys(defaultConfig).length ||
     !colors ||
-    !labels ||
     !scale ||
     !display ||
     !animation
   )
     return false;
+
+  console.log('a');
 
   if (
     Object.values(colors).length !== 4 ||
@@ -85,25 +79,21 @@ const validateConfig = config => {
   )
     return false;
 
+  console.log('a');
+
   if (!Object.values(colors).every(color => typeof color === 'string'))
     return false;
 
-  if (
-    Object.values(labels).length !== 4 ||
-    !labels.SD0_1 ||
-    !labels.SD1_2 ||
-    !labels.SD2_3 ||
-    !labels.SD3_4
-  )
-    return false;
-
-  if (!Object.values(labels).every(label => typeof label === 'string'))
-    return false;
+  console.log('a');
 
   if (typeof scale !== 'number') return false;
 
+  console.log('a');
+
   const validDisplay = { p: '-', z: '-', zp: '-', pz: '-' };
   if (!validDisplay[display]) return false;
+
+  console.log('a');
 
   if (
     Object.values(animation).length !== 3 ||
@@ -112,28 +102,44 @@ const validateConfig = config => {
     !animation.radius
   )
     return false;
+
+  console.log('a');
+
   if (!Object.values(animation).every(a => typeof a === 'number')) return false;
+
+  console.log('a');
 
   if (
     !Object.values(indicators).every(
       indicator => typeof indicator === 'boolean'
     )
-  );
+  )
+    return false;
+
+  console.log('a');
 
   if (!Object.values(alerts).every(alert => typeof alert === 'string'))
     return false;
+
+  console.log('a');
+
   if (Object.values(alerts).length !== 6) return false;
+
+  console.log('a');
 
   if (!alertThreshold) return false;
 
+  console.log('a');
+
   if (alertThreshold && typeof alertThreshold !== 'number') return false;
+
+  console.log('a');
 
   return true;
 };
 
 export {
   defaultColors,
-  defaultLabels,
   defaultAnimation,
   descriptions,
   defaultConfig,
