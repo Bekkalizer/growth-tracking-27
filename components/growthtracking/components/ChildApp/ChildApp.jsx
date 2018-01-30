@@ -9,22 +9,32 @@ import {
   getMUACForAge,
   getBMIForAge
 } from '../../functions';
+import { teiIds, eventIds } from '../../constants';
 
 class ChildApp extends React.Component {
   getPatientData = trackedEntity => ({
-    firstname: trackedEntity.attributes.find(
-      attr => attr.attribute === 'kim8r9m1oGE'
-    ).value,
-    lastname: trackedEntity.attributes.find(
-      attr => attr.attribute === 'blDEf5Ld0fA'
-    ).value,
+    firstname:
+      trackedEntity.attributes.find(
+        attr => attr.attribute === teiIds.firstname
+      ) &&
+      trackedEntity.attributes.find(attr => attr.attribute === teiIds.firstname)
+        .value,
+    lastname:
+      trackedEntity.attributes.find(
+        attr => attr.attribute === teiIds.lastname
+      ) &&
+      trackedEntity.attributes.find(attr => attr.attribute === teiIds.lastname)
+        .value,
+    birthdate:
+      trackedEntity.attributes.find(
+        attr => attr.attribute === teiIds.birthdate
+      ) &&
+      trackedEntity.attributes.find(attr => attr.attribute === teiIds.birthdate)
+        .value,
     gender:
-      trackedEntity.attributes.find(attr => attr.attribute === 'uMSSNRDVcXS') &&
-      trackedEntity.attributes.find(attr => attr.attribute === 'uMSSNRDVcXS')
-        .value === 'Female',
-    birthdate: trackedEntity.attributes.find(
-      attr => attr.attribute === 'yj8BaYdkTA6'
-    ).value
+      trackedEntity.attributes.find(attr => attr.attribute === teiIds.gender) &&
+      trackedEntity.attributes.find(attr => attr.attribute === teiIds.gender)
+        .value === 'Female'
   });
 
   render() {
@@ -63,22 +73,29 @@ class ChildApp extends React.Component {
       .sort((a, b) => a.eventDate > b.eventDate)
       .map((event, index) => {
         const eventDate = new Date(event.eventDate);
-        const ageInMonths = Number(
-          event.dataValues.find(val => val.dataElement === 'WeCHX2qGTPy').value
-        );
+
         // Get a more accurate age by calculating age based on birth date and event date
         const ageInDays = Math.floor(
           (Date.parse(eventDate) - Date.parse(patient.birthdate)) / 86400000
         );
-        const muac = Number(
-          event.dataValues.find(val => val.dataElement === 'ySphlmZ7fKG').value
-        );
-        const weight = Number(
-          event.dataValues.find(val => val.dataElement === 'KHyKhpRfVRS').value
-        );
-        const height = Number(
-          event.dataValues.find(val => val.dataElement === 'VCYJkaP96KZ').value
-        );
+        const muac =
+          event.dataValues.find(val => val.dataElement === eventIds.muac) &&
+          Number(
+            event.dataValues.find(val => val.dataElement === eventIds.muac)
+              .value
+          );
+        const weight =
+          event.dataValues.find(val => val.dataElement === eventIds.weight) &&
+          Number(
+            event.dataValues.find(val => val.dataElement === eventIds.weight)
+              .value
+          );
+        const height =
+          event.dataValues.find(val => val.dataElement === eventIds.height) &&
+          Number(
+            event.dataValues.find(val => val.dataElement === eventIds.height)
+              .value
+          );
 
         const bmi = weight / (height / 100) ** 2;
 
@@ -90,7 +107,6 @@ class ChildApp extends React.Component {
         return {
           index,
           eventDate,
-          ageInMonths,
           ageInDays,
           muac,
           weight,

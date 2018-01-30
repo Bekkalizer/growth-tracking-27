@@ -7,7 +7,7 @@ import { defaultConfig } from './datasets/defaultConfig';
 
 const trackerCapture = angular.module('trackerCapture');
 
-const getInitialConfig = (get, create) =>
+const getConfig = (get, create) =>
   get('growthTracker', 'config')
     .then(result => result.data)
     .catch(
@@ -54,7 +54,7 @@ trackerCapture
     restrict: 'E',
 
     link: (scope, el) => {
-      const initialConfig = getInitialConfig(
+      const initialConfig = getConfig(
         scope.dataStoreFunctions.get,
         scope.dataStoreFunctions.create
       );

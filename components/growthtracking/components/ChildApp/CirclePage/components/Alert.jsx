@@ -66,7 +66,11 @@ class Alert extends React.Component {
         >
           X
         </button>
-        {alertMessage.map(message => <p key={Math.random()}>{message}</p>)}
+        {alertMessage.map(message => (
+          <div style={{ fontSize: '1.3rem' }} key={Math.random()}>
+            {message}
+          </div>
+        ))}
       </div>
     );
   }
