@@ -1,6 +1,6 @@
 const getZscoreColor = (colors, value) => {
   if (value >= 3) {
-    return colors.SD2_3;
+    return colors.SD3_4;
   }
   if (value >= 2) {
     return colors.SD2_3;
@@ -12,7 +12,6 @@ const getZscoreColor = (colors, value) => {
 };
 
 const getMuacColor = (colors, muac) => {
-
   if (muac >= 13.5) {
     return colors.SD0_1;
   }
@@ -22,7 +21,7 @@ const getMuacColor = (colors, muac) => {
   if (muac >= 11) {
     return colors.SD2_3;
   }
-  return colors.SD2_3;
+  return colors.SD3_4;
 };
 
 const getMuacZscoreColor = (colors, value, disabled, muac) => {
@@ -33,7 +32,6 @@ const getMuacZscoreColor = (colors, value, disabled, muac) => {
     return getMuacColor(colors, muac);
   }
   return getZscoreColor(colors, value);
-
 };
 
 export default getMuacZscoreColor;

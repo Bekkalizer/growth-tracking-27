@@ -21,18 +21,13 @@ class ConfigPage extends React.Component {
   };
 
   setColor = (id, color) => {
+    console.log(id, color);
     this.setState(state => ({
       colors: { ...state.colors, [id]: color }
     }));
   };
 
   setDisplay = display => this.setState({ display });
-
-  setLabel = (id, label) => {
-    this.setState(state => ({
-      labels: { ...state.labels, [id]: label }
-    }));
-  };
 
   setRadius = radius =>
     this.setState(state => ({ animation: { ...state.animation, radius } }));
@@ -81,8 +76,6 @@ class ConfigPage extends React.Component {
     const { toggleConfig, saveConfig, addAnimation } = this.props;
     const config = this.state;
 
-    console.log(config.alerts);
-
     addAnimation(config.animation.radius);
 
     return (
@@ -96,13 +89,9 @@ class ConfigPage extends React.Component {
 
         <SettingWrapper
           SettingComponent={
-            <ColorSettings
-              setColor={this.setColor}
-              setLabel={this.setLabel}
-              config={config}
-            />
+            <ColorSettings setColor={this.setColor} config={config} />
           }
-          title="Colors and Labels"
+          title="Colors"
           restoreDefault={() => this.restoreDefault('colors')}
         />
 

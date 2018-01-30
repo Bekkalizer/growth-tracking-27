@@ -18,7 +18,7 @@ class Circle extends React.Component {
     return getMuacZscoreColor(colors, absoluteValue, disabled, rdata);
   };
 
-  toggleHover = () => this.setState(state => ({ hovered: !state.hovered }));
+  toggleHover = value => this.setState({ hovered: value });
 
   render() {
     const {
@@ -65,8 +65,8 @@ class Circle extends React.Component {
           cursor: onClick ? 'pointer' : 'unset'
         }}
         onClick={onClick}
-        onMouseEnter={() => this.toggleHover()}
-        onMouseLeave={() => this.toggleHover()}
+        onMouseEnter={() => this.toggleHover(true)}
+        onMouseLeave={() => this.toggleHover(null)}
       >
         {animated && (
           <CircleAnimation

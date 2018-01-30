@@ -3,14 +3,14 @@ import { getCentile, getDeviations, getSeries } from '../functions';
 const getDataSeries = (displayType, deviations, colors) => {
   if (displayType === 'zscore') {
     return [
-      getSeries('arearange', deviations.SD4_SD3, colors.SD2_3, true),
-      getSeries('arearange', deviations.SD3_SD2, colors.SD1_2, true),
-      getSeries('arearange', deviations.SD2_SD1, colors.SD0_1, true),
+      getSeries('arearange', deviations.SD4_SD3, colors.SD3_4, true),
+      getSeries('arearange', deviations.SD3_SD2, colors.SD2_3, true),
+      getSeries('arearange', deviations.SD2_SD1, colors.SD1_2, true),
       getSeries('arearange', deviations.SD1_SD0, colors.SD0_1),
       getSeries('arearange', deviations.SD0_nSD1, colors.SD0_1),
-      getSeries('arearange', deviations.nSD1_nSD2, colors.SD0_1),
-      getSeries('arearange', deviations.nSD2_nSD3, colors.SD1_2),
-      getSeries('arearange', deviations.nSD3_nSD4, colors.SD2_3),
+      getSeries('arearange', deviations.nSD1_nSD2, colors.SD1_2),
+      getSeries('arearange', deviations.nSD2_nSD3, colors.SD2_3),
+      getSeries('arearange', deviations.nSD3_nSD4, colors.SD3_4),
       getSeries('line', deviations.SD0, colors.SD3_4, true)
     ];
   }
@@ -20,7 +20,7 @@ const getDataSeries = (displayType, deviations, colors) => {
     getSeries('arearange', deviations.P15, colors.SD0_1),
     getSeries('arearange', deviations.P85, colors.SD1_2),
     getSeries('arearange', deviations.P97, colors.SD2_3),
-    getSeries('line', deviations.P50, colors.SD3_4),
+    getSeries('line', deviations.P50, colors.SD0_1)
   ];
 };
 
@@ -83,7 +83,7 @@ const getPlotConfig = (
   ];
 
   const formatDivisor = ageBased ? 30.25 : 1;
-  const minorFormatDivisor = ageBased ? (30.25 / 2) : 1;
+  const minorFormatDivisor = ageBased ? 30.25 / 2 : 1;
 
   return {
     title: {
@@ -98,8 +98,7 @@ const getPlotConfig = (
           y: 10
         }
       },
-      backgroundColor: 'white',
-
+      backgroundColor: 'white'
     },
     exporting: {
       fallbackToExportServer: false
@@ -120,10 +119,9 @@ const getPlotConfig = (
             e.preventDefault();
           },
           click(e) {
-            const index = this.xData.indexOf(e.point.x)
+            const index = this.xData.indexOf(e.point.x);
             setVisit(index);
           }
-
         }
       }
     },
@@ -176,7 +174,7 @@ const getPlotConfig = (
           value: selectedVisit[measurement2],
           dashStyle: 'shortdash',
           zIndex: 4
-        },
+        }
       ]
     },
     tooltip: {
@@ -192,9 +190,9 @@ const getPlotConfig = (
 
           return `
                     <b>${visit.index +
-            1}: ${visit.eventDate
-              .toISOString()
-              .slice(0, 10)}</b> <br />
+                      1}: ${visit.eventDate
+            .toISOString()
+            .slice(0, 10)}</b> <br />
                     ${xtitle}: ${x} <br />
                     ${ytitle}: ${y} <br />
                     Z-score: ${zscore} <br />
@@ -205,7 +203,7 @@ const getPlotConfig = (
 
         return `
           <b>${selectedVisit.index +
-          1}: ${selectedVisit.eventDate.toISOString().slice(0, 10)}</b> <br />
+            1}: ${selectedVisit.eventDate.toISOString().slice(0, 10)}</b> <br />
           ${xtitle}: ${x} <br />
           ${ytitle}: ${y} <br />
           Z-score: ${zscore} <br />
@@ -220,7 +218,7 @@ const getPlotConfig = (
           displayType === 'zscore'
             ? `Z-score: ${selectedVisit[plotType]}`
             : `Percentile: ${getCentile(selectedVisit[plotType])}%`
-          }`,
+        }`,
         dashStyle: 'shortdash',
         marker: {
           enabled: false

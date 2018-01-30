@@ -22,16 +22,15 @@ class ColorSettings extends React.Component {
   };
 
   render() {
-    const { setColor, setLabel, config } = this.props;
-    const { labels, colors } = config;
+    const { setColor, config } = this.props;
+    const { colors } = config;
     const { show } = this.state;
 
     return (
       <div>
         <i>
           Click a circle to change the color representation of the standard
-          deviation range. You can also edit the label that shows up in the
-          plots.
+          deviation range.
         </i>
         <div
           style={{
@@ -94,18 +93,6 @@ class ColorSettings extends React.Component {
                   </div>
                 </div>
               ) : null}
-
-              <div>
-                Label:
-                <input
-                  style={{ height: '2.5rem', borderColor: '#ccc' }}
-                  type="text"
-                  name="label"
-                  value={labels[id]}
-                  placeholder="Label"
-                  onChange={event => setLabel(id, event.target.value)}
-                />
-              </div>
             </div>
           ))}
         </div>
@@ -116,7 +103,6 @@ class ColorSettings extends React.Component {
 
 ColorSettings.propTypes = {
   setColor: PropTypes.func.isRequired,
-  setLabel: PropTypes.func.isRequired,
   config: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.string])
   ).isRequired
