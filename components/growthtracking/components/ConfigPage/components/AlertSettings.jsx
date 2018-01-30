@@ -48,9 +48,7 @@ class AlertSettings extends React.Component {
               name="wfl-message"
               value={alerts.wfl}
               placeholder="WFL alert message"
-              onChange={event =>
-                setAlertMessage(alerts.wfl, event.target.value)
-              }
+              onChange={event => setAlertMessage('wfl', event.target.value)}
             />
           </div>
           <div style={{ textAlign: 'center' }}>
@@ -61,9 +59,7 @@ class AlertSettings extends React.Component {
               name="wfa-message"
               value={alerts.wfa}
               placeholder="WFA alert message"
-              onChange={event =>
-                setAlertMessage(alerts.wfa, event.target.value)
-              }
+              onChange={event => setAlertMessage('wfa', event.target.value)}
             />
           </div>
           <div style={{ textAlign: 'center' }}>
@@ -74,9 +70,7 @@ class AlertSettings extends React.Component {
               name="lhfa-message"
               value={alerts.lhfa}
               placeholder="LHFA alert message"
-              onChange={event =>
-                setAlertMessage(alerts.lhfa, event.target.value)
-              }
+              onChange={event => setAlertMessage('lhfa', event.target.value)}
             />
           </div>
           <div style={{ textAlign: 'center' }}>
@@ -87,9 +81,7 @@ class AlertSettings extends React.Component {
               name="bfa-message"
               value={alerts.bfa}
               placeholder="BFA alert message"
-              onChange={event =>
-                setAlertMessage(alerts.bfa, event.target.value)
-              }
+              onChange={event => setAlertMessage('bfa', event.target.value)}
             />
           </div>
           <div style={{ textAlign: 'center' }}>
@@ -100,9 +92,7 @@ class AlertSettings extends React.Component {
               name="acfa-message"
               value={alerts.acfa}
               placeholder="ACFA alert message"
-              onChange={event =>
-                setAlertMessage(alerts.acfa, event.target.value)
-              }
+              onChange={event => setAlertMessage('acfa', event.target.value)}
             />
           </div>
           <div style={{ textAlign: 'center' }}>
@@ -113,9 +103,7 @@ class AlertSettings extends React.Component {
               name="muac-message"
               value={alerts.muac}
               placeholder="MUAC alert message"
-              onChange={event =>
-                setAlertMessage(alerts.muac, event.target.value)
-              }
+              onChange={event => setAlertMessage('muac', event.target.value)}
             />
           </div>
         </div>
