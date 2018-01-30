@@ -21,7 +21,6 @@ class ConfigPage extends React.Component {
   };
 
   setColor = (id, color) => {
-    console.log(id, color);
     this.setState(state => ({
       colors: { ...state.colors, [id]: color }
     }));
@@ -49,7 +48,6 @@ class ConfigPage extends React.Component {
     }));
 
   setAlertMessage = (id, alert) => {
-    console.log(id, alert);
     this.setState(state => ({
       alerts: { ...state.alerts, [id]: alert }
     }));

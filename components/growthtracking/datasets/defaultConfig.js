@@ -57,8 +57,6 @@ const validateConfig = config => {
     alertThreshold
   } = config;
 
-  console.log('a');
-
   if (
     Object.keys(config).length !== Object.keys(defaultConfig).length ||
     !colors ||
@@ -67,8 +65,6 @@ const validateConfig = config => {
     !animation
   )
     return false;
-
-  console.log('a');
 
   if (
     Object.values(colors).length !== 4 ||
@@ -79,21 +75,13 @@ const validateConfig = config => {
   )
     return false;
 
-  console.log('a');
-
   if (!Object.values(colors).every(color => typeof color === 'string'))
     return false;
 
-  console.log('a');
-
   if (typeof scale !== 'number') return false;
-
-  console.log('a');
 
   const validDisplay = { p: '-', z: '-', zp: '-', pz: '-' };
   if (!validDisplay[display]) return false;
-
-  console.log('a');
 
   if (
     Object.values(animation).length !== 3 ||
@@ -103,11 +91,7 @@ const validateConfig = config => {
   )
     return false;
 
-  console.log('a');
-
   if (!Object.values(animation).every(a => typeof a === 'number')) return false;
-
-  console.log('a');
 
   if (
     !Object.values(indicators).every(
@@ -116,24 +100,14 @@ const validateConfig = config => {
   )
     return false;
 
-  console.log('a');
-
   if (!Object.values(alerts).every(alert => typeof alert === 'string'))
     return false;
 
-  console.log('a');
-
   if (Object.values(alerts).length !== 6) return false;
-
-  console.log('a');
 
   if (!alertThreshold) return false;
 
-  console.log('a');
-
   if (alertThreshold && typeof alertThreshold !== 'number') return false;
-
-  console.log('a');
 
   return true;
 };
